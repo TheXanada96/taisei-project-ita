@@ -57,7 +57,7 @@ MenuData* create_spell_menu(void) {
 	}
 
 	add_menu_separator(m);
-	add_menu_entry(m, "Back", menu_action_close, NULL);
+	add_menu_entry(m, "Indietro", menu_action_close, NULL);
 
 	while(!dynarray_get(&m->entries, m->cursor).action) {
 		++m->cursor;

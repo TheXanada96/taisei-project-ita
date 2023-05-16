@@ -10,8 +10,5 @@
 #include "taisei.h"
 
 #include "menu.h"
-#include "resource/resource.h"
-
-void preload_media_menu(ResourceGroup *rg);
 
 MenuData *create_media_menu(void);

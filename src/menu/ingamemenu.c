@@ -113,7 +113,7 @@ static void ingame_menu_input(MenuData *m) {
 	}, EFLAG_MENU);
 }
 
-MenuData *create_ingame_menu(void) {
+MenuData* create_ingame_menu(void) {
 	MenuData *m = alloc_menu();
 
 	m->draw = draw_ingame_menu;
@@ -122,12 +122,12 @@ MenuData *create_ingame_menu(void) {
 	m->flags = MF_Abortable | MF_AlwaysProcessInput;
 	m->transition = TransEmpty;
 	m->cursor = 1;
-	m->context = "Game Paused";
-	add_menu_entry(m, "Options", menu_action_enter_options, NULL)->transition = TransFadeBlack;
-	add_menu_entry(m, "Return to Game", menu_action_close, NULL);
-	add_menu_entry(m, "Restart the Game", restart_game, NULL)->transition = TransFadeBlack;
-	add_menu_entry(m, "Stop the Game", return_to_title, NULL)->transition = TransFadeBlack;
-	set_transition(TransEmpty, 0, m->transition_out_time, NO_CALLCHAIN);
+	m->context = "Gioco in pausa";
+	add_menu_entry(m, "Opzioni", menu_action_enter_options, NULL)->transition = TransFadeBlack;
+	add_menu_entry(m, "Torna al Gioco", menu_action_close, NULL);
+	add_menu_entry(m, "Riavvia il gioco", restart_game, NULL)->transition = TransFadeBlack;
+	add_menu_entry(m, "Ferma il Gioco", return_to_title, NULL)->transition = TransFadeBlack;
+	set_transition(TransEmpty, 0, m->transition_out_time);
 
 	return m;
 }
@@ -137,7 +137,7 @@ static void skip_stage(MenuData *m, void *arg) {
 	menu_action_close(m, arg);
 }
 
-MenuData *create_ingame_menu_replay(void) {
+MenuData* create_ingame_menu_replay(void) {
 	MenuData *m = alloc_menu();
 
 	m->draw = draw_ingame_menu;
@@ -145,14 +145,14 @@ MenuData *create_ingame_menu_replay(void) {
 	m->flags = MF_Abortable | MF_AlwaysProcessInput;
 	m->transition = TransEmpty;
 	m->cursor = 1;
-	m->context = "Replay Paused";
-	add_menu_entry(m, "Options", menu_action_enter_options, NULL)->transition = TransFadeBlack;
-	add_menu_entry(m, "Continue Watching", menu_action_close, NULL);
-	add_menu_entry(m, "Restart the Stage", restart_game, NULL)->transition = TransFadeBlack;
-	add_menu_entry(m, "Skip the Stage", skip_stage, NULL)->transition = TransFadeBlack;
-	add_menu_entry(m, "Stop Watching", return_to_title, NULL)->transition = TransFadeBlack;
+	m->context = "Replay in Pausa";
+	add_menu_entry(m, "Opzioni", menu_action_enter_options, NULL)->transition = TransFadeBlack;
+	add_menu_entry(m, "Continua a Guardare", menu_action_close, NULL);
+	add_menu_entry(m, "Riavvia il Livello", restart_game, NULL)->transition = TransFadeBlack;
+	add_menu_entry(m, "Salta il Livello", skip_stage, NULL)->transition = TransFadeBlack;
+	add_menu_entry(m, "Smetti di Guardare", return_to_title, NULL)->transition = TransFadeBlack;
 	m->cursor = 1;
-	set_transition(TransEmpty, 0, m->transition_out_time, NO_CALLCHAIN);
+	set_transition(TransEmpty, 0, m->transition_out_time);
 
 	return m;
 }

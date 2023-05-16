@@ -11,7 +11,7 @@
 
 #include "transition.h"
 #include "events.h"
-#include "util/callchain.h"
+#include "eventloop/eventloop.h"
 #include "dynarray.h"
 
 #define IMENU_BLUR 0.05

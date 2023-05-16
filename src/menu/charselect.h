@@ -10,8 +10,7 @@
 #include "taisei.h"
 
 #include "menu.h"
-#include "resource/resource.h"
 
-MenuData *create_char_menu(void);
+MenuData* create_char_menu(void);
 void draw_char_menu(MenuData *menu);
-void preload_char_menu(ResourceGroup *rg);
+void preload_char_menu(void);

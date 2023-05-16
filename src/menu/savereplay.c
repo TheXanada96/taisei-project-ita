@@ -43,7 +43,7 @@ static void do_save_replay(Replay *rpy) {
 		rpy->playername = NULL;
 	}
 
-	mem_free(name);
+	free(name);
 }
 
 static void save_rpy(MenuData *menu, void *a) {
@@ -59,7 +59,7 @@ static void draw_saverpy_menu(MenuData *m) {
 
 	r_mat_mv_push();
 	r_mat_mv_translate(SCREEN_W/2, SCREEN_H/2 - 100, 0);
-	text_draw("Save Replay?", &(TextParams) {
+	text_draw("Salvare il Replay?", &(TextParams) {
 		.font = "big",
 		.align = ALIGN_CENTER,
 		.shader = "text_default",
@@ -126,7 +126,7 @@ static MenuData* create_saverpy_menu(Replay *rpy) {
 	m->logic = update_saverpy_menu;
 	m->flags = MF_Transient;
 
-	add_menu_entry(m, "Yes", save_rpy, rpy);
+	add_menu_entry(m, "Si", save_rpy, rpy);
 	add_menu_entry(m, "No", menu_action_close, NULL);
 
 	return m;

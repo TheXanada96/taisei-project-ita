@@ -32,7 +32,7 @@ typedef struct ReplayviewItemContext {
 	char *replayname;
 } ReplayviewItemContext;
 
-static MenuData *replayview_sub_messagebox(MenuData *parent, const char *message);
+static MenuData* replayview_sub_messagebox(MenuData *parent, const char *message);
 
 static void replayview_set_submenu(MenuData *parent, MenuData *submenu) {
 	ReplayviewContext *ctx = parent->context;
@@ -59,14 +59,10 @@ static void on_replay_finished(CallChainResult ccr) {
 	audio_bgm_play(res_bgm("menu"), true, 0, 0);
 }
 
-static void really_start_replay(CallChainResult ccr) {
-	startrpy_arg_t *argp = ccr.ctx;
-	auto arg = *argp;
-	mem_free(argp);
-
-	if(!TRANSITION_RESULT_CANCELED(ccr)) {
-		replay_play(arg.rpy, arg.stgnum, false, CALLCHAIN(on_replay_finished, NULL));
-	}
+static void really_start_replay(void *varg) {
+	startrpy_arg_t arg = *(startrpy_arg_t*)varg;
+	free(varg);
+	replay_play(arg.rpy, arg.stgnum, CALLCHAIN(on_replay_finished, NULL));
 }
 
 static void start_replay(MenuData *menu, void *arg) {
@@ -82,7 +78,7 @@ static void start_replay(MenuData *menu, void *arg) {
 	Replay *rpy = ictx->replay;
 
 	if(!replay_load(rpy, ictx->replayname, REPLAY_READ_EVENTS)) {
-		replayview_set_submenu(menu, replayview_sub_messagebox(menu, "Failed to load replay events"));
+		replayview_set_submenu(menu, replayview_sub_messagebox(menu, "Impossibile caricare gli eventi di replay"));
 		return;
 	}
 
@@ -91,30 +87,30 @@ static void start_replay(MenuData *menu, void *arg) {
 
 	if(!stageinfo_get_by_id(stg->stage)) {
 		replay_destroy_events(rpy);
-		snprintf(buf, sizeof(buf), "Can't replay this stage: unknown stage ID %X", stg->stage);
+		snprintf(buf, sizeof(buf), "Impossibile rigiocare questa tappa: ID Stage sconosciuto %X", stg->stage);
 		replayview_set_submenu(menu, replayview_sub_messagebox(menu, buf));
 		return;
 	}
 
 	if(!plrmode_find(stg->plr_char, stg->plr_shot)) {
 		replay_destroy_events(rpy);
-		snprintf(buf, sizeof(buf), "Can't replay this stage: unknown player character/mode %X/%X", stg->plr_char, stg->plr_shot);
+		snprintf(buf, sizeof(buf), "Non è possibile rigiocare questa fase: personaggio/modalità di gioco sconosciuta %X/%X", stg->plr_char, stg->plr_shot);
 		replayview_set_submenu(menu, replayview_sub_messagebox(menu, buf));
 		return;
 	}
 
-	set_transition(TransFadeBlack, FADE_TIME, FADE_TIME,
-		CALLCHAIN(really_start_replay, ALLOC(startrpy_arg_t, {
+	set_transition_callback(TransFadeBlack, FADE_TIME, FADE_TIME, really_start_replay,
+		memdup(&(startrpy_arg_t) {
 			.rpy = ictx->replay,
 			.stgnum = stagenum
-		}))
+		}, sizeof(startrpy_arg_t))
 	);
 }
 
 static void replayview_draw_stagemenu(MenuData*);
 static void replayview_draw_messagebox(MenuData*);
 
-static MenuData *replayview_sub_stageselect(MenuData *parent, ReplayviewItemContext *ictx) {
+static MenuData* replayview_sub_stageselect(MenuData *parent, ReplayviewItemContext *ictx) {
 	MenuData *m = alloc_menu();
 	Replay *rpy = ictx->replay;
 
@@ -131,7 +127,7 @@ static MenuData *replayview_sub_stageselect(MenuData *parent, ReplayviewItemCont
 			add_menu_entry(m, stg->title, start_replay, ictx);
 		} else {
 			char label[64];
-			snprintf(label, sizeof(label), "Unknown stage %X", stage_id);
+			snprintf(label, sizeof(label), "Stage sconosciuto %X", stage_id);
 			add_menu_entry(m, label, menu_action_close, NULL);
 		}
 	});
@@ -139,7 +135,7 @@ static MenuData *replayview_sub_stageselect(MenuData *parent, ReplayviewItemCont
 	return m;
 }
 
-static MenuData *replayview_sub_messagebox(MenuData *parent, const char *message) {
+static MenuData* replayview_sub_messagebox(MenuData *parent, const char *message) {
 	MenuData *m = alloc_menu();
 	m->draw = replayview_draw_messagebox;
 	m->flags = MF_Transient | MF_Abortable;
@@ -163,9 +159,9 @@ static void replayview_run(MenuData *menu, void *arg) {
 static void replayview_freearg(void *a) {
 	ReplayviewItemContext *ctx = a;
 	replay_reset(ctx->replay);
-	mem_free(ctx->replay);
-	mem_free(ctx->replayname);
-	mem_free(ctx);
+	free(ctx->replay);
+	free(ctx->replayname);
+	free(ctx);
 }
 
 static void replayview_draw_submenu_bg(float width, float height, float alpha) {
@@ -391,16 +387,17 @@ static int fill_replayview_menu(MenuData *m) {
 		if(!strendswith(filename, ext))
 			continue;
 
-		auto rpy = ALLOC(Replay);
+		Replay *rpy = malloc(sizeof(Replay));
 		if(!replay_load(rpy, filename, REPLAY_READ_META)) {
-			mem_free(rpy);
+			free(rpy);
 			continue;
 		}
 
-		auto ictx = ALLOC(ReplayviewItemContext, {
-			.replay = rpy,
-			.replayname = strdup(filename),
-		});
+		ReplayviewItemContext *ictx = malloc(sizeof(ReplayviewItemContext));
+		memset(ictx, 0, sizeof(ReplayviewItemContext));
+
+		ictx->replay = rpy;
+		ictx->replayname = strdup(filename);
 
 		add_menu_entry(m, " ", replayview_run, ictx)->transition = /*rpy->numstages < 2 ? TransFadeBlack :*/ NULL;
 		++rpys;
@@ -434,7 +431,7 @@ static void replayview_free(MenuData *m) {
 
 		free_menu(ctx->next_submenu);
 		free_menu(ctx->submenu);
-		mem_free(m->context);
+		free(m->context);
 		m->context = NULL;
 	}
 
@@ -445,7 +442,7 @@ static void replayview_free(MenuData *m) {
 	});
 }
 
-MenuData *create_replayview_menu(void) {
+MenuData* create_replayview_menu(void) {
 	MenuData *m = alloc_menu();
 
 	m->logic = replayview_logic;
@@ -453,20 +450,23 @@ MenuData *create_replayview_menu(void) {
 	m->draw = replayview_draw;
 	m->end = replayview_free;
 	m->transition = TransFadeBlack;
-	m->context = ALLOC(ReplayviewContext, {
-		.sub_fade = 1.0,
-	});
+
+	ReplayviewContext *ctx = malloc(sizeof(ReplayviewContext));
+	memset(ctx, 0, sizeof(ReplayviewContext));
+	ctx->sub_fade = 1.0;
+
+	m->context = ctx;
 	m->flags = MF_Abortable;
 
 	int r = fill_replayview_menu(m);
 
 	if(!r) {
-		add_menu_entry(m, "No replays available. Play the game and record some!", menu_action_close, NULL);
+		add_menu_entry(m, "Non sono disponibili replay. Gioca e registra!", menu_action_close, NULL);
 	} else if(r < 0) {
-		add_menu_entry(m, "There was a problem getting the replay list :(", menu_action_close, NULL);
+		add_menu_entry(m, "C'è stato un problema nell'ottenere la lista dei replay :(", menu_action_close, NULL);
 	} else {
 		add_menu_separator(m);
-		add_menu_entry(m, "Back", menu_action_close, NULL);
+		add_menu_entry(m, "Indietro", menu_action_close, NULL);
 	}
 
 	return m;

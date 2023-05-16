@@ -29,7 +29,6 @@ typedef struct StartGameContext {
 	MenuData *char_menu;
 	Replay replay;
 	Difficulty difficulty;
-	ResourceGroup rg;
 } StartGameContext;
 
 static void start_game_do_pick_character(CallChainResult ccr);
@@ -40,8 +39,7 @@ static void start_game_do_show_credits(CallChainResult ccr);
 static void start_game_do_cleanup(CallChainResult ccr);
 
 static void start_game_internal(MenuData *menu, StageInfo *info, bool difficulty_menu) {
-	auto ctx = ALLOC(StartGameContext);
-	res_group_init(&ctx->rg);
+	StartGameContext *ctx = calloc(1, sizeof(*ctx));
 
 	if(info == NULL) {
 		global.is_practice_mode = false;
@@ -112,11 +110,6 @@ static void kill_aux_menus(StartGameContext *ctx) {
 	ctx->char_menu = ctx->diff_menu = NULL;
 }
 
-static void enter_stage_now(StartGameContext *ctx) {
-	res_group_release(&ctx->rg);
-	stage_enter(ctx->current_stage, &ctx->rg, CALLCHAIN(start_game_do_leave_stage, ctx));
-}
-
 static void start_game_do_enter_stage(CallChainResult ccr) {
 	StartGameContext *ctx = ccr.ctx;
 	MenuData *prev_menu = ccr.result;
@@ -134,7 +127,7 @@ static void start_game_do_enter_stage(CallChainResult ccr) {
 
 	kill_aux_menus(ctx);
 	reset_game(ctx);
-	enter_stage_now(ctx);
+	stage_enter(ctx->current_stage, CALLCHAIN(start_game_do_leave_stage, ctx));
 }
 
 static void start_game_do_leave_stage(CallChainResult ccr) {
@@ -142,7 +135,7 @@ static void start_game_do_leave_stage(CallChainResult ccr) {
 
 	if(global.gameover == GAMEOVER_RESTART) {
 		reset_game(ctx);
-		enter_stage_now(ctx);
+		stage_enter(ctx->current_stage, CALLCHAIN(start_game_do_leave_stage, ctx));
 		return;
 	}
 
@@ -150,14 +143,12 @@ static void start_game_do_leave_stage(CallChainResult ccr) {
 		++ctx->current_stage;
 
 		if(ctx->current_stage->type == STAGE_STORY) {
-			enter_stage_now(ctx);
+			stage_enter(ctx->current_stage, CALLCHAIN(start_game_do_leave_stage, ctx));
 		} else {
 			CallChain cc;
 
 			if(global.gameover == GAMEOVER_WIN) {
-				res_group_release(&ctx->rg);
-				res_purge();
-				credits_preload(&ctx->rg);
+				credits_preload();
 				cc = CALLCHAIN(start_game_do_show_ending, ctx);
 			} else {
 				cc = CALLCHAIN(start_game_do_cleanup, ctx);
@@ -193,8 +184,8 @@ static void start_game_do_cleanup(CallChainResult ccr) {
 	StartGameContext *ctx = ccr.ctx;
 	replay_reset(&ctx->replay);
 	kill_aux_menus(ctx);
-	res_group_release(&ctx->rg);
-	mem_free(ctx);
+	free(ctx);
+	free_resources(false);
 	global.gameover = GAMEOVER_NONE;
 	replay_state_deinit(&global.replay.output);
 	main_menu_update_practice_menus();
