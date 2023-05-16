@@ -40,10 +40,10 @@ MenuData* create_difficulty_menu(void) {
 	m->transition = TransFadeBlack;
 	m->flags = MF_Abortable;
 
-	add_menu_entry(m, "Per chi ha appena iniziato\nla loro carriera accademica", set_difficulty, (void *)D_Easy);
-	add_menu_entry(m, "Tutti quegli anni di studio\nhanno finalmente dato i loro frutti", set_difficulty, (void *)D_Normal);
-	add_menu_entry(m, "Devi davvero\namare i libri", set_difficulty, (void *)D_Hard);
-	add_menu_entry(m, "O muori da studente,\no vivi abbastanza a lungo da\ndiventare un professore", set_difficulty, (void *)D_Lunatic);
+	add_menu_entry(m, "For those just beginning\ntheir academic careers", set_difficulty, (void *)D_Easy);
+	add_menu_entry(m, "All those years of study\nhave finally paid off", set_difficulty, (void *)D_Normal);
+	add_menu_entry(m, "You must really\nlove books", set_difficulty, (void *)D_Hard);
+	add_menu_entry(m, "You either die a student,\nor live long enough to\nbecome a professor", set_difficulty, (void *)D_Lunatic);
 
 	dynarray_foreach(&m->entries, int i, MenuEntry *e, {
 		Difficulty d = (Difficulty)(uintptr_t)e->arg;
@@ -61,7 +61,7 @@ void draw_difficulty_menu(MenuData *menu) {
 	r_state_push();
 
 	draw_main_menu_bg(menu, 0, 0, 0.05, "menu/mainmenubg", "stage1/cirnobg");
-	draw_menu_title(menu, "Seleziona una Difficoltà");
+	draw_menu_title(menu, "Select Difficulty");
 
 	Color c = diff_color;
 	r_color(color_mul(&c, RGBA(0.07, 0.07, 0.07, 0.7)));

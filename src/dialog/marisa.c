@@ -22,30 +22,30 @@ DIALOG_TASK(marisa, Stage1PreBoss) {
 	HIDE(cirno);
 
 	FACE(marisa, puzzled);
-	MSG(marisa, "Uff, di nuovo neve? Ho appena messo via il mio cappotto invernale.");
+	MSG(marisa, "Snow again? But I just put away my winter coat.");
 	FACE(marisa, sweat_smile);
-	MSG(marisa, "…anche se siamo già a metà estate.");
+	MSG(marisa, "…even though it’s half-way through summer already.");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(cirno, 180, "Non è bello, vero?");
+	MSG(cirno, "Don’t you like the cold weather???");
 
 	SHOW(cirno);
 	FACE(cirno, normal);
-	MSG(cirno, "E’ la mia neve. Ce l'ho fatta!"); 
+	MSG(cirno, "It should be winter all the time!");
 
 	FACE(marisa, normal);
-	MSG(marisa, "Ti dispiace se prendo in prestito dei soldi per il conto della lavanderia?");
+	MSG(marisa, "Mind paying to get my coat cleaned, then?");
 	FACE(marisa, sweat_smile);
-	MSG(marisa, "Avrei finito in autunno, ma ora…"); 
+	MSG(marisa, "I was gonna get it done in the fall, but now…");
 
-	TITLE(cirno, "Cirno", "Fata del ghiaccio termodinamica");
-	MSG(cirno, "No, ma posso prestarti del gelato!");
+	TITLE(cirno, "Cirno", "Thermodynamic Ice Fairy");
+	MSG(cirno, "Why would I do that?! You’re never going to pay me back!");
 	EVENT(music_changes);
 	FACE(cirno, angry);
-	MSG(cirno, "Dopo che ti faccio diventare del gelato!"); 
+	MSG(cirno, "I’m gonna turn you into an ice cube!");
 
 	FACE(marisa, smug);
-	MSG(marisa, "Preferisco il ghiaccio tritato, grazie.");
+	MSG(marisa, "Really? I prefer shaved ice, myself.");
 
 	DIALOG_END();
 }
@@ -59,13 +59,13 @@ DIALOG_TASK(marisa, Stage1PostBoss) {
 	FACE(cirno, defeated);
 
 	FACE(marisa, smug);
-	MSG(marisa, "Perché non vai a giocare con la tua nuova amica, quella dell'inferno?"); 
-	MSG(marisa, "Forse con lei è uno scontro alla pari…"); 
+	MSG(marisa, "Why don’t you go play with your new friend, the one from Hell?");
+	MSG(marisa, "Maybe then it’d be more of a fair fight.");
 
-	MSG(cirno, "Ahia…");
-	MSG(cirno, "Vo-Voglio dire, l'ultima volta ha perso! E la prossima volta lo farai anche tu!");
+	MSG(cirno, "Ouch…");
+	MSG(cirno, "I-I mean, last time she lost! And next time, you will too!");
 
-	MSG(marisa, "Certo, Certo…");
+	MSG(marisa, "Sure, sure.");
 
 	DIALOG_END();
 }
@@ -81,32 +81,31 @@ DIALOG_TASK(marisa, Stage2PreBoss) {
 	ACTOR_RIGHT(hina);
 	HIDE(hina);
 	FACE(marisa, unamused);
-	MSG(marisa, "Diamine, ora questo posto è un po' triste.");
-	MSG(marisa, "Cosa potrebbe causare lo spirito a stranire l'ambiente', comunque?"); 
+	MSG(marisa, "Geez, this place is kinda sad now.");
+	MSG(marisa, "What would be causin’ the yōkai to get all weird, anyways?");
 
 	EVENT(boss_appears);
-	WAIT(60);
+	MSG(hina, "Why hello, Ms. Kirisame.");
 	SHOW(hina);
 	FACE(hina, normal);
-	MSG(hina, "Salve signorina Kirisame. Ne è passato di tempo."); 
-	MSG(hina, "Sembri spericolata come al solito, Ti consiglio di tornare indietro."); 
+	MSG(hina, "You seem to be as reckless as always. I recommend turning back.");
 
 	FACE(marisa, happy);
-	MSG(marisa, "E come al solito, qua mi gioco la mia reputazione di risolutrice d'incidenti, dunque ignorerò il tuo consiglio."); 
-	FACE(marisa, normal);
-	MSG(marisa, "Grazie comunque. ci vediamo!"); 
+	MSG(marisa, "Thanks for the advice! I’ll be ignoring it, though.");
+	MSG(marisa, "See ya.");
 
-	TITLE(hina, "Kagiyama Hina", "Dea giroscopica della pestilenza"); 
+	TITLE(hina, "Kagiyama Hina", "Gyroscopic Pestilence God");
 	FACE(hina, serious);
-	MSG(hina, "Oh mio dio… sei piuttosto ribelle, vero?"); 
-	MSG(hina, "Quanta confidenza, ad ignorare il mio avvertimento in quel modo");
+	MSG(hina, "Oh my… you’re quite the rebellious one, aren’t you?");
+	MSG(hina, "Such confidence, ignoring my warning like that.");
 
-	FACE(marisa, happy);
-	MSG(marisa, "Lo prendo come un complimento.");
+	FACE(marisa, smug);
+	MSG(marisa, "I’ll take that as a compliment.");
 
 	EVENT(music_changes);
-	MSG(hina, "E sai cosa succede alle ragazze cattive che non ascoltano i loro anziani?"); 
-	MSG(hina, "Vengono inondate di sfortuna per anni!");
+	MSG(hina, "And do you know what happens to naughty girls who don’t listen to their elders?");
+	MSG(hina, "They get showered in misfortune for years!");
+
 	DIALOG_END();
 }
 
@@ -118,13 +117,15 @@ DIALOG_TASK(marisa, Stage2PostBoss) {
 	VARIANT(hina, defeated);
 	FACE(hina, defeated);
 	FACE(marisa, unamused);
-	MSG(marisa, "Sai, oggi sei molto più tagliente del solito, Hina.");
-	MSG(marisa, "Sei pittosto fastidiosa, onestamente"); 
+	MSG(marisa, "You’re way more snippy than usual today.");
+	MSG(marisa, "It’s kinda annoyin’, honestly.");
 
-	MSG(hina, "C-che cattiveria…");
-	MSG(hina, "Non hai visto che stavo solo cercando di tenerti al sicuro?");
-	MSG(marisa, "Oh, ora non fare la protettiva con me."); 
-	MSG(marisa, "Ne ho abbastanza per tutta la vita."); 
+	MSG(hina, "H-how mean…");
+	MSG(hina, "Don’t you see I was just trying to keep you safe…?");
+
+	MSG(marisa, "Don’t get all motherly on me now.");
+	FACE(marisa, sweat_smile);
+	MSG(marisa, "I’ve had enough of that for a lifetime.");
 
 	DIALOG_END();
 }
@@ -140,52 +141,57 @@ DIALOG_TASK(marisa, Stage3PreBoss) {
 	ACTOR_RIGHT(wriggle);
 	HIDE(wriggle);
 	FACE(marisa, normal);
-	MSG(marisa, "Oggi sono tutti più spericolati. Qual'è la causa?");
+	MSG(marisa, "Geez, everyone’s getting even more reckless the further up I go. What gives?");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(wriggle, 180, "Aspetta di vedere il loro capo!"); 
+	MSG(wriggle, "Wait ‘til you meet their leader!");
 	SHOW(wriggle);
 
-	MSG(marisa, "Sì, Sicuramente ho tanto da chiedere al loro capo.");
+	MSG(marisa, "Yeah, I’m gonna have to ask their leader a bunch‘a questions for sure.");
 
-	MSG(wriggle, "Sentiti libera di chiedere. Sto ascoltando.");
-
-	MSG(marisa, "Oh, sei il suo messaggero?"); 
-	FACE(marisa, happy);
-	MSG(marisa, "Ti dispiace passare qualcosa?"); 
-
-	TITLE(wriggle, "Wriggle Nightbug", "L'attivista per i diritt degli insetti"); 
-	FACE(wriggle, outraged);
-	MSG(wriggle, "Um, OVVIAMENTE Non sono un messaggero!");
 	FACE(wriggle, proud);
-	MSG(wriggle, "Sono io il grande LEADER SUPREMO degli insetti!"); 
+	MSG(wriggle, "Feel free to go ahead. I’m listening.");
+
+	MSG(marisa, "Oh, you’re the messenger?");
+	FACE(marisa, happy);
+	MSG(marisa, "Mind passin’ a message along?");
+
+	TITLE(wriggle, "Wriggle Nightbug", "Insect Rights Activist");
+	FACE(wriggle, outraged);
+	MSG(wriggle, "Um, OBVIOUSLY I’m not the messenger!");
+	FACE(wriggle, proud);
+	MSG(wriggle, "Yeah, I’m the great leader of Insectkind!");
 
 	FACE(marisa, smug);
-	MSG(marisa, "Grande leader? Percaso gli insetti si sono uniti o qualcosa del genere?");
+	MSG(marisa, "Great leader? What, did the insects unionize or somethin’?");
 
 	FACE(wriggle, outraged);
-	MSG(wriggle, "No! Te l'ho detto, sono il leader, la mente!");
+	MSG(wriggle, "No! I told you, I’m the leader! The mastermind!");
 	FACE(wriggle, calm);
-	MSG(wriggle, "Quindi, quali sono le tue domande?"); 
-	FACE(marisa, normal);
-	MSG(marisa, "Uhm, credo di aver dimenticato."); 
-	MSG(marisa, "Qual'è il tuo problema, comunque?"); 
+	MSG(wriggle, "So, what’s your question?");
 
-	MSG(wriggle, "Noi insetti abbiamo tre esigenze:"); 
-	MSG(wriggle, "Primo: Non usare lo spray per insetti!"); 
-	MSG(wriggle, "Secondo: Scacciare gli scacciamosche!!"); 
-	MSG(wriggle, "Terzo: Vogliamo il diritto di pungere e mordere!"); 
-	MSG(wriggle, "Fourth—"); 
+	FACE(marisa, normal);
+	MSG(marisa, "Hmm, guess I forgot.");
+	MSG(marisa, "What’s yer deal, anyways?");
+
+	FACE(wriggle, proud);
+	MSG(wriggle, "We insects have three demands:");
+	MSG(wriggle, "First: say nay to insect spray!");
+	MSG(wriggle, "Second: swat the swatters!");
+	FACE(wriggle, outraged);
+	MSG(wriggle, "Third: the right to bite!");
+	MSG(wriggle, "Fourth—!");
 
 	FACE(marisa, unamused);
-	MSG(marisa, "Va bene va bene, è fantastico, ma onestamente ho cose più importanti da fare."); 
-	MSG(marisa, "…e non hai idea di cosa sta succedendo, vero?");
+	MSG(marisa, "Okay okay, this is great ‘n all, but I’ve honestly got more important stuff to do.");
+	MSG(marisa, "… and ya don’t got a clue about what’s goin’ on, do ya?");
 
 	EVENT(music_changes);
 	FACE(wriggle, proud);
-	MSG(wriggle, "Forse ne so più di quanto pensi."); 
+	MSG(wriggle, "Maybe I know more than you think.");
 	FACE(wriggle, outraged);
-	MSG(wriggle, "Ma non è NIENTE che direi a un usurpatore della gloria degli insetti!"); 
+	MSG(wriggle, "But it’s NOTHING I’d tell an usurper of Insectkind’s glory!");
+
 	DIALOG_END();
 }
 
@@ -198,26 +204,28 @@ DIALOG_TASK(marisa, Stage3PostBoss) {
 	FACE(wriggle, defeated);
 
 	FACE(marisa, smug);
-	MSG(marisa, "Più duro del solito, ma non abbastanza"); 
-	MSG(marisa, "Dove hai appreso quelle nuove mosse, comunque?"); 
+	MSG(marisa, "Tougher than usual, but not tough enough.");
+	MSG(marisa, "Where’d ya pick up those new moves, anyway?");
 
-	MSG(wriggle, "Ah! Era uhm… la grande visione del nostro glorioso passato da insetto!"); 
-	MSG(wriggle, "Era l'era car… car… l'Era dei Carboni!"); 
+	MSG(wriggle, "Aw! It was, um… the great vision of our glorious Insect past!");
+	MSG(wriggle, "It was in the age of Car—… Carb—… the age of Carbs!");
 
 	FACE(marisa, puzzled);
-	MSG(marisa, "‘Glorioso passato da insetto’? ‘Carboni’?");
+	MSG(marisa, "‘Glorious insect past’? ‘Carbs’?");
 	FACE(marisa, normal);
-	MSG(marisa, "Ah, intendevi il periodo carbonifero. Con gli insetti giganti e tutto il resto."); 
-	MSG(marisa, "Ricordo quella dottoressa nella foresta di bambù, se ne uscì con un'affermazione del genere"); 
-	MSG(marisa, "Era l'unica volta che la vedevo così eccitata…"); 
+	MSG(marisa, "Oh, ya must mean the Carboniferous Period. With the giant bug- err, insects, ‘n all that.");
+	MSG(marisa, "I remember that doctor at Eientei goin’ off about it once.");
+	FACE(marisa, sweat_smile);
+	MSG(marisa, "Only time I’d seen her so excited…");
 
-	MSG(wriggle, "Sì, quello!");
-	MSG(wriggle, "Vuoi allearti con noi per la nostra gloriosa conquista…?");
+	MSG(wriggle, "Yeah, that!");
+	FACE(wriggle, proud);
+	MSG(wriggle, "Do you want to be an ally in our glorious conquest…?");
 
 	FACE(marisa, smug);
-	MSG(marisa, "Dopo, forse."); 
+	MSG(marisa, "Maybe later.");
 	FACE(marisa, happy);
-	MSG(marisa, "Probabilmente mai.");
+	MSG(marisa, "Probably never.");
 
 	DIALOG_END();
 }
@@ -234,78 +242,79 @@ DIALOG_TASK(marisa, Stage4PreBoss) {
 	HIDE(kurumi);
 
 	FACE(marisa, surprised);
-	MSG(marisa, "Oh cavolo, una villa misteriosa!"); 
+	MSG(marisa, "Oh wow, a mysterious, magical mansion!");
 	FACE(marisa, smug);
-	MSG(marisa, "… quanto si può essere generici?"); 
+	MSG(marisa, "… how generic can you get?");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(kurumi, 180, "E per finire, una strega occidentale!"); 
+	MSG(kurumi, "And to top it off, a western witch!");
 	SHOW(kurumi);
-	MSG(kurumi, "L'ho già visto mille volte. È un vestito così noioso.");
+	MSG(kurumi, "Seen it a thousand times already. It’s such a boring motif.");
 
 	FACE(marisa, happy);
-	MSG(marisa, "E quindi? Ma compenso con il mio fascino diabolico."); 
+	MSG(marisa, "Right? But I make up for it with my devilish charm.");
 
 	FACE(kurumi, dissatisfied);
-	MSG(kurumi, "Ma questo tema è così abusato…"); 
+	MSG(kurumi, "But that theme is so overdone…");
 	FACE(kurumi, normal);
-	MSG(kurumi, "Cosa c'è dopo? Una cameriera?");
+	MSG(kurumi, "What’s next? A maid?");
 	FACE(marisa, normal);
-	MSG(kurumi, "Una ragazzina con quasi nessun dialogo che diventa comunque una delle preferite dei fan?"); 
-	MSG(kurumi, "Che ne dite di una che avrà la sua personalità massacrata dai fan?");
+	MSG(kurumi, "A little girl with almost no dialogue who becomes a fan-favourite anyways?");
+	MSG(kurumi, "One that’ll have her personality massacred by the fans?");
 
 	FACE(marisa, smug);
-	MSG(marisa, "Oh, non ne so niente."); 
+	MSG(marisa, "Maybe they’ll even make her something edgy like a vampire to drive up sales.");
 
-	MSG(kurumi, "Forse ho letto troppi manga che quei tengu sfornano."); 
+	FACE(kurumi, dissatisfied);
+	MSG(kurumi, "Ugh! Maybe I’ve been reading too much manga that those tengu churn out.");
 
 	FACE(marisa, puzzled);
-	MSG(marisa, "I tengu hanno iniziato a scrivere manga?"); 
+	MSG(marisa, "The tengu write manga now?");
 	FACE(marisa, sweat_smile);
-	MSG(marisa, "Scrivere pura narrativa è più onesto per loro, credo."); 
+	MSG(marisa, "Writin’ pure ficiton is more honest for them, I guess.");
 
-	TITLE(kurumi, "Kurumi", "High-Society Phlebotomist"); 
+	TITLE(kurumi, "Kurumi", "High-Society Phlebotomist");
 	FACE(kurumi, normal);
-	MSG(kurumi, "Sì, vero?"); 
-	MSG(kurumi, "Naturalmente, la maggior parte è spazzatura che piace solo agli strambi!"); 
+	MSG(kurumi, "Yeah, duh?");
+	MSG(kurumi, "Of course, most of it is garbage that only weirdos like!");
 	FACE(kurumi, dissatisfied);
-	MSG(kurumi, "E non fatemi NEMMENO parlare del design di certi personaggi! Che schifo!"); 
+	MSG(kurumi, "And don’t EVEN get me started on certain character designs! So generic!");
 
 	FACE(marisa, normal);
-	MSG(marisa, "Forse dovrebbero assumere qualcuno con un po' di senso della moda."); 
+	MSG(marisa, "Maybe they oughta hire someone with some fashion sense.");
 
 	FACE(kurumi, normal);
-	MSG(kurumi, "Possono chiedere pure a me!"); 
-	MSG(kurumi, "Le mie idee farebbero sicuramente colpo, se riconoscessero il mio talento!"); 
+	MSG(kurumi, "That’d be me, then!");
+	MSG(kurumi, "My ideas would surely make a splash, if they’d recognize my talent!");
 
 	FACE(marisa, unamused);
-	MSG(marisa, "Eh? forse");
+	MSG(marisa, "Eh? Maybe…");
 
 	FACE(kurumi, dissatisfied);
-	MSG(kurumi, "Eh?!"); 
+	MSG(kurumi, "Huh?!");
 
 	FACE(marisa, smug);
-	MSG(marisa, "Al tuo abbigliamento manca qualcosa. Forse è caduto in disgrazia?"); 
+	MSG(marisa, "Your outfit’s missin’ somethin'…");
 
 	FACE(kurumi, tsun_blush);
-	MSG(kurumi, "Tsk! Potrei dire lo stesso di te!"); 
+	MSG(kurumi, "H-Hmph! I could say the same about you!");
 	FACE(kurumi, normal);
-	MSG(kurumi, "Sul serio, è un semplice vestito generico da strega!"); 
+	MSG(kurumi, "Seriously, it’s just a plain generic witch outfit!");
 
-	FACE(marisa, normal);
-	MSG(marisa, "Le mie sottovesti sono leggendarie, sai?"); 
+	FACE(marisa, unamused);
+	MSG(marisa, "That’s just because it’s summer!");
 	FACE(marisa, happy);
-	MSG(marisa, "Le ragazze di tutta Gensōkyō ne parlano."); 
+	MSG(marisa, "My winter petticoats are legendary. Girls across Gensōkyō talk about ‘em.");
 	FACE(marisa, normal);
-	MSG(marisa, "In effetti, ce ne sono alcune, più in profondità, all'interno di questa villa."); 
+	MSG(marisa, "In fact, there’s a few of ‘em, uh, deeper inside this mansion.");
 	FACE(marisa, happy);
-	MSG(marisa, "Allora mi sto dirigendo verso di loro.");
+	MSG(marisa, "So I’ll be headin’ in, then.");
 
 	EVENT(music_changes);
 	FACE(kurumi, tsun);
-	MSG(kurumi, "Oh, non ti lascerò andare senza combattere!"); 
+	MSG(kurumi, "Oh, I’m not letting you go without a fight!");
 	FACE(kurumi, normal);
-	MSG(kurumi, "Vediamo chi è la più carina qui, strega!"); 
+	MSG(kurumi, "Let’s see who’s the most fashionable here, witch!");
 
 	DIALOG_END();
 }
@@ -319,34 +328,36 @@ DIALOG_TASK(marisa, Stage4PostBoss) {
 	FACE(kurumi, defeated);
 
 	FACE(marisa, smug);
-	MSG(marisa, "Vince chi ha la sottoveste migliore. È un fatto scientifico."); 
+	MSG(marisa, "Whoever has the best petticoat wins. It’s a scientific fact.");
 	FACE(marisa, sweat_smile);
-	MSG(marisa, "… ma da quando mi interessano i fatti scientifici?"); 
+	MSG(marisa, "… but since when do I care about scientific facts?");
 
-	MSG(kurumi, "U-un attimo, cosa stavo facendo?"); 
-	MSG(kurumi, "(Sì, è così, fingi di avere un'amnesia…)");
-	MSG(kurumi, "Uuu, non ricordo assolutamente nulla!!!"); 
-	MSG(kurumi, "(Ma… non ho già visto questa ragazza dall'aspetto nerd…?)"); 
+	MSG(kurumi, "W-wait, what was I doing again?");
+	MSG(kurumi, "(Y-yeah, that’s it, play it off as amnesia…");
+	MSG(kurumi, "(But, hmm… haven’t I seen this nerdy-looking girl before…?)");
+	MSG(kurumi, "Uuu, I don’t remember anything at all!!");
 
 	FACE(marisa, normal);
-	MSG(marisa, "Ah, scusa, scusa. Credo che tu sia scivolata e abbia battuto la testa."); 
-	MSG(marisa, "Sono l'ispettrice delle… sottovesti del Gensokyo.");
-	MSG(marisa, "Sono qui per controllare le sottovesti in questa villa."); /
+	MSG(marisa, "Ah, sorry, sorry. I think ya slipped ‘n hit your head.");
+	FACE(marisa, sweat_smile);
+	MSG(marisa, "I’m Gensōkyō’s… petticoat inspector.");
+	FACE(marisa, smug);
+	MSG(marisa, "I’m here to inspect the petticoats in this here mansion.");
 	FACE(marisa, happy);
-	MSG(marisa, "Mi avete appena fatto entrare, quindi me ne vado.");
+	MSG(marisa, "Ya were just lettin’ me in, so I’ll be off, then.");
 
 	FACE(kurumi, normal);
-	MSG(kurumi, "Uhm, Ne dubito…");
+	MSG(kurumi, "Uhm, I kind of doubt that…");
 	FACE(kurumi, defeated);
-	MSG(kurumi, "Non che io possa fermarti, in ogni caso…"); 
+	MSG(kurumi, "Not that I could stop you, anyways…");
 	FACE(marisa, normal);
-	MSG(kurumi, "Non mi sono iscritta per essere picchiata in questo modo!"); 
+	MSG(kurumi, "Ugh, I didn’t sign up to get beaten like this!");
 
-	FACE(marisa, puzzled);
-	MSG(marisa, "‘Iscriversi’? Pensavo che non ricordasse nulla."); 
+	FACE(marisa, smug);
+	MSG(marisa, "‘Sign up’? I thought you didn’t remember anything.");
 
 	FACE(kurumi, tsun_blush);
-	MSG(kurumi, "N-Non importa!"); 
+	MSG(kurumi, "N-Nevermind!");
 
 	DIALOG_END();
 }
@@ -363,99 +374,99 @@ DIALOG_TASK(marisa, Stage5PreBoss) {
 	HIDE(iku);
 
 	FACE(marisa, inquisitive);
-	MSG(marisa, "Questo posto è affascinante!"); 
-	MSG(marisa, "Che tipo di fonte di energia userebbero per ciò?!"); 
-	MSG(marisa, "Devo dirlo a Patchy!");
+	MSG(marisa, "This place is fascinatin’!");
+	MSG(marisa, "I gotta tell Nitori!");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(iku, 180, "Ti sconsiglio di innamorarti troppo, giovane strega.");
+	MSG(iku, "I would not recommend getting too enamoured, young witch.");
 	SHOW(iku);
-	MSG(iku, "Comunque sia, sono sorpresa di vederla qui. Come sta?");
+	MSG(iku, "I’m surprised to see you here. How have you been?");
 
-	MSG(marisa, "In quale grimorio sarebbe questo…?" ); 
-	MSG(marisa, "Uhm… probabilmente una grande illusione di qualche tipo…?");
-	MSG(marisa, "Sarebbe più facile che rendere i mattoni più leggeri di una piuma, sarebbe un buon camuffamento…");
+	MSG(marisa, "What grimoire would this be in…?");
+	MSG(marisa, "Hmm… probably a major illusion of some kind…?");
+	MSG(marisa, "That’d be easier than making the bricks weightless, ‘n it’s a good disguise…");
 
-	TITLE(iku, "Nagae Iku", "Fulminologa dei cieli");
+	TITLE(iku, "Nagae Iku", "Fulminologist of the Heavens");
 	FACE(iku, smile);
-	MSG(iku, "UEhm, mi scusi. Sta parlando con se stessa?"); 
+	MSG(iku, "… pardon me, are you conversing with yourself?");
 
 	FACE(marisa, normal);
-	MSG(marisa, "Eh? No, stavo solo chiedendo.");
+	MSG(marisa, "Huh? No, I was askin’ ya a question.");
 
-	MSG(iku, "Sarebbe questa la sua teoria riguardo questa torre?"); 
+	MSG(iku, "An interesting theory, I suppose.");
 
-	MSG(marisa, "Avrebbe senso però, giusto?"); 
+	MSG(marisa, "It’d make sense though, right?");
 	FACE(marisa, inquisitive);
-	MSG(marisa, "È apparso dal nulla. Se fosse stato un vero mattone, il solo spostamento dell'aria avrebbe causato un rumore enorme…");
-	MSG(marisa, "E ci vorrebbe anche così tanto potere.");
-	MSG(marisa, "Dunque è sicuramente una maggior illusione.");
+	MSG(marisa, "It appeared outta nowhere. If it were real brick, the air displacement alone woulda caused a huge noise…");
+	MSG(marisa, "And it’d take so much power, too.");
+	MSG(marisa, "Definitely an illusion, then.");
 
-	MSG(iku, "Sfortunatamente, credo che sia errata la premessa della sua teoria.");
+	MSG(iku, "The premise of your theory is flawed, unfortunately.");
 	FACE(iku, eyes_closed);
 	FACE(marisa, normal);
-	MSG(iku, "La tecnologia che vede qua è oltre la nostra comprensione attuale."); 
+	MSG(iku, "The technology on display here is beyond our current comprehension.");
 
 	FACE(marisa, surprised);
-	MSG(marisa, "Tecnologia? Wow, quindi sta dicendo che è formata da mattoni VERI?");
+	MSG(marisa, "Technology? Whoa, so yer sayin’ this is REAL brick?!");
 	FACE(marisa, normal);
-	MSG(marisa, "*tap tap*"); 
+	MSG(marisa, "*tap tap*");
 	FACE(marisa, surprised);
-	MSG(marisa, "Fa così freddo che è quasi inquietante, come se mi stesse succhiando la magia dalle dita."); 
+	MSG(marisa, "It’s so cold it’s almost creepy, like it was suckin’ magic right outta my fingers.");
 	FACE(marisa, inquisitive);
-	MSG(marisa, "Ma questo significa che la torre… ha una forma corporea?!");
-	MSG(marisa, "Diamine! Ora DEVO incontrare il proprietario!");
-	MSG(marisa, "Che grimori possiede per tirare fuori qualcosa del genere?!"); 
+	MSG(marisa, "But that means the tower… has corporeal form?!");
+	MSG(marisa, "Dang! Now I GOTTA meet the owner!");
+	MSG(marisa, "What grimoires does she got to pull somethin’ like this off?!");
 
 	FACE(iku, smile);
-	MSG(iku, "N-non sta usando grimori, o magia in generale.");
+	MSG(iku, "I-I would imagine she does not use grimoires, or magic.");
 	FACE(iku, serious);
-	MSG(iku, "Si affida a macchinari complessi e probabilmente computazionali avanzati");
+	MSG(iku, "This is highly complex machinery, likely relying on advanced computational—");
 
-	MSG(marisa, "Ma quindi, quale sarebbero le fonti energetiche?");
-	MSG(marisa, "Nemmeno la fusione nucleare potrebbe sostenere una cosa del genere!");
+	MSG(marisa, "But then, what’s the power source?");
+	MSG(marisa, "Not even nuclear fusion could sustain somethin’ like this!");
 
 	FACE(iku, smile);
-	MSG(iku, "I-io non sono sicura della sua meccanica esatta—");
+	MSG(iku, "I-I am not sure of its exact mechanics—");
 
 	FACE(marisa, happy);
-	MSG(marisa, "Dove pensi che sia?");
+	MSG(marisa, "Where’d y’say she was?");
 
 	FACE(iku, normal);
-	MSG(iku, "Intendi…?");
+	MSG(iku, "You mean…?");
 
 	FACE(marisa, inquisitive);
-	MSG(marisa, "Esatto, La proprietaria! E' di sopra, vero?");
+	MSG(marisa, "The owner, o’ course! Upstairs, right?");
 
 	FACE(iku, serious);
-	MSG(iku, "Forse l'atmosfera rarefatta a questa quota ti ha dato alla testa. Non dovrei divulgare ulteriori informazioni, per la tua protezione.");
+	MSG(iku, "Perhaps the thin atmosphere at this elevation has gotten to you. I will not divulge any further information, for your own protection.");
 
 	FACE(marisa, happy);
-	MSG(marisa, "Come si chiama?"); 
+	MSG(marisa, "What’s her name?");
 
-	MSG(iku, "Mi stai ascoltando? Non stai ragionando in modo chiaro!");
+	MSG(iku, "Why are you not listening to me…?");
 
 	FACE(marisa, inquisitive);
-	MSG(marisa, "Hai qualche consiglio su come parlare con lei, magari per farla rilassare un po'?");
+	MSG(marisa, "Do ya got any tips on talkin’ to her, maybe make her loosen up a bit?");
 	FACE(marisa, happy);
-	MSG(marisa, "Non voglio sprecare la mia occasione.");
+	MSG(marisa, "I don’t wanna blow my chance.");
 
 	FACE(iku, smile);
-	MSG(iku, "Sto cercando di risparmiarle ulteriori pericoli, ma tutto quello che può fare è parlare di me. Sii più premurosa.");
-	MSG(iku, "Mi aspettavo che fosse stata in grado di affrontare la cosa con una mente lucida e risolvere questo incidente, ma sembra—");
+	MSG(iku, "I am trying to spare you further peril, yet all you can do is talk over me. Be more considerate.");
+	MSG(iku, "I had expectations that you would be able to approach this with a clear head and resolve this incident, but it seems—");
 
 	FACE(marisa, normal);
-	MSG(marisa, "Ah, ah, capisco. Dovrò attivare il vecchio fascino Kirisame.");
+	MSG(marisa, "Ah, I see, I see. I’ll have to turn on the ol’ Kirisame charm.");
 	FACE(marisa, smug);
 	FACE(iku, serious);
-	MSG(marisa, "Ho capito, Ho capito."); 
-	MSG(marisa, "Non facevo la ‘femme fatale’ da un po’, però…"); 
+	MSG(marisa, "I get it, I get it.");
+	MSG(marisa, "Haven’t done ‘femme fatale’ in a while, but…");
 
 	EVENT(music_changes);
 
-	MSG(iku, "Basta!"); 
-	MSG(iku, "Si dice che l'elettrostimolazione applicata in modo specifico possa rilassare la mente.");
-	MSG(iku, "Mi permetta per metterlo in pratica per lei!"); 
+	MSG(iku, "Enough!");
+	MSG(iku, "It is said that specifically applied electro-stimulation can ease the mind.");
+	FACE(iku, eyes_closed);
+	MSG(iku, "Allow me to put that into practice for you!");
 
 	DIALOG_END();
 }
@@ -467,7 +478,7 @@ DIALOG_TASK(marisa, Stage5PostMidBoss) {
 	FACE(marisa, surprised);
 
 	// should be only one message with a fixed 180-frame (3 second) timeout
-	MSG_UNSKIPPABLE(marisa, 180, "Quindi questo posto funziona con l'elettricità, eh? Uhm…");
+	MSG_UNSKIPPABLE(marisa, 180, "So this place runs on electricity, eh? Hmm…");
 
 	DIALOG_END();
 }
@@ -480,35 +491,38 @@ DIALOG_TASK(marisa, Stage5PostBoss) {
 	VARIANT(iku, defeated);
 	FACE(iku, defeated);
 
-	FACE(marisa, normal);
-	MSG(marisa, "Oof, spero che non mi abbia reso i capelli troppo crespi.");
+	FACE(marisa, unamused);
+	MSG(marisa, "Oof, I hope that didn’t make my hair too frizzy.");
 	FACE(marisa, happy);
-	MSG(marisa, "Sai, per la mia prima impressione e tutto.");
+	MSG(marisa, "Y’know, for my big first impression ‘n all.");
 
 	FACE(iku, eyes_closed);
-	MSG(iku, "T-te lo dirò per l'ultima volta, non avrà niente da insegnarti…"); 
-	MSG(iku, "I suoi poteri si basano sulla tecnologia e sul metodo scientifico. Di questo sono sicura.");
+	MSG(iku, "F-For the last time, she’ll have nothing to teach you…");
+	MSG(iku, "Her powers rely on technology and the scientific method. Of that much, I am sure.");
 
 	FACE(marisa, unamused);
-	MSG(marisa, "L'unica volta che Sanae non è in giro per smanettare su tutte le cose scientifiche, eh?"); 
+	MSG(marisa, "The one time Sanae’s not around to geek out about all the sciencey stuff, eh?");
 	FACE(iku, normal);
 	FACE(marisa, normal);
-	MSG(marisa, "Ah bene, so come far funzionare uno di quei telefoni intelligenti, la tecnologia di questa torre è molto avanzata, quindi dovrebbe funzionare bene."); 
+	MSG(marisa, "Ah well, I know how to operate one of those Intelligent Phones, and that’s plenty advanced, so I should be fine.");
 	FACE(marisa, inquisitive);
-	MSG(marisa, "A proposito, hai sentito quella strana voce?"); 
+	MSG(marisa, "By the way, have ya been hearing that strange voice?");
 
-	MSG(iku, "Strana voce?"); 
+	MSG(iku, "Strange voice?");
 
 	FACE(marisa, smug);
-	MSG(marisa, "Sì, continua a dirmi che non sto pensando in modo chiaro, etc…"); 
-	MSG(marisa, "Probabilmente solo quegli strani raggi della follia che cercano di prendermi."); 
+	MSG(marisa, "Yeah, it keeps tellin’ me that I’m not thinkin’ straight or whatever.");
+	MSG(marisa, "Probably just those weird madness rays tryin’ to get me.");
 
 	FACE(iku, eyes_closed);
-	MSG(iku, "Uff, quanto sei sciocca."); 
-	MSG(iku, "Ma forse stai pensando abbastanza bene per risolvere questo incidente, dopotutto…"); 
+	MSG(iku, "Ugh, you fool.");
+	FACE(iku, normal);
+	MSG(iku, "But perhaps you are thinking just well enough to resolve this incident after all…");
 
 	FACE(marisa, surprised);
-	MSG(marisa, "Ah! Ecco di nuovo quella voce! Così strano…");
+	MSG(marisa, "Ah! There’s that voice again!");
+	FACE(marisa, smug);
+	MSG(marisa, "So strange…");
 
 	DIALOG_END();
 }
@@ -525,111 +539,111 @@ DIALOG_TASK(marisa, Stage6PreBoss) {
 	HIDE(elly);
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(elly, 180, "Stavo aspettando la tua mossa.");
+	MSG(elly, "I’ve been waiting for you to make your move.");
 	SHOW(elly);
-	MSG(elly, "Furtiva come sei, ma continui a fare rumore."); 
+	MSG(elly, "Sneaking around as you are, and yet still so loud somehow.");
 
-	FACE(marisa, unamused);
-	MSG(marisa, "Uhm…"); 
+	FACE(marisa, puzzled);
+	MSG(marisa, "Hmm…");
+
 	FACE(elly, smug);
-	MSG(elly, "Pensavi davvero che non avrei notato tutto il trambusto che hai causato all'interno della torre?");
+	MSG(elly, "Did you really think I wouldn’t notice all the commotion you caused inside the tower?");
 
-	MSG(marisa, "Uhmmmmmmmmmmmmmmmmmmmmmmmmm…");
+	MSG(marisa, "Hmmmmmmm…");
 
 	FACE(elly, angry);
-	MSG(elly, "Smettila di fare l'insolente e parla!");
+	MSG(elly, "Stop being an insolent brat and speak up!");
 
 	FACE(marisa, unamused);
-	MSG(marisa, "…asd… non fare l'obamica"); 
+	MSG(marisa, "… sigh.");
 
 	FACE(elly, normal);
-	MSG(elly, "…c-che cos'è"); 
+	MSG(elly, "… w-what is it?");
 
-	FACE(marisa, unamused);
-	MSG(marisa, "Dopotutto non sembri una maga.");
-	MSG(marisa, "Sono alquanto delusa."); 
-	MSG(marisa, "Onestamente, questo potrebbe essere l'incidente più deludente di sempre.");
+	MSG(marisa, "Ya don’t look like a magician after all.");
+	MSG(marisa, "I’m pretty disappointed.");
+	MSG(marisa, "Honestly, this might be the most disappointing incident yet.");
 
-	TITLE(elly, "Elly", "La mietitrice teorica"); 
-	MSG(elly, "Stai cercando… la magia?"); 
+	TITLE(elly, "Elly", "The Theoretical Reaper");
+	MSG(elly, "You’re after… magic?");
 	FACE(elly, smug);
-	MSG(elly, "Ah! Ti pentirai di aver sprecato il tuo tempo in queste sciocchezze."); 
-	MSG(elly, "Presto capirai l'errore di-"); 
+	MSG(elly, "Hah! You’ll regret wasting your time on such nonsense.");
+	MSG(elly, "Soon, you’ll see the error of—");
 
-	MSG(marisa, "Sai quanto è noioso essere un mago in Gensōkyō di questi tempi?"); 
+	MSG(marisa, "Do ya know how boring it is to be a magician in Gensōkyō these days?");
 
 	FACE(elly, eyes_closed);
-	MSG(elly, "Non me ne frega un-");
+	MSG(elly, "I couldn’t possibly care about—");
 
-	MSG(marisa, "Sul serio! Di recente è stato solo ‘Dio questo’ e ‘Altro Mondo quello’."); 
-	MSG(marisa, "Reimu ha appreso alcune abilità dolci, ma io? Nulla!"); 
-	MSG(marisa, "Anche gli dei usano la magia, però sono come lei! Non hanno bisogno di libri"); 
-	MSG(marisa, "Invece io sì! E finisco sempre a mani vuote ogni volta!");
+	MSG(marisa, "Seriously! Recently it’s just been ‘God this’ and ‘Otherworld that’.");
+	MSG(marisa, "Reimu’s been pickin’ up some sweet skills, but me? Nothin’!");
+	MSG(marisa, "Gods use magic too, but they’re like her! They don’t need books!");
+	MSG(marisa, "But I do! And I end up empty handed every dang time!");
 
 	FACE(elly, angry);
-	MSG(elly, "HO DETTO CHE NON ME NE FREGA NULLA sulla tua stupida mag-");
+	MSG(elly, "I SAID I don’t CARE about your stupid little sorc—");
 
-	MSG(marisa, "Ho visto questo posto e mi sono detta ‘Wow! Ma sono tutti incantesimi o simili?"); 
+	MSG(marisa, "I saw this place ‘n I was all, ‘Whoa! Is this all enchantments ‘n stuff?!’");
 	FACE(marisa, inquisitive);
-	MSG(marisa, "Mi ero veramente emozionata!"); 
-	MSG(marisa, "Forse potrei ottenere una nuova carta vincente da ciò’ ho pensato.");
+	MSG(marisa, "I got really excited!");
+	MSG(marisa, "‘Maybe I could get a new trump-card outta this’ is what I thought.");
 	FACE(marisa, unamused);
-	MSG(marisa, "Ma ovviamente sei uno shinigami o qualcosa di simile. E non ho visto una biblioteca…"); /
-	MSG(marisa, "Immagino che quel pesce remo di prima avesse ragione.");
-	MSG(marisa, "Master Spark è buono in tutto, ma mi porterà solo così lontano nella vita…"); 
+	MSG(marisa, "But obviously yer a shinigami or somethin’. And I didn’t see a library…");
+	MSG(marisa, "I guess that oarfish from before was right.");
+	MSG(marisa, "Master Spark’s good ‘n all, but it’ll only get me so far in life…");
 
 	FACE(elly, eyes_closed);
-	MSG(elly, "…"); 
-	MSG(elly, "Hai finito finalmente?"); 
+	MSG(elly, "…");
+	MSG(marisa, "*sigh*");
+	MSG(elly, "Are you finally done?");
 	FACE(elly, angry);
-	MSG(elly, "E' percaso uno scherzo?!");
+	MSG(elly, "Is this some kind of joke?!");
 	FACE(elly, shouting);
-	MSG(elly, "Mi di prendendo in giro come hai fatto la prima volta che ci siamo incontrati?!");
+	MSG(elly, "How does every version of you just keep mocking me?!");
 
-	MSG(marisa, "Almeno quella volta facevi la guardia a qualcosa di potente che avrei potuto usare."); 
-	MSG(marisa, "Sto cercando di ricordare, anche quella volta è stato un fallimento?"); 
+	MSG(marisa, "What, you mean last time? At least then you were guardin’ some powerful thingy I coulda used.");
+	MSG(marisa, "I’m tryin’ to remember, was that timeline a bust, too?");
 	FACE(marisa, happy);
-	MSG(marisa, "Almeno ho incontrato Yuuka, giusto? Sapevi che ha finito per darmi il mio marchio di fabbrica?");
-	MSG(marisa, "Non in quel momento, e non volontariamente, tuttavia-"); 
+	MSG(marisa, "At least I met Yūka, right? Did ya know she ended up givin’ me my trademark spell?");
+	MSG(marisa, "Not right then, ‘n not voluntarily, but—");
 
 	FACE(elly, angry);
-	MSG(elly, "Te lo ricordi?! Ma come-?!"); 
-	MSG(elly, "...uff, non importa! Non è che tu possa afferrare il vero potere della Torre."); 
+	MSG(elly, "Y-you remember that?! But how—?!");
+	MSG(elly, "… ugh, nevermind! It’s not as if you could possibly grasp the Tower’s true power.");
 	FACE(elly, smug);
-	MSG(elly, "Dopotutto, posso già percepire la tua debole mente soccombere alla sua potenza!");
+	MSG(elly, "After all, I can already sense your feeble mind succumbing to its might!");
 
 	FACE(marisa, unamused);
-	MSG(marisa, "Eh? Non sono depressa o triste. Sono solo delusa."); 
+	MSG(marisa, "Eh? I’m not depressed or anythin’. I’m just disappointed.");
 
 	FACE(elly, shouting);
-	MSG(elly, "N-Non si tratta di essere 'depressi'! Si tratta di essere sopraffatti dalla vasta conoscenza dell'universo!");
-	MSG(elly, "Una volta realizzato il vero potenziale della realtà, impazzirai per la conoscenza!");
-	MSG(elly, "Non vedi?! Niente può fermarci adesso! Perché noi siamo—!");
+	MSG(elly, "I-It’s not about being ‘depressed’! It’s about being overwhelmed with the vast knowledge of the universe!");
+	MSG(elly, "Once you realize the true potential of reality, you’ll go mad with knowledge!");
+	MSG(elly, "Don’t you see?! Nothing can stop us now! For we are—!");
 
 	FACE(marisa, surprised);
-	MSG(marisa, "Ma sono già pazza con la conoscienza! Pensi che sia un'alcolista anonima?!");
-	MSG(marisa, "La mia mente corre sempre con questo e quello..."); 
-	MSG(marisa, "Pensi che questo sia diverso da come vivo di solito?! Supera te stessa!");
+	MSG(marisa, "But I’m already mad with knowledge! Why do ya think I drink all the time?!");
+	MSG(marisa, "My mind’s always racin’ with this ‘n that…");
+	MSG(marisa, "Ya think this is any different than how I usually live?! Get over y’erself!");
 	FACE(marisa, inquisitive);
-	MSG(marisa, "Ora, devo chiedertelo... veramente non hai una biblioteca segreta da nessuna parte?"); 
-	MSG(marisa, "Una sola libreria?! Qualche nota scarabocchiata?!"); 
-	MSG(marisa, "Diamine, prenderò anche uno di quei piccoli tablet luminosi con tutti quei ‘Piddieffe’ dentro! Fanno male agli occhi, ma—"); 
+	MSG(marisa, "Now, I gotta ask… ya really, seriously don’t got anything?");
+	MSG(marisa, "A single bookshelf?! A few loose scribbled notes?!");
+	MSG(marisa, "Heck, I’ll even take one of those little glowy tablet thingies with all those ‘Pee Dee Effs’ on ‘em! They're so bright they hurt my eyes, but—");
 
 	FACE(elly, eyes_closed);
-	MSG(elly, "Finché OVVIAMENTE tratti ciò come uno scherzo, MI RIFIUTO di parlare ancora con te"); 
+	MSG(elly, "Since you’re OBVIOUSLY treating this as a joke, I REFUSE to speak with you any longer!");
 
 	FACE(marisa, happy);
-	MSG(marisa, "Oh andiamo, vuoi recuperare i vecchi tempi?"); 
-	MSG(marisa, "Qualunque cosa sia spegnila ed usciremo per bere qualcosa! C'è questo bel nuovo bar in città con un simpatico—"); 
+	MSG(marisa, "Oh c’mon, turn the madness-whatever off ‘n we’ll go out for drinks! There’s this nice new bar in town with a cute—");
 
-	MSG(elly, "Non c'è forza in questo mondo che mi farebbe tornare indietro adesso!");
+	MSG(elly, "There’s no force in this world that would make me turn back now!");
 	EVENT(music_changes);
 	FACE(elly, smug);
-	MSG(elly, "Qualcuno così ‘ordinario’ come te che ti metti sulla nostra strada è impressionante, ti darò così tanto.");
+	MSG(elly, "Someone as ‘ordinary’ as you getting in our way may be impressive…");
 	FACE(elly, angry);
-	MSG(elly, "Ma non c'è posto per la stregoneria nella nostra visione illuminata di Gensōkyō!");
+	MSG(elly, "But there’s no place for sorcery in our enlightened vision of Gensōkyō!");
 	FACE(elly, shouting);
-	MSG(elly, "Ora, soccombi nella follia!"); 
+	MSG(elly, "Now, succumb to the madness!");
 
 	DIALOG_END();
 }
@@ -640,12 +654,13 @@ DIALOG_TASK(marisa, Stage6PreFinal) {
 	ACTOR_LEFT(marisa);
 	ACTOR_RIGHT(elly);
 	VARIANT(elly, beaten);
-	FACE(elly, angry);
+	FACE(elly, normal);
 	FACE(marisa, unamused);
-	MSG(marisa, "Sei sicura di non avere un libro degli incantesimi in giro?! Niente di niente?!"); 
-	MSG(elly, "Ne parli ancora?! Va bene, guarda quello che ti pare!"); 
+	MSG(marisa, "Are ya sure ya don’t got a spellbook laying around?! Nothin’ at all?!");
+	FACE(elly, angry);
+	MSG(elly, "Are you still on about that?! Fine, see what good it does you!");
 	FACE(elly, shouting);
-	MSG(elly, "La tua pietosa magia non vale nulla contro la vera natura della realtà!"); 
+	MSG(elly, "Your pitiful magic amounts to nothing against the true nature of reality!");
 
 	DIALOG_END();
 }

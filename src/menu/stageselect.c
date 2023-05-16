@@ -19,7 +19,7 @@
 
 static void draw_stage_menu(MenuData *m) {
 	draw_options_menu_bg(m);
-	draw_menu_title(m, "Seleziona lo Stage");
+	draw_menu_title(m, "Select Stage");
 	draw_menu_list(m, 100, 100, NULL, SCREEN_H, NULL);
 }
 
@@ -50,7 +50,7 @@ MenuData* create_stage_menu(void) {
 	}
 
 	add_menu_separator(m);
-	add_menu_entry(m, "Indietro", menu_action_close, NULL);
+	add_menu_entry(m, "Back", menu_action_close, NULL);
 
 	return m;
 }

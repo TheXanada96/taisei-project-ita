@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "global.h"
 #include "video.h"
+#include "eventloop/eventloop.h"
 
 MenuEntry *add_menu_entry(MenuData *menu, const char *name, MenuAction action, void *arg) {
 	MenuEntry *e = dynarray_append(&menu->entries);
@@ -33,22 +34,22 @@ void free_menu(MenuData *menu) {
 	}
 
 	dynarray_foreach_elem(&menu->entries, MenuEntry *e, {
-		free(e->name);
+		mem_free(e->name);
 	});
 
 	dynarray_free_data(&menu->entries);
-	free(menu);
+	mem_free(menu);
 }
 
 MenuData* alloc_menu(void) {
-	MenuData *menu = calloc(1, sizeof(*menu));
-	menu->selected = -1;
-	menu->transition = TransFadeBlack;
-	menu->transition_in_time = FADE_TIME;
-	menu->transition_out_time = FADE_TIME;
-	menu->fade = 1.0;
-	menu->input = menu_input;
-	return menu;
+	return ALLOC(MenuData, {
+		.selected = -1,
+		.transition = TransFadeBlack,
+		.transition_in_time = FADE_TIME,
+		.transition_out_time = FADE_TIME,
+		.fade = 1.0,
+		.input = menu_input,
+	});
 }
 
 void kill_menu(MenuData *menu) {
@@ -58,7 +59,13 @@ void kill_menu(MenuData *menu) {
 	}
 }
 
-static void close_menu_finish(MenuData *menu) {
+static void close_menu_finish(CallChainResult ccr) {
+	MenuData *menu = ccr.ctx;
+
+	if(TRANSITION_RESULT_CANCELED(ccr)) {
+		return;
+	}
+
 	// This may happen with MF_AlwaysProcessInput menus, so make absolutely sure we
 	// never run the call chain with menu->state == MS_Dead more than once.
 	bool was_dead = (menu->state == MS_Dead);
@@ -92,15 +99,17 @@ void close_menu(MenuData *menu) {
 		trans = dynarray_get(&menu->entries, menu->selected).transition;
 	}
 
+	CallChain cc = CALLCHAIN(close_menu_finish, menu);
+
 	if(trans) {
-		set_transition_callback(
+		set_transition(
 			trans,
 			menu->transition_in_time,
 			menu->transition_out_time,
-			(TransitionCallback)close_menu_finish, menu
+			cc
 		);
 	} else {
-		close_menu_finish(menu);
+		run_call_chain(&cc, NULL);
 	}
 }
 

@@ -22,27 +22,27 @@ DIALOG_TASK(youmu, Stage1PreBoss) {
 	HIDE(cirno);
 
 	FACE(youmu, happy);
-	MSG(youmu, "Suppongo che la neve che cade possa essere bella quanto i fiori di ciliegio…"); 
+	MSG(youmu, "I suppose falling snow can be just as pretty as cherry blossoms…");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(cirno, 180, "Ehi!"); 
+	MSG(cirno, "Hey!");
 	SHOW(cirno);
 
-	MSG(cirno, "Sono più figa di te, quindi vattene dal mio lago!"); 
+	MSG(cirno, "I’m cooler than you, so get off my lake!");
 	FACE(youmu, unamused);
-	MSG(youmu, "Vedo che hai abbastanza freddo, sì."); 
+	MSG(youmu, "I can see you’re quite cold, yes.");
 	FACE(youmu, smug);
-	MSG(youmu, "Tendo ad evitare i duelli con chi è più debole di me, quindi apprezzerei se ti facessi da parte."); 
+	MSG(youmu, "I tend to dislike dueling those weaker than myself, so I’d appreciate it if you’d step aside.");
 
-	TITLE(cirno, "Cirno", "Fata del ghiaccio termodinamica"); 
-	MSG(cirno, "AH! Casomai TU dovresti farti da parte!"); 
+	TITLE(cirno, "Cirno", "Thermodynamic Ice Fairy");
+	MSG(cirno, "Hah! Maybe YOU should step aside, then!");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Suppongo che sia il momento migliore per praticare la mia Tecnica di Distruzione dei Fiocchi di Neve."); 
+	MSG(youmu, "I suppose it’s as good a time as any to practice my Snowflake-Destruction Technique.");
 
 	EVENT(music_changes);
 	FACE(cirno, angry);
-	MSG(cirno, "Ma se ti trasformo in un fiocco di neve, dovrai tagliarti a metà!");
+	MSG(cirno, "But if I turn you into a snowflake, you’ll have to chop yourself in half!");
 
 	DIALOG_END();
 }
@@ -56,12 +56,12 @@ DIALOG_TASK(youmu, Stage1PostBoss) {
 	FACE(cirno, defeated);
 
 	FACE(youmu, sigh);
-	MSG(youmu, "Il freddo non va bene per lame così sottili…"); 
+	MSG(youmu, "The cold is no good for such fine blades…");
 
-	MSG(cirno, "D-Dovresti stare attenta con q-quelli!");
+	MSG(cirno, "Y-you should be careful with t-those!");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "Sì, è quello che stavo dicendo."); 
+	MSG(youmu, "Yes, that’s what I was just saying.");
 
 	DIALOG_END();
 }
@@ -78,37 +78,35 @@ DIALOG_TASK(youmu, Stage2PreBoss) {
 	HIDE(hina);
 
 	FACE(youmu, normal);
-	MSG(youmu, "Dunque questa è la Montagna Yōkai…"); 
-	MSG(youmu, "Peccato, ho sentito dire che di solito è un posto piuttosto vivace."); 
+	MSG(youmu, "So this is Yōkai Mountain…");
+	MSG(youmu, "A shame, I’ve heard this is usually quite a lovely place.");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(hina, 180, "Oh mio, chi è? Un nuovo volto?"); 
+	MSG(hina, "Oh my, what’s this? A new face?");
 	SHOW(hina);
-	MSG(hina, "E chi potresti essere, cara?"); 
+	MSG(hina, "And who might you be, dear?");
 
-	MSG(youmu, "Konpaku Youmu. Lady Yuyuko mi ha affidato una missione per indagare sul disturbo."); 
-	FACE(youmu, eyes_closed);
-	MSG(youmu, "Non devi preoccuparti. Sono solo di passaggio."); 
+	MSG(youmu, "Konpaku Yōmu. I am on a mission from Lady Yuyuko to investigate—");
 
-	TITLE(hina, "Kagiyama Hina", "Dea giroscopica della pestilenza"); 
-	MSG(hina, "Non ho mai sentito parlare di questa ‘Lady Yuyuko’ di cui stai parlando, ma non posso lasciare che ciò accada."); 
+	TITLE(hina, "Kagiyama Hina", "Gyroscopic Pestilence God");
+	MSG(hina, "I’ve never heard of this ‘Lady Yuyuko’ you speak of, but I can’t let this slide.");
 	FACE(youmu, normal);
 	FACE(hina, serious);
-	MSG(hina, "Ragazze giovani come te non dovrebbero essere mandate a fare commissioni così pericolose!");
+	MSG(hina, "Young girls such as yourself shouldn’t be sent to do such dangerous errands!");
 
 	FACE(youmu, embarrassed);
-	MSG(youmu, "‘G-Giovane ragazza’?! Ti farò notare che sono un'esperta spadaccina-"); 
-	MSG(youmu, "-Avendo imparato la mia tecnica per oltre *decenni*-"); 
-	MSG(youmu, "—Oserei dire anche la migliore di Gensōkyō—"); 
+	MSG(youmu, "‘Y-Young girl’?! I’ll have you know that I am an expert swordswoman—");
+	MSG(youmu, "—having mastered my technique over *decades*—");
+	MSG(youmu, "—dare I say even the best in Gensōkyō—");
 
 	FACE(hina, normal);
-	MSG(hina, "Aww... come sei carina! In nessun modo una come te potrebbe interessarsi di ciò."); 
-	MSG(hina, "Sei sicuro che questa cosa della ‘spadaccina esperta’ non sia solo una sorta di fase adolescenziale?"); 
+	MSG(hina, "Aww… but you’re so adorable! No way someone like you could be into that.");
+	MSG(hina, "Are you sure this ‘expert swordswoman’ thing isn’t just some sort of teenage phase?");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "Non è una FASE, ma—");
+	MSG(youmu, "It’s not a PHASE, mo—");
 	FACE(youmu, embarrassed);
-	MSG(youmu, "…!!"); 
+	MSG(youmu, "…!!");
 
 	EVENT(music_changes);
 
@@ -123,18 +121,18 @@ DIALOG_TASK(youmu, Stage2PostBoss) {
 	VARIANT(hina, defeated);
 	FACE(hina, defeated);
 
-	MSG(hina, "Mi hai appena chiamata ‘mamma’…?"); 
+	MSG(hina, "Did you just call me ‘mom’…?");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "No");
-	MSG(youmu, "Dev'essere la follia che ti ha sopraffatto."); 
-	MSG(youmu, "Sì, decisamente."); 
+	MSG(youmu, "I did not.");
+	MSG(youmu, "It must be the madness overcoming you.");
+	MSG(youmu, "Yes, indeed.");
 
 	FACE(hina, normal);
-	MSG(hina, "Mio, mio…~"); 
+	MSG(hina, "My, my…~");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "Non osare."); 
+	MSG(youmu, "Don’t you dare.");
 
 	DIALOG_END();
 }
@@ -150,55 +148,53 @@ DIALOG_TASK(youmu, Stage3PreBoss) {
 	ACTOR_RIGHT(wriggle);
 	HIDE(wriggle);
 	FACE(youmu, relaxed);
-	MSG(youmu, "Più mi addentro in questa foresta, più mi sento irrequieta."); 
+	MSG(youmu, "The further I go into this forest, the more restless I feel.");
 	FACE(youmu, normal);
-	MSG(youmu, "C'è qualcosa che non va."); 
+	MSG(youmu, "Something is definitely amiss.");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(wriggle, 120, "Cosa c'è che non va?"); 
+	MSG(wriggle, "Amiss?");
 	SHOW(wriggle);
-	MSG(wriggle, "Forse sei spaventata dalla nostra crescente e schiacciante popolazione?"); 
+	MSG(wriggle, "Perhaps you’re frightened by our growing, overwhelming influence?");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Le cimici non mi riguardano al momento."); 
+	MSG(youmu, "Bugs do not concern me at the moment.");
 
 	FACE(wriggle, outraged);
-	MSG(wriggle, "Oh, quindi tutti gli insetti sono ‘cimici’, eh? Vedo com'è!"); 
-	TITLE(wriggle, "Wriggle Nightbug", "Attivista dei Diritti degli Insetti"); 
-	MSG(wriggle, "Hai mai sentito parlare di coleotteri? Mosche? Si tratta di rispetto, lo sai!"); 
+	MSG(wriggle, "Oh, so all insects are ‘bugs’ now, hmm? I see how it is!");
+	TITLE(wriggle, "Wriggle Nightbug", "Insect Rights Activist");
+	MSG(wriggle, "Ever heard of beetles? Flies? Show us some respect!");
 
 	FACE(youmu, normal);
-	MSG(youmu, "Mi scuso, non volevo mancare di rispetto."); 
+	MSG(youmu, "Apologies, I meant no offense.");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Sono in missione per Lady Yuyuko. Devo porre fine a ciò che sta acusando il disturbo in quest'area"); 
-	FACE(youmu, normal);
-	MSG(youmu, "Dimmi tutto quello che sai."); 
+	MSG(youmu, "I am on a mission from Lady Yuyuko to end whatever is causing the disturbance—");
 
 	FACE(wriggle, proud);
-	MSG(wriggle, "Ah, ora capisco."); 
+	MSG(wriggle, "Oh, oh, I understand now.");
 	FACE(wriggle, calm);
-	MSG(wriggle, "Il potere esercitato da un esercito di insetti giganti solleverebbe sicuramente qualche preoccupazione."); 
+	MSG(wriggle, "The power wielded by an army of giant insects would surely raise some concerns.");
 	FACE(wriggle, proud);
-	MSG(wriggle, "In poche parole, vogliamo ripristinare il nostro legittimo posto nella storia!"); 
-	MSG(wriggle, "È naturale che gli abitanti inferiori della montagna si innervosiscono di fronte al nostro dominio naturale."); 
+	MSG(wriggle, "Simply put, we want to restore our rightful place in history!");
+	MSG(wriggle, "It’s only natural that the lower inhabitants of the mountain would get nervous in the face of our natural dominance.");
 	FACE(wriggle, calm);
-	MSG(wriggle, "Le tue scuse sono accettate. Non temerai la nostra ira. Per ora."); 
+	MSG(wriggle, "Your apology is accepted. You shall not fear our wrath—");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "… no, no, gli insetti da soli non causerebbero questo tipo di disturbo…"); 
+	MSG(youmu, "… no, no, bugs alone wouldn’t cause this kind of disturbance…");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Tutto quello di cui sono capaci è rovinare il mio giardino ben curato."); 
+	MSG(youmu, "All they’re capable of is ruining my carefully manicured garden.");
 
-	MSG(wriggle, "Hai appena detto di essere…"); 
+	MSG(wriggle, "Did you just say you’re…");
 	FACE(wriggle, outraged);
-	MSG(wriggle, "… una giardiniera?!");
+	MSG(wriggle, "… a gardener?!");
 
 	EVENT(music_changes);
 
 	FACE(youmu, puzzled);
-	MSG(wriggle, "Hai mostrato il tuo vero volto"); 
-	MSG(wriggle, "La mia luce brilla più luminosa che mai ora! Insegnerò il dovuto rispetto a questo umile usurpatore!"); 
-	MSG(wriggle, "In modo che possiamo vivere al di sopra del tuo pollice verde una volta per tutte!"); 
+	MSG(wriggle, "Your true face is finally revealed!");
+	MSG(wriggle, "My light shines brighter than ever now! I shall teach this lowly usurper due respect!");
+	MSG(wriggle, "So that we may live above beyond your green thumb once and for all!");
 
 	DIALOG_END();
 }
@@ -212,20 +208,20 @@ DIALOG_TASK(youmu, Stage3PostBoss) {
 	FACE(wriggle, defeated);
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Conosci la leggenda del Tonbokiri?"); 
-	MSG(youmu, "Si diceva che la sua lama potesse tagliare a metà gli insetti semplicemente atterrando su di essa."); 
+	MSG(youmu, "Are you aware of the legend of the Tonbokiri?");
+	MSG(youmu, "It was said its blade could cut insects in half simply by them landing on it.");
 	FACE(youmu, smug);
-	MSG(youmu, "Senza dubbio, questo è ciò che è accaduto oggi"); 
+	MSG(youmu, "Undoubtedly, that is what has transpired today.");
 
-	MSG(wriggle, "non è il passato che dicevo…"); 
+	MSG(wriggle, "That’s not the past I saw…");
 
-	MSG(youmu, "Che sfortuna per te."); 
+	MSG(youmu, "How unfortunate for you.");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Non preoccuparti. Porrò fine alla tua follia delirante e restituirò giustizia e ordine al—"); 
+	MSG(youmu, "Fear not. I will end your delusional madness and restore justice and order to the—");
 	FACE(youmu, eeeeh);
-	MSG(youmu, "… ugh, è un po' troppo, anche per me, no?"); 
+	MSG(youmu, "… ugh, that’s a little much, even for me, isn’t it?");
 
-	MSG(wriggle, "Sembra giusto, Onestamente…"); 
+	MSG(wriggle, "Seems about right, honestly…");
 
 	FACE(youmu, unamused);
 	MSG(youmu, "…");
@@ -244,57 +240,58 @@ DIALOG_TASK(youmu, Stage4PreBoss) {
 	ACTOR_RIGHT(kurumi);
 	HIDE(kurumi);
 
-	MSG(youmu, "A-ha, ora devo essere vicina al vero ingresso."); 
+	MSG(youmu, "A-ha, I must be close to the true entrance now.");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Questa torre… Lo sento già…"); 
+	MSG(youmu, "This tower… I can already feel it…");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Può davvero essere una sfida degna delle mie capacità, finalmente?"); 
+	MSG(youmu, "Could this be a challenge worthy of my skills…?!");
 
 	EVENT(boss_appears);
 	SHOW(kurumi);
-	MSG(kurumi, "Questa villa è in realtà piuttosto trasandata. Mi aspettavo di meglio");
+	MSG(kurumi, "Really? This mansion is actually pretty trashy, though.");
 	FACE(youmu, relaxed);
-	MSG(youmu, "Tu chi saresti?"); 
+	MSG(youmu, "Who might you be?");
 
-	TITLE(kurumi, "Kurumi", "Flebotomista dell'alta società"); 
+	TITLE(kurumi, "Kurumi", "High-Society Phlebotomist");
 	FACE(kurumi, tsun);
-	MSG(kurumi, "Mah! Sono Kurumi, una rosa nera solitaria che affoga in un mare di cattivo gusto!"); 
-	MSG(kurumi, "Faresti meglio a ricordartelo!"); 
+	MSG(kurumi, "Hmph! I’m Kurumi, a lone black rose drowning in a sea of bad taste!");
+	MSG(kurumi, "You better remember that!");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Forse lo farò."); 
+	MSG(youmu, "Perhaps I will.");
 	FACE(youmu, normal);
-	MSG(youmu, "Sei una socia di questi… abitanti della villa-torre, allora?"); 
+	MSG(youmu, "Are you an associate of this… mansion-tower’s denizens, then?");
 
-	MSG(kurumi, "Ovviamente no! Per chi mi prendi?!"); 
-	MSG(kurumi, "In nessun MODO vorrei associarmi alla gente di questa villa!"); 
-	MSG(kurumi, "Si vestono come se fossero usciti fuori da un anime scadente degli anni '80!"); 
+	FACE(kurumi, dissastisfied);
+	MSG(kurumi, "Of course not! Who do you take me for?!");
+	MSG(kurumi, "No WAY I’d want to associate myself with the dweebs running this mansion!");
+	MSG(kurumi, "They dress like they’ve fallen out of a bad 80s anime!");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Si vestono come se fossero usciti fuori da un anime scadente degli anni 80!"); 
+	MSG(youmu, "I see. I have no immediate reason to distrust you.");
 	FACE(youmu, puzzled);
-	MSG(youmu, "…Cosa sarebbe un ‘anime degli anni 80’ se posso chiedere?"); 
+	MSG(youmu, "… what’s an ‘80s anime’, though, if I may ask?");
 
 	FACE(kurumi, normal);
-	MSG(kurumi, "Non lo so, non me lo chiedere!"); 
-	MSG(kurumi, "La signora nella torre ne parla molto, quindi dev'essere sicuramente qualcosa di orribile."); 
+	MSG(kurumi, "I don’t know, don’t ask me!");
+	MSG(kurumi, "The lady in the tower talks about it a lot, so it must be something horrible for sure.");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "Non hai appena detto che non eri associata a loro?"); 
+	MSG(youmu, "Didn’t you just say you weren’t associated with them?");
 
-	MSG(kurumi, "Sì, ma stavo mentendo per vedere quanto eri credulona."); 
+	MSG(kurumi, "Yeah, but I was lying to see how gullible you were.");
 
 	FACE(youmu, embarrassed);
-	MSG(youmu, "O-ovviamente. L-lo sapevo."); 
+	MSG(youmu, "O-of course. I-I knew that.");
 	FACE(youmu, normal);
-	MSG(youmu, "Volevo vedere se saresti stata sincera.");
+	MSG(youmu, "I wanted to see if you’d come clean.");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "La mia vera sfida è al di là di te. Fatti da parte."); 
+	MSG(youmu, "My true challenge lies beyond you. Step aside.");
 
 	EVENT(music_changes);
 
-	MSG(kurumi, "No. Hai un ballo con uno splendido vampiro in programma prima!"); 
-	MSG(kurumi, "In guardia, meditabonda spadaccina!"); 
+	MSG(kurumi, "Nope. You’ve got a dance with a gorgeous vampire scheduled first!");
+	MSG(kurumi, "En garde, brooding swordsgirl!");
 
 	DIALOG_END();
 }
@@ -308,36 +305,37 @@ DIALOG_TASK(youmu, Stage4PostBoss) {
 	FACE(kurumi, defeated);
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Nonostante la tua tecnica inferiore, devo ringraziarti."); 
-	MSG(youmu, "‘Ballare’ con te è stata una piacevole distrazione sulla strada per il completamento della mia missione."); 
+	MSG(youmu, "Despite your inferior technique, I must thank you.");
+	MSG(youmu, "‘Dancing’ with you has been a pleasant distraction on the path to completing my mission.");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Di al tuo ‘superiore’ che sto venendo a prenderli."); 
+	MSG(youmu, "Tell your ‘leader’ that I am coming for them.");
 
-	MSG(kurumi, "(Parla seriamente come un antieore dei manga…)"); 
+	MSG(kurumi, "(She earnestly talks like a manga anti-hero…)");
 	FACE(kurumi, normal);
-	MSG(kurumi, "Ah, Allora okay!"); 
+	MSG(kurumi, "O-Oh, okay then!");
 	FACE(kurumi, defeated);
-	MSG(kurumi, "Sono comunque stufa di fare la guardia a questa villa inquietante e spettrale."); 
+	MSG(kurumi, "I’m sick of guarding this creepy, spooky mansion anyways.");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "S-… spettrale?"); 
+	MSG(youmu, "S-… spooky?");
 
 	FACE(kurumi, puzzled);
 	MSG(kurumi, "…?");
 	FACE(kurumi, normal);
-	MSG(kurumi, "… Esatto! Pensavo che sarebbe stata tutta ‘scientifica’, ma poi l'hanno resa infestata, con fantasmi e roba del genere!"); 
+	MSG(kurumi, "… yeah! I thought it was gonna be all ‘scientific’ or whatever, but then they made it haunted, with like, ghosts and stuff!");
 
 	FACE(youmu, eeeeh);
-	MSG(youmu, "F-…"); 
-	MSG(youmu, "FANTASMI?!"); 
+	MSG(youmu, "G-…");
+	MSG(youmu, "GHOSTS?!");
 
-	MSG(kurumi, "Spaventosi fantasmi vendicativi! Provano pure ad ucciderti!"); 
-	MSG(kurumi, "Ma sicuramente una spadaccina forte come te potrebbe farcela."); 
+	MSG(kurumi, "Scary vengeful ghosts! Trying to kill you, even!");
+	MSG(kurumi, "But surely a strong swordsgirl like yourself could handle it.");
 
 	FACE(youmu, embarrassed);
-	MSG(youmu, "D-datti da fare! Niente mi ostacolerà!"); 
+	MSG(youmu, "B-Bring it on! Nothing will stand in my way!");
 
-	MSG(kurumi, "(Hahaha, è proprio credulona.)"); 
+	FACE(kurumi, tsun);
+	MSG(kurumi, "(Teehee, so gullible.)");
 
 	DIALOG_END();
 }
@@ -354,75 +352,80 @@ DIALOG_TASK(youmu, Stage5PreBoss) {
 	HIDE(iku);
 
 	FACE(youmu, relaxed);
-	MSG(youmu, "Incredibile. Davvero sbalorditivo."); 
+	MSG(youmu, "Incredible. Truly astounding.");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Sì, la battaglia finale si avvicina. Me lo sento."); 
+	MSG(youmu, "Yes, the final battle approaches. I can feel it.");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Sarà un duello leggendario? Uno che passerà alla storia di Gensōkyō?!");
+	MSG(youmu, "Will it be a legendary duel? One to go down in the history of Gensōkyō?!");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(iku, 180, "Oh, la giardiniera degli Inferi?"); 
+	MSG(iku, "Oh, the gardener from the Netherworld?");
 	SHOW(iku);
-	MSG(iku, "Non mi sorprende vederti qua."); 
-	MSG(iku, "La tua padrona è stata presa dalla presenza della torre, presumo?");
+	MSG(iku, "It’s no surprise to see you here.");
+	MSG(iku, "Your mistress has been taken by the Tower’s presence, I assume?");
 
 	FACE(youmu, normal);
-	MSG(youmu, "Lady Yuyuko si trova in un luogo sicuro e segreto.");
+	MSG(youmu, "Lady Yuyuko is in a safe, undisclosed location.");
 
-	MSG(iku, "Il Tempio Hakurei, presumo?"); 
+	MSG(iku, "The Hakurei Shrine, I presume?");
 
 	FACE(youmu, surprised);
-	MSG(youmu, "C-chi te l'ha detto?! Sei in combutta anche con loro?!"); 
+	MSG(youmu, "Wh-who told you?! Are you in league with them too?!");
 
 	FACE(iku, smile);
-	MSG(iku, "Certo che no, ma dove altro sarebbe stata in un momento come questo?"); 
+	MSG(iku, "Of course not, but where else would she be at a time like this?");
 
 	FACE(youmu, unamused);
-	MSG(youmu, "Mah. Forse siamo diventati troppo prevedibili."); 
-	MSG(youmu, "Sono qui per risolvere questa questione. Non devi più preoccuparti di questo."); 
+	MSG(youmu, "Hmph. Perhaps we have become too predictable.");
+	MSG(youmu, "I am here to settle this matter. You need not concern yourself—");
 
 	FACE(iku, normal);
-	MSG(iku, "Al contrario, direi."); 
-	TITLE(iku, "Nagae Iku", "Fulminologa dei cieli"); 
+	MSG(iku, "On the contrary, I would say.");
+	TITLE(iku, "Nagae Iku", "Fulminologist of the Heavens");
 	FACE(youmu, normal);
-	MSG(iku, "Ho deciso di fare delle ricerche per conto mio."); 
-	MSG(iku, "Questa torre è controllata da una macchina…"); 
+	MSG(iku, "I decided to do some research on my own.");
+	MSG(iku, "This tower is controlled by a machine…");
 	FACE(iku, serious);
-	MSG(iku, "… e gli effetti della macchina sembrano andare ben oltre i confini di Gensōkyō");
+	MSG(iku, "… and the machine’s effects seem to go well beyond Gensōkyō’s boundaries.");
 
 	FACE(youmu, normal);
-	MSG(youmu, "Compreso il paradiso, presumo? Vedo."); 
+	MSG(youmu, "Including the heavens, I presume? I see.");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Non aver paura. Non permetterò a nulla di ostacolarmi."); 
+	MSG(youmu, "Fear not. I will allow nothing to stand in my way.");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Konpaku Youmu, la più grande spadaccina mai vissuta e morta, risolverà questo incidente una volta per tutte!");
+	MSG(youmu, "Konpaku Yōmu, the greatest swordswoman to live and die, will settle this incident once and—");
 
 	FACE(iku, smile);
-	MSG(iku, "Sembra che la macchina abbia gonfiato troppo anche il tuo ego, Spadaccina di Hakugyokurō."); 
-	MSG(iku, "Non dovresti essere più prudente in questa situazione"); 
+	MSG(iku, "It seems that the machine has also overinflated your ego, Swordswoman of Hakugyokurō.");
+	FACE(iku, serious);
+	MSG(iku, "Would caution not be prudent in this situation?");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Ego esagerato? Non ha senso."); 
-	MSG(youmu, "Durante le mie recenti battaglie, ho raggiunto uno stato meditativo che la maggior parte dei maestri d'armi sogna solo!"); 
+	MSG(youmu, "Overinflated ego? Nonsense.");
+	MSG(youmu, "During my recent battles, I have achieved a flow state most blademasters only dream of!");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Grazie a ciò, ho realizzato la vera forma della mia tecnica di sconfitta degli yōkai, precedentemente incompleta!"); 
+	MSG(youmu, "Through that, I have realized the true form of my previously-incomplete yōkai-vanquishing technique!");
 
-	MSG(iku, "È così? Credi che questa ‘tecnica’ ti aiuterà a sconfiggere i mandanti senza sforzo?"); 
+	FACE(iku, smile);
+	MSG(iku, "Is that so?");
 
 	FACE(youmu, sigh);
-	MSG(youmu, "Altri dubbi da scettici ignoranti, vedo."); 
+	MSG(youmu, "More doubt from ignorant skeptics, I see.");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Duelliamo in modo che io possa dimostrare in modo soddisfacente?!"); 
+	MSG(youmu, "Shall we duel so that I may demonstrate to your satisfaction?!");
 
 	FACE(iku, serious);
-	MSG(iku, "Aspetta, non è quello che intendevo, semplicemente—"); 
+	MSG(iku, "W-wait, that is not what I meant, I simply—");
+
+	MSG(youmu, "I can see it in your expression! The doubt! The fear!");
+	MSG(youmu, "But I have become one with my swords, achieving a perfection that no other before me has been able—");
 
 	EVENT(music_changes);
 
-	MSG(iku, "Ah, non ho tempo per queste sciocchezze!"); 
-	MSG(iku, "Umani insolenti come te hanno bisogno di riabilitazione! Permettimi di somministrartene un po'!"); 
+	MSG(iku, "Ah, I haven’t the time for this nonsense!");
+	MSG(iku, "I will not allow you to march onwards to your demise!");
 
-	MSG(youmu, "Finalmente! Testimone della forza travolgente del mio Rōkanken!"); 
+	MSG(youmu, "Finally! Then, witness the overwhelming strength of my Rōkanken!");
 
 	DIALOG_END();
 }
@@ -434,7 +437,7 @@ DIALOG_TASK(youmu, Stage5PostMidBoss) {
 	FACE(youmu, smug);
 
 	// should be only one message with a fixed 180-frames timeout
-	MSG_UNSKIPPABLE(youmu, 180, "Un fulmine? Mah. Posso superarlo facilmente."); 
+	MSG_UNSKIPPABLE(youmu, 180, "Lightning? Hmph. I can outrun it with ease.");
 
 	DIALOG_END();
 }
@@ -448,26 +451,26 @@ DIALOG_TASK(youmu, Stage5PostBoss) {
 	FACE(iku, defeated);
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Tutto secondo i piani."); 
+	MSG(youmu, "All according to plan.");
 
-	MSG(iku, "La tua logica è così contorta…"); 
-	MSG(iku, "Ahimè, non può essere aiutato. Probabilmente sei stata colpita da prima del tuo arrivo."); 
-	MSG(iku, "Non ho altra scelta che lasciarti passare, nonostante le mie riserve."); 
-	MSG(iku, "Forse le intenzioni pure si nascondono dietro quel tuo ego."); 
+	MSG(iku, "Your logic is so twisted…");
+	MSG(iku, "Alas, it cannot be helped. You have likely been affected since before your arrival.");
+	MSG(iku, "I have no choice but to let you through, despite my reservations.");
+	MSG(iku, "Perhaps pure intentions lurk behind that ego of yours.");
 
-	MSG(youmu, "E forse sono davvero impazzita. Che ne dici?"); 
-	MSG(youmu, "La mia missione è cristallina:"); 
+	MSG(youmu, "And perhaps I truly have gone mad. What of it?");
+	MSG(youmu, "My mission is crystal clear:");
 	FACE(youmu, chuuni);
-	MSG(youmu, "… per portare a termine la missione di Lady Yuyuko e portare la pace a Gensōkyō e a tutti i regni collegati!"); 
-	MSG(youmu, "Non devo fallire!");
+	MSG(youmu, "… to carry out Lady Yuyuko’s mission, and to bring peace to Gensōkyō and all connected realms!");
+	MSG(youmu, "I will not fail!");
 
-	MSG(iku, "H-ho visto."); 
-	MSG(iku, "Sali la scala. Lì ti aspetterà il colpevole."); 
-	MSG(iku, "Sii preparata. La tecnologia che possiede proviene da un cosiddetto ‘universo parallelo’."); 
-	MSG(iku, "È diverso da qualsiasi cosa che nessuno di noi abbia mai incontrato prima. Nenche io sono sicura dei suoi dettagli."); 
+	MSG(iku, "I-I see.");
+	MSG(iku, "Ascend the staircase. You will find the perpetrator waiting for you there.");
+	MSG(iku, "Be prepared. The technology she possesses is from a so-called ‘parallel universe’.");
+	MSG(iku, "It is unlike anything any of us have encountered before. Even I am not sure of its specifics.");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Non temere, taglierò a metà la sua macchina infernale come un'erba invasiva."); 
+	MSG(youmu, "Fear not, I will slice her infernal machine in half like an invasive weed.");
 
 	DIALOG_END();
 }
@@ -484,96 +487,98 @@ DIALOG_TASK(youmu, Stage6PreBoss) {
 	HIDE(elly);
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Ah."); 
+	MSG(youmu, "Ah.");
+	FACE(youmu, happy);
+	MSG(youmu, "Ahaha.");
 	FACE(youmu, chuuni);
 	MSG(youmu, "Ah-hahaha!");
-	MSG(youmu, "Sì. Sì! E' Questo!"); 
-	FACE(youmu, happy);
-	MSG(youmu, "Questa è ovviamente l'arena drammatica per la battaglia finale!"); 
+	MSG(youmu, "Yes. Yes! This is it!");
+	MSG(youmu, "What a magnificent arena for a heroic final battle!!");
 
 	EVENT(boss_appears);
-	MSG_UNSKIPPABLE(elly, 180, "Niente sembra rallentarti, eh?"); 
+	MSG(elly, "Nothing seems to slow you down, hmm?");
 
 	SHOW(elly);
-	MSG(elly, "Sei un tale fastidio. Ma c'era da aspettarselo dalla gente di questo Gensōkyō."); 
+	MSG(elly, "Such an annoyance. But that’s to be expected of the folk of this Gensōkyō.");
 
-	MSG(youmu, "E vedo che sei una maestra della spada, nientemeno che uno shinigami!"); 
+	MSG(youmu, "And I see that you’re a master of the blade, a shinigami no less!");
+	FACE(youmu, happy);
 	MSG(youmu, "Absolutely splendid!");
 
-	TITLE(elly, "Elly", "La mietitrice teorica"); 
-	MSG(elly, "Ah, non sono uno shinigami, soprattutto non adesso."); 
+	TITLE(elly, "Elly", "The Theoretical Reaper");
+	MSG(elly, "Ah, I’m no shinigami, especially not now.");
 
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "La falce è un'arma piuttosto particolare, devi capire. Perdonami la presunzione."); 
+	MSG(youmu, "The scythe is a rather particular weapon, you must understand. Forgive me presumptiveness.");
 
-	MSG(elly, "Capisco.  Facevo affidamento su questa falce come custode, nel vero Gensōkyō."); 
+	MSG(elly, "I see. I used to rely on this scythe as a gatekeeper, in the real Gensōkyō.");
 	FACE(elly, angry);
-	MSG(elly, "Ora sarà il sigillo di una nuova era!"); 
+	MSG(elly, "Now, it will be the sigil of a new era!");
 	FACE(elly, shouting);
-	MSG(elly, "Uno tra di noi ‘dimenticati’, regnerà!"); 
+	MSG(elly, "One that we, the ‘forgotten’, will reign over!");
 
-	MSG(youmu, "Un'arma così ingombrante... perché chiunque la scelga volentieri…"); 
-	MSG(youmu, "O sei incredibilmente abile o incredibilmente sciocca.");
+	MSG(youmu, "Such an unwieldy weapon… for anyone to choose it willingly…");
+	MSG(youmu, "Either you’re incredibly skilled, or incredibly foolish.");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Vorrei scoprirlo!"); 
-	MSG(youmu, "Dopo il nostro duello, incontriamoci e discutiamo delle nostre tecniche!"); 
+	MSG(youmu, "I wish to find that out!");
+	MSG(youmu, "After our duel, let us meet and discuss our techniques!");
 
 	FACE(elly, angry);
-	MSG(elly, "Tecniche? Hah!"); 
-	MSG(elly, "La vostra esistenza non significa niente per noi! E sono sicura che la nostra esistenza non significa niente per voi!"); 
+	MSG(elly, "Techniques? Hah!");
+	MSG(elly, "I’m sure our existence means nothing to you! And the feeling is mutual!");
 
 	FACE(youmu, chuuni);
-	MSG(youmu, "Al contrario, portatrice di falce!");
-	MSG(youmu, "Hai creato un palcoscenico impeccabile per il nostro confronto finale."); 
-	FACE(youmu, happy);
-	MSG(youmu, "Davvero, uno dei migliori. Congratulazioni!"); 
+	MSG(youmu, "On the contrary, scythe-bearer!");
+	MSG(youmu, "You’ve created an impeccable stage for our final confrontation.");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Ma prima, per favore, dimmi: qual è la tua missione? Che cosa desideri?");
+	MSG(youmu, "But first, please, tell me: what is your mission? What is it you desire?");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Per condividere questo… momento intimo, desidero sapere tutto di te.");
+	MSG(youmu, "For us to share this… intimate moment, I desire to know everything about you.");
 
 	FACE(elly, blush);
 	MSG(elly, "…!");
-	MSG(elly, "L-la nostra missione, è di—"); 
+	MSG(elly, "O-Our mission, is t-to—");
 
 	FACE(elly, eyes_closed);
 	MSG(elly, "…");
 	FACE(elly, angry);
-	MSG(elly, "… di vendicare i nostri amici d-dimenticati!"); 
-	MSG(elly, "Creeremo una nuova era in Gensōkyō, dove i veri dimenticati potranno vivere un altro giorno!"); 
-	MSG(elly, "Presto, gli abitanti di questa terra impazziranno oltre ogni comprensione e saranno maturi per la conquista!"); 
+	MSG(elly, "… is to avenge our forgotten f-friends!");
+	MSG(elly, "We will create a new era of Gensōkyō, where the truly forgotten can live another day!");
+	MSG(elly, "Soon, the residents of this land will be driven mad beyond comprehension, and be ripe to conquer!");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Quindi desideri vendicare i tuoi compatrioti caduti… che nobile…"); 
-	MSG(youmu, "Sento che mi commuove fino alle lacrime…"); 
+	MSG(youmu, "So you wish to avenge your fallen compatriots… how noble…");
+	MSG(youmu, "I can feel it move me to tears…");
 	FACE(youmu, chuuni);
-	MSG(youmu, "Ahimè, la mia missione, affidatami da Lady Yuyuko degli Inferi, è direttamente in conflitto con la tua!"); 
-	MSG(youmu, "Non posso lasciarti far impazzire i miei compatrioti o di soggiogare la mia casa!"); 
+	MSG(youmu, "Alas, my mission, given to me by Lady Yuyuko of the Netherworld, directly conflicts with yours!");
+	MSG(youmu, "I cannot allow you to drive my compatriots mad, or to subjugate my home!");
 	FACE(youmu, eyes_closed);
-	MSG(youmu, "Forse, in un altro tempo e luogo, saremmo potute essere amiche!"); 
+	MSG(youmu, "Perhaps, in another time and place, we could have been friends!");
 
 	FACE(elly, angry);
-	MSG(elly, "E-Essere amico di voi gente senza cuore sarebbe un peccato! Non potrei mai!"); 
+	MSG(elly, "B-Being friends with you h-heartless folk would be a sin! I could never!");
 
 	FACE(youmu, chuuni);
-	MSG(youmu, "Come sei tragica!"); 
+	MSG(youmu, "What a tragedy!");
 
-	MSG(elly, "Il tuo obiettivo è diventare il grande ‘eroe’ di questo Gensōkyō, vero?"); 
+	FACE(elly, outraged);
+	MSG(elly, "You’re aiming to be the big ‘hero’ of this Gensōkyō, aren’t you?!");
 
-	MSG(youmu, "Naturalmente! Non è diverso da te che desideri essere l'eroe del ‘tuo’ Gensōkyō!"); 
-	MSG(youmu, "Non siamo così diverse, noi due."); 
+	MSG(youmu, "Naturally! No different than how you wish to be the hero of ‘your’ Gensōkyō!");
+	FACE(youmu, eyes_closed);
+	MSG(youmu, "We’re not so different, you and I.");
 
 	FACE(elly, smug);
-	MSG(elly, "Il tuo coraggio è ammirabile, te lo riconosco."); 
+	MSG(elly, "Your courage is admirable, I’ll give you that.");
 	FACE(elly, angry);
-	MSG(elly, "Ma c'è un enorme differenza tra noi, spadaccina."); 
+	MSG(elly, "But there’s an enormous difference between us, swordswoman.");
 
 	EVENT(music_changes);
 
 	FACE(elly, shouting);
 	FACE(youmu, normal);
-	MSG(elly, "Perché io possiedo la conoscenza della scienza!"); 
-	MSG(elly, "In un mondo pieno di magia come questo, la scienza e la razionalità tagliano gli avversari con una precisione senza pari!"); 
-	MSG(elly, "Vediamo a cosa ti servono le spade quando cadi preda della vera illuminazione!"); 
+	MSG(elly, "For I possess the knowledge of science and rationality!");
+	MSG(elly, "In a magic-filled world like this, they cut through delusional opponents with unparalleled precision!");
+	MSG(elly, "Let’s see what good your swords do you when you fall prey to true enlightenment!");
 
 	DIALOG_END();
 }
@@ -587,11 +592,11 @@ DIALOG_TASK(youmu, Stage6PreFinal) {
 	FACE(elly, angry);
 
 	FACE(youmu, chuuni);
-	MSG(youmu, "Degno di nota! Mi hai spinta al 10% del mio vero potere!");
+	MSG(youmu, "Impressive! You’ve pushed me to 10% of my true power!");
 
-	MSG(elly, "Il tuo spregevole orgoglio sarà la tua rovina!"); 
+	MSG(elly, "Your despicable pride will be your downfall!");
 	FACE(elly, shouting);
-	MSG(elly, "Guarda il tuo giudizio davanti alla vera natura della realtà!"); 
+	MSG(elly, "Behold, your judgement before the true nature of reality!");
 
 	DIALOG_END();
 }

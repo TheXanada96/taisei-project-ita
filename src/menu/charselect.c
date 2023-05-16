@@ -107,7 +107,7 @@ static void update_char_menu(MenuData *menu) {
 }
 
 static void end_char_menu(MenuData *m) {
-	free(m->context);
+	mem_free(m->context);
 }
 
 static void transition_to_game(double fade) {
@@ -124,9 +124,10 @@ MenuData* create_char_menu(void) {
 	m->transition = TransFadeBlack;
 	m->flags = MF_Abortable;
 
-	CharMenuContext *ctx = calloc(1, sizeof(*ctx));
-	ctx->subshot = progress.game_settings.shotmode;
-	ctx->prev_selected_char = -1;
+	auto ctx = ALLOC(CharMenuContext, {
+		.subshot = progress.game_settings.shotmode,
+		.prev_selected_char = -1,
+	});
 	m->context = ctx;
 
 	for(uintptr_t i = 0; i < NUM_CHARACTERS; ++i) {
@@ -377,16 +378,16 @@ static void char_menu_input(MenuData *menu) {
 	}, EFLAG_MENU);
 }
 
-void preload_char_menu(void) {
+void preload_char_menu(ResourceGroup *rg) {
 	for(int i = 0; i < NUM_CHARACTERS; ++i) {
 		PlayerCharacter *pchar = plrchar_get(i);
-		portrait_preload_base_sprite(pchar->lower_name, NULL, RESF_PERMANENT);
-		preload_resource(RES_TEXTURE, pchar->menu_texture_name, RESF_PERMANENT);
+		portrait_preload_base_sprite(rg, pchar->lower_name, NULL, RESF_DEFAULT);
+		res_group_preload(rg, RES_TEXTURE, RESF_DEFAULT, pchar->menu_texture_name, NULL);
 	}
 
 	char *p = (char*)facedefs;
 
 	for(int i = 0; i < sizeof(facedefs) / FACENAME_LEN; ++i) {
-		preload_resource(RES_SPRITE, p + i * FACENAME_LEN, RESF_PERMANENT);
+		res_group_preload(rg, RES_SPRITE, RESF_DEFAULT, p + i * FACENAME_LEN, NULL);
 	}
 }

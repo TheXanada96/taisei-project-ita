@@ -15,7 +15,7 @@
 #include "global.h"
 
 static void continue_game(MenuData *m, void *arg) {
-	log_info("Il gioco continua...");
+	log_info("The game is being continued...");
 	player_event(&global.plr, &global.replay.input, &global.replay.output, EV_CONTINUE, 0);
 }
 
@@ -23,7 +23,7 @@ static void give_up(MenuData *m, void *arg) {
 	global.gameover = (MAX_CONTINUES - global.plr.stats.total.continues_used) ? GAMEOVER_ABORT : GAMEOVER_DEFEAT;
 }
 
-MenuData* create_gameover_menu(void) {
+MenuData *create_gameover_menu(void) {
 	MenuData *m = alloc_menu();
 
 	m->draw = draw_ingame_menu;
@@ -32,24 +32,24 @@ MenuData* create_gameover_menu(void) {
 	m->transition = TransEmpty;
 
 	if(global.stage->type == STAGE_SPELL) {
-		m->context = "Incantesimo fallito";
+		m->context = "Spell Failed";
 
-		add_menu_entry(m, "Riprova", restart_game, NULL)->transition = TransFadeBlack;
-		add_menu_entry(m, "Arrenditi", give_up, NULL)->transition = TransFadeBlack;
+		add_menu_entry(m, "Retry", restart_game, NULL)->transition = TransFadeBlack;
+		add_menu_entry(m, "Give up", give_up, NULL)->transition = TransFadeBlack;
 	} else {
 		m->context = "Game Over";
 
 		char s[64];
 		int c = MAX_CONTINUES - global.plr.stats.total.continues_used;
-		snprintf(s, sizeof(s), "Continua (%i)", c);
+		snprintf(s, sizeof(s), "Continue (%i)", c);
 		add_menu_entry(m, s, c ? continue_game : NULL, NULL);
-		add_menu_entry(m, "Riprova", restart_game, NULL)->transition = TransFadeBlack;
-		add_menu_entry(m, c? "Arrenditi" : "Torna al titolo", give_up, NULL)->transition = TransFadeBlack;
+		add_menu_entry(m, "Restart the Game", restart_game, NULL)->transition = TransFadeBlack;
+		add_menu_entry(m, c? "Give up" : "Return to Title", give_up, NULL)->transition = TransFadeBlack;
 
 		if(!c)
 			m->cursor = 1;
 	}
 
-	set_transition(TransEmpty, 0, m->transition_out_time);
+	set_transition(TransEmpty, 0, m->transition_out_time, NO_CALLCHAIN);
 	return m;
 }

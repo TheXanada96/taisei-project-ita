@@ -112,20 +112,20 @@ MenuData* create_main_menu(void) {
 
 	ptrdiff_t stage_practice_idx, spell_practice_idx;
 
-	add_menu_entry(m, "Modalità Storia", start_game, NULL);
-	add_menu_entry(m, "Modalità Extra", NULL, NULL);
-	stage_practice_entry = add_menu_entry(m, "Pratica Stage", menu_action_enter_stagepractice, NULL);
+	add_menu_entry(m, "Start Story", start_game, NULL);
+	add_menu_entry(m, "Start Extra", NULL, NULL);
+	stage_practice_entry = add_menu_entry(m, "Stage Practice", menu_action_enter_stagepractice, NULL);
 	stage_practice_idx = dynarray_indexof(&m->entries, stage_practice_entry);
-	spell_practice_entry = add_menu_entry(m, "Pratica Spell", menu_action_enter_spellpractice, NULL);
+	spell_practice_entry = add_menu_entry(m, "Spell Practice", menu_action_enter_spellpractice, NULL);
 	spell_practice_idx = dynarray_indexof(&m->entries, spell_practice_entry);
 #ifdef DEBUG
-	add_menu_entry(m, "Seleziona lo Stage", menu_action_enter_stagemenu, NULL);
+	add_menu_entry(m, "Select Stage", menu_action_enter_stagemenu, NULL);
 #endif
-	add_menu_entry(m, "Replay", menu_action_enter_replayview, NULL);
-	add_menu_entry(m, "Galleria Musica", menu_action_enter_media, NULL);
-	add_menu_entry(m, "Opzioni", menu_action_enter_options, NULL);
+	add_menu_entry(m, "Replays", menu_action_enter_replayview, NULL);
+	add_menu_entry(m, "Media Room", menu_action_enter_media, NULL);
+	add_menu_entry(m, "Options", menu_action_enter_options, NULL);
 #ifndef __EMSCRIPTEN__
-	add_menu_entry(m, "Esci", menu_action_close, NULL)->transition = TransFadeBlack;
+	add_menu_entry(m, "Quit", menu_action_close, NULL)->transition = TransFadeBlack;
 	m->input = main_menu_input;
 #endif
 
@@ -241,12 +241,14 @@ void draw_main_menu(MenuData *menu) {
 }
 
 void draw_loading_screen(void) {
-	preload_resource(RES_TEXTURE, "loading", RESF_DEFAULT);
-	preload_resource(RES_SHADER_PROGRAM, "text_default", RESF_PERMANENT);
+	ResourceGroup rg;
+	res_group_init(&rg);
+	res_group_preload(&rg, RES_TEXTURE, RESF_DEFAULT, "loading", NULL);
+	res_group_preload(&rg, RES_SHADER_PROGRAM, RESF_DEFAULT, "text_default", NULL);
 
 	set_ortho(SCREEN_W, SCREEN_H);
-	fill_screen("Caricamento");
-	text_draw("Vi preghiamo di attendere calorosamente...", &(TextParams) {
+	fill_screen("loading");
+	text_draw("Please wait warmly…", &(TextParams) {
 		.align = ALIGN_CENTER,
 		.pos = { SCREEN_W/2, SCREEN_H-20 },
 		.font = "standard",
@@ -255,24 +257,25 @@ void draw_loading_screen(void) {
 	});
 
 	video_swap_buffers();
+	res_group_release(&rg);
 }
 
-void menu_preload(void) {
-	difficulty_preload();
+void menu_preload(ResourceGroup *rg) {
+	difficulty_preload(rg);
 
-	preload_resources(RES_FONT, RESF_PERMANENT,
+	res_group_preload(rg, RES_FONT, RESF_DEFAULT,
 		"big",
 		"small",
 	NULL);
 
-	preload_resources(RES_TEXTURE, RESF_PERMANENT,
+	res_group_preload(rg, RES_TEXTURE, RESF_DEFAULT,
 		"abstract_brown",
 		"cell_noise",
 		"stage1/cirnobg",
 		"menu/mainmenubg",
 	NULL);
 
-	preload_resources(RES_SPRITE, RESF_PERMANENT,
+	res_group_preload(rg, RES_SPRITE, RESF_DEFAULT,
 		"part/smoke",
 		"part/petal",
 		"menu/logo",
@@ -280,20 +283,20 @@ void menu_preload(void) {
 		"star",
 	NULL);
 
-	preload_resources(RES_SHADER_PROGRAM, RESF_PERMANENT,
+	res_group_preload(rg, RES_SHADER_PROGRAM, RESF_DEFAULT,
 		"mainmenubg",
 		"sprite_circleclipped_indicator",
 	NULL);
 
-	preload_resources(RES_SFX, RESF_PERMANENT | RESF_OPTIONAL,
+	res_group_preload(rg, RES_SFX, RESF_OPTIONAL,
 		"generic_shot",
 		"shot_special1",
 		"hit",
 	NULL);
 
-	preload_resources(RES_BGM, RESF_PERMANENT | RESF_OPTIONAL,
+	res_group_preload(rg, RES_BGM, RESF_OPTIONAL,
 		"menu",
 	NULL);
 
-	preload_char_menu();
+	preload_char_menu(rg);
 }

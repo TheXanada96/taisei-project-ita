@@ -34,6 +34,10 @@ typedef struct MusicEntryParam {
 	uint8_t state;
 } MusicEntryParam;
 
+typedef struct MusicRoomContext {
+	ResourceGroup rg;
+} MusicRoomContext;
+
 static void musicroom_logic(MenuData *m) {
 	float prev_selector_x = m->drawdata[0];
 	float prev_selector_w = m->drawdata[1];
@@ -117,7 +121,7 @@ static void musicroom_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 
 	if(p->state & MSTATE_PLAYING) {
 		color_mul(&clr, RGBA(0.1, 0.6, 0.8, 0.8));
-		text_draw("In riproduzione", &(TextParams) {
+		text_draw("Now playing", &(TextParams) {
 			.pos = { SCREEN_W - 200, 20 * i },
 			.shader_ptr = p->text_shader,
 			.align = ALIGN_RIGHT,
@@ -129,7 +133,7 @@ static void musicroom_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 static void musicroom_draw(MenuData *m) {
 	r_state_push();
 	draw_options_menu_bg(m);
-	draw_menu_title(m, "Spazio Musicale");
+	draw_menu_title(m, "Music Room");
 	draw_menu_list(m, 100, 100, musicroom_draw_item, SCREEN_H / GOLDEN_RATIO, NULL);
 
 	float comment_height = SCREEN_H * (1 - 1 / GOLDEN_RATIO);
@@ -163,15 +167,15 @@ static void musicroom_draw(MenuData *m) {
 
 		if(p->state & MSTATE_CONFIRM) {
 			comment = (
-				"\nNon hai ancora sbloccato questa traccia!\n\n"
-				"Se desideri ascoltarlo, selezionalo di nuovo per confermare."
+				"\nYou have not unlocked this track yet!\n\n"
+				"If you wish to hear it anyway, please select it again to confirm."
 			);
 			clr->g *= 0.3;
 			clr->b *= 0.2;
 		} else if(!(p->state & MSTATE_COMMENT_VISIBLE)) {
 			continue;
 		} else if(!(comment = bgm_get_comment(p->bgm))) {
-			comment = "\nNessun commento disponibile";
+			comment = "\nNo comment available";
 		}
 
 		text_draw_wrapped(comment, SCREEN_W - text_x * 2, &(TextParams) {
@@ -216,8 +220,10 @@ static void action_play_bgm(MenuData *m, void *arg) {
 }
 
 static void add_bgm(MenuData *m, const char *bgm_name, bool preload) {
+	MusicRoomContext *ctx = m->context;
+
 	if(preload) {
-		preload_resource(RES_BGM, bgm_name, RESF_OPTIONAL);
+		res_group_preload(&ctx->rg, RES_BGM, RESF_OPTIONAL, bgm_name, NULL);
 		return;
 	}
 
@@ -225,12 +231,13 @@ static void add_bgm(MenuData *m, const char *bgm_name, bool preload) {
 	const char *title = bgm ? bgm_get_title(bgm) : NULL;
 
 	if(!title) {
-		title = "Traccia sconosciuta";
+		title = "Unknown track";
 	}
 
-	MusicEntryParam *p = calloc(1, sizeof(*p));
-	p->bgm = bgm;
-	p->text_shader = res_shader("text_default");
+	auto p = ALLOC(MusicEntryParam, {
+		.bgm = bgm,
+		.text_shader = res_shader("text_default"),
+	});
 
 	if(progress_is_bgm_unlocked(bgm_name)) {
 		p->state |= MSTATE_UNLOCKED;
@@ -241,18 +248,26 @@ static void add_bgm(MenuData *m, const char *bgm_name, bool preload) {
 }
 
 static void musicroom_free(MenuData *m) {
+	MusicRoomContext *ctx = m->context;
+	res_group_release(&ctx->rg);
+	mem_free(ctx);
+
 	dynarray_foreach_elem(&m->entries, MenuEntry *e, {
-		free(e->arg);
+		mem_free(e->arg);
 	});
 }
 
-MenuData* create_musicroom_menu(void) {
+MenuData *create_musicroom_menu(void) {
+	auto ctx = ALLOC(MusicRoomContext);
+	res_group_init(&ctx->rg);
+
 	MenuData *m = alloc_menu();
 	m->logic = musicroom_logic;
 	m->draw = musicroom_draw;
 	m->end = musicroom_free;
 	m->transition = TransFadeBlack;
 	m->flags = MF_Abortable;
+	m->context = ctx;
 
 	for(int preload = 1; preload >= 0; --preload) {
 		add_bgm(m, "menu", preload);
@@ -278,7 +293,7 @@ MenuData* create_musicroom_menu(void) {
 	}
 
 	add_menu_separator(m);
-	add_menu_entry(m, "Indietro", menu_action_close, NULL);
+	add_menu_entry(m, "Back", menu_action_close, NULL);
 
 	while(!dynarray_get(&m->entries, m->cursor).action) {
 		++m->cursor;

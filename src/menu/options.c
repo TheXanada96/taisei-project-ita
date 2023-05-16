@@ -59,29 +59,24 @@ typedef struct OptionBinding {
 
 // --- Menu entry <-> config option binding stuff --- //
 
-static void bind_init(OptionBinding *bind) {
-	memset(bind, 0, sizeof(OptionBinding));
-	bind->selected      = -1;
-	bind->configentry   = -1;
-}
-
 static OptionBinding* bind_new(void) {
-	OptionBinding *bind = malloc(sizeof(OptionBinding));
-	bind_init(bind);
-	return bind;
+	return ALLOC(OptionBinding, {
+		.selected = -1,
+		.configentry = -1,
+	});
 }
 
 static void bind_free(OptionBinding *bind) {
 	int i;
 
 	if(bind->type == BT_StrValue) {
-		free(bind->strvalue);
+		mem_free(bind->strvalue);
 	} else if(bind->values) {
 		assert(bind->valrange_min == 0);
 		for(i = 0; i <= bind->valrange_max; ++i) {
-			free(*(bind->values+i));
+			mem_free(*(bind->values+i));
 		}
-		free(bind->values);
+		mem_free(bind->values);
 	}
 }
 
@@ -204,7 +199,7 @@ static void bind_resolution_update(OptionBinding *bind) {
 	uint nmodes = video_get_num_modes(fullscreen);
 	VideoMode cur = video_get_current_mode();
 
-	log_debug("Schermo intero: %i", fullscreen);
+	log_debug("Fullscreen: %i", fullscreen);
 	log_debug("Prev selected: %i", bind->selected);
 
 	bind->valrange_min = 0;
@@ -269,7 +264,7 @@ static int bind_addvalue(OptionBinding *b, char *val) {
 	assert(b->valrange_min == 0);
 
 	if(b->values == NULL) {
-		b->values = malloc(sizeof(char*));
+		b->values = mem_alloc(sizeof(char*));
 		b->valrange_min = 0;
 		b->valrange_max = 0;
 	} else {
@@ -277,7 +272,7 @@ static int bind_addvalue(OptionBinding *b, char *val) {
 		++b->valrange_max;
 	}
 
-	b->values = realloc(b->values, (1 + b->valrange_max) * sizeof(char*));
+	b->values = mem_realloc(b->values, (1 + b->valrange_max) * sizeof(char*));
 	b->values[b->valrange_max] = strdup(val);
 	return b->valrange_max;
 }
@@ -465,7 +460,7 @@ static void destroy_options_menu(MenuData *m) {
 		}
 
 		bind_free(bind);
-		free(bind);
+		mem_free(bind);
 	});
 
 	if(change_vidmode) {
@@ -480,8 +475,8 @@ static void destroy_options_menu(MenuData *m) {
 
 	if(m->context) {
 		OptionsMenuContext *ctx = m->context;
-		free(ctx->data);
-		free(ctx);
+		mem_free(ctx->data);
+		mem_free(ctx);
 	}
 }
 
@@ -526,10 +521,7 @@ static MenuData* create_options_menu_base(const char *s) {
 	m->logic = update_options_menu;
 	m->begin = begin_options_menu;
 	m->end = destroy_options_menu;
-
-	OptionsMenuContext *ctx = calloc(1, sizeof(OptionsMenuContext));
-	ctx->title = s;
-	m->context = ctx;
+	m->context = ALLOC(OptionsMenuContext, { .title = s });
 
 	return m;
 }
@@ -887,24 +879,24 @@ MenuData* create_options_menu(void) {
 	OptionBinding *b;
 
 #ifndef __SWITCH__
-	add_menu_entry(m, "Nome giocatore", do_nothing,
+	add_menu_entry(m, "Player name", do_nothing,
 		b = bind_stroption(CONFIG_PLAYERNAME)
 	);
 
 	add_menu_separator(m);
 #endif
 
-	add_menu_entry(m, "Salva i replay", do_nothing,
+	add_menu_entry(m, "Save replays", do_nothing,
 		b = bind_option(CONFIG_SAVE_RPY, bind_common_onoffplus_get, bind_common_onoffplus_set)
-	);	bind_addvalue(b, "sempre");
-		bind_addvalue(b, "mai");
-		bind_addvalue(b, "chiedi");
+	);	bind_addvalue(b, "always");
+		bind_addvalue(b, "never");
+		bind_addvalue(b, "ask");
 
-	add_menu_entry(m, "Riavvio automatico in Pratica Spell", do_nothing,
+	add_menu_entry(m, "Auto-restart in Spell Practice", do_nothing,
 		b = bind_option(CONFIG_SPELLSTAGE_AUTORESTART,  bind_common_onoff_get, bind_common_onoff_set)
 	);	bind_onoff(b);
 
-	add_menu_entry(m, "Potere nella Spell e pratica Stage", do_nothing,
+	add_menu_entry(m, "Power in Spell and Stage Practice", do_nothing,
 		b = bind_option(CONFIG_PRACTICE_POWER, bind_power_get, bind_power_set)
 	);	bind_addvalue(b, "0.0");
 		bind_addvalue(b, "1.0");
@@ -912,40 +904,40 @@ MenuData* create_options_menu(void) {
 		bind_addvalue(b, "3.0");
 		bind_addvalue(b, "4.0");
 
-	add_menu_entry(m, "Sparo per impostazione predefinita", do_nothing,
+	add_menu_entry(m, "Shoot by default", do_nothing,
 		b = bind_option(CONFIG_SHOT_INVERTED,   bind_common_onoff_get, bind_common_onoff_set)
 	);	bind_onoff(b);
 
-	add_menu_entry(m, "Stile barra della vita del Boss", do_nothing,
+	add_menu_entry(m, "Boss healthbar style", do_nothing,
 		b = bind_option(CONFIG_HEALTHBAR_STYLE,   bind_common_int_get, bind_common_int_set)
-	);	bind_addvalue(b, "classico");
-		bind_addvalue(b, "moderno");
+	);	bind_addvalue(b, "classic");
+		bind_addvalue(b, "modern");
 
-	add_menu_entry(m, "Visibilità del testo di punteggio variabile", do_nothing,
+	add_menu_entry(m, "Floating score text visibility", do_nothing,
 		b = bind_scale(CONFIG_SCORETEXT_ALPHA, 0, 1, 0.05)
 	);
 
 	add_menu_separator(m);
 
-	add_menu_entry(m, "Volume SFX", do_nothing,
+	add_menu_entry(m, "SFX Volume", do_nothing,
 		b = bind_scale(CONFIG_SFX_VOLUME, 0, 1, 0.05)
 	);	b->dependence = audio_output_works;
 
-	add_menu_entry(m, "Volume BGM", do_nothing,
+	add_menu_entry(m, "BGM Volume", do_nothing,
 		b = bind_scale(CONFIG_BGM_VOLUME, 0, 1, 0.05)
 	);	b->dependence = audio_output_works;
 
-	add_menu_entry(m, "Muto", do_nothing,
+	add_menu_entry(m, "Mute audio", do_nothing,
 		b = bind_option(CONFIG_MUTE_AUDIO,  bind_common_onoff_get, bind_common_onoff_set)
 	);	bind_onoff(b);
 
 	add_menu_separator(m);
-	add_menu_entry(m, "Opzione video…", enter_options_menu_video, NULL);
-	add_menu_entry(m, "Personalizza i controlli…", enter_options_menu_controls, NULL);
-	add_menu_entry(m, "Opzioni per Gamepad e Joystick options…", enter_options_menu_gamepad, NULL);
+	add_menu_entry(m, "Video options…", enter_options_menu_video, NULL);
+	add_menu_entry(m, "Customize controls…", enter_options_menu_controls, NULL);
+	add_menu_entry(m, "Gamepad & Joystick options…", enter_options_menu_gamepad, NULL);
 	add_menu_separator(m);
 
-	add_menu_entry(m, "Indietro", menu_action_close, NULL);
+	add_menu_entry(m, "Back", menu_action_close, NULL);
 
 	return m;
 }
@@ -1054,7 +1046,7 @@ static void options_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 
 			case BT_KeyBinding: {
 				if(bind->blockinput) {
-					text_draw("Premere un tasto per assegnare, ESC per annullare", &(TextParams) {
+					text_draw("Press a key to assign, ESC to cancel", &(TextParams) {
 						.pos = { origin, 20*i },
 						.align = ALIGN_RIGHT,
 						.color = RGBA(0.5, 1, 0.5, 1),
@@ -1063,7 +1055,7 @@ static void options_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 					const char *txt = SDL_GetScancodeName(config_get_int(bind->configentry));
 
 					if(!txt || !*txt) {
-						txt = "Sconosciuto";
+						txt = "Unknown";
 					}
 
 					text_draw(txt, &(TextParams) {
@@ -1094,13 +1086,13 @@ static void options_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 
 					if(bind->valrange_max >= 0) {
 						if(bind->selected < 0) {
-							txt = "Tutti i dispositivi";
+							txt = "All devices";
 						} else {
 							snprintf(buf, sizeof(buf), "#%i: %s", bind->selected + 1, gamepad_device_name(bind->selected));
 							txt = buf;
 						}
 					} else {
-						txt = "Nessun dispositivo disponibile";
+						txt = "No devices available";
 					}
 
 					text_draw(txt, &(TextParams) {
@@ -1142,8 +1134,8 @@ static void options_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 				bool is_axis = (bind->type == BT_GamepadAxisBinding);
 
 				if(bind->blockinput) {
-					char *text = is_axis ? "Muovi un asse da assegnare, Indietro per annullare"
-											: "Premere un pulsante per assegnare, Indietro per annullare";
+					char *text = is_axis ? "Move an axis to assign, Back to cancel"
+											: "Press a button to assign, Back to cancel";
 
 					text_draw(text, &(TextParams) {
 						.pos = { origin, 20*i },
@@ -1159,7 +1151,7 @@ static void options_draw_item(MenuEntry *e, int i, int cnt, void *ctx) {
 						.color = &clr,
 					});
 				} else {
-					text_draw("Senza restrizioni", &(TextParams) {
+					text_draw("Unbound", &(TextParams) {
 						.pos = { origin, 20*i },
 						.align = ALIGN_RIGHT,
 						.color = &clr,
@@ -1442,15 +1434,15 @@ static bool options_text_input_handler(SDL_Event *event, void *arg) {
 
 			if(ulen > max_len) {
 				*(u + max_len) = 0;
-				free(b->strvalue);
+				mem_free(b->strvalue);
 				b->strvalue = ucs4_to_utf8_alloc(u);
 				snd = "hit";
 			}
 
-			free(u);
+			mem_free(u);
 		}
 
-		free(text_allocated);
+		mem_free(text_allocated);
 		play_sfx_ui(snd);
 		return true;
 	}
@@ -1486,9 +1478,9 @@ static bool options_text_input_handler(SDL_Event *event, void *arg) {
 				play_sfx_ui("hit");
 			}
 
-			free(b->strvalue);
+			mem_free(b->strvalue);
 			b->strvalue = ucs4_to_utf8_alloc(u);
-			free(u);
+			mem_free(u);
 		}
 
 		return true;
