@@ -41,36 +41,42 @@ DIALOG_TASK(reimu, Stage1PreBoss) {
 	// All timings are in frames (60 = 1 sec).
 	WAIT_SKIPPABLE(60);
 	// "normal" is the default face.
-	FACE(reimu, sigh);
+	FACE(reimu, normal);
 
 	// MSG() makes the actor say a line, and then waits an unspecified amount of time (skippable).
 	// The timeout is determined by the dialog_util_estimate_wait_timeout_from_text() function in dialog.c
-	MSG(reimu, "Snow during summer? This is certainly familiar…");
+	MSG(reimu, "Neve fuori stagione? Mi chiedo se sia di nuovo quella ‘divinità segreta’…");
 
 	// EVENT()s are handled by stage code.
 	// You can find the list of events per dialogue in dialog_interface.h
 	// All of them should be signaled eventually.
 	EVENT(boss_appears);
-	MSG(cirno, "Nobody can stop me now!");
+
+	// MSG_UNSKIPPABLE() is like MSG(), but can’t be skipped and takes an explicit timeout.
+	// Wait until the boss slides in.
+	MSG_UNSKIPPABLE(cirno, 180, "Mi hai appena definita ‘Divinità’?"); 
+
 	// Reveal Cirno’s portrait
 	SHOW(cirno);
-	FACE(cirno, normal);
-	MSG(cirno, "Mwahahaha!");
+	MSG(cirno, "Cosa, sei *così* colpita dalla mia incredibile magia?!"); 
 
-	FACE(reimu, puzzled);
-	MSG(reimu, "What’s gotten into you all of a sudden?");
+	FACE(reimu, sigh);
+	MSG(reimu, "Certo, mi ero completamente dimenticata di te prima."); 
+	MSG(reimu, "Avrei dovuto saperlo.");
+
 	// Titles are not yet implemented, but this should work once they are.
 	// Right now this does nothing.
-	TITLE(cirno, "Cirno", "Thermodynamic Ice Fairy");
-	MSG(cirno, "Gah! Y-you again?! Are you here to get in the way of my plans?!");
+	TITLE(cirno, "Cirno", "Fata del ghiaccio termodinamica");
+	MSG(cirno, "Era meglio saperlo piuttosto che intromettersi nella mia tana segreta!"); 
 
-	MSG(reimu, "What ‘plans'? Freezing frogs?");
-	FACE(reimu, sigh);
-	MSG(reimu, "Anyway, I don’t really care. So if you could just—");
+	FACE(reimu, normal);
+	MSG(reimu, "Beh, se *sei* eccitata, immagino che stia succedendo davvero qualcosa."); 
+	MSG(reimu, "Tuttavia chiedo il permesso di passare…"); 
+
 	EVENT(music_changes);
+	FACE(cirno, angry);
+	MSG(cirno, "Non è possibile! Preparati a essere raffreddata fino all'ultimo osso!");
 
-	FACE(reimu, annoyed);
-	MSG(cirno, "I’ll never tell you! Prepare to be chilled to the bone!");
 	// Teardown, must be at the very bottom.
 	DIALOG_END();
 }
@@ -89,10 +95,10 @@ DIALOG_TASK(reimu, Stage1PostBoss) {
 	// Bosses also have a "defeated" face to go along with the variant, but all the other faces can be used as well.
 	// It’s best to set the face to "defeated" in the beginning of a post-battle dialogue, and change it later if needed.
 	FACE(cirno, defeated);
-	MSG(cirno, "Chill out! I didn’t mean it like that!");
+	MSG(cirno, "Calmati! Non intendevo in questo modo."); 
 	FACE(reimu, smug);
-	MSG(reimu, "You could have just let me through, you know.");
-	MSG(cirno, "Not fair! You broke the rules! I wasn’t ready yet…");
+	MSG(reimu, "Ho chiesto il permesso di passare, sai."); 
+	MSG(cirno, "Non me lo ricordo! Hai infranto le regole! non ero ancora pronta…");
 
 	DIALOG_END();
 }
@@ -111,44 +117,44 @@ DIALOG_TASK(reimu, Stage2PreBoss) {
 	WAIT_SKIPPABLE(60);
 
 	FACE(reimu, normal);
-	MSG(reimu, "With those loudmouthed kappa gone, the mountain feels practically deserted.");
+	MSG(reimu, "In assenza di quei kappa chiacchieroni, la montagna risulta praticamente abbandonata."); 
 	FACE(reimu, sigh);
-	MSG(reimu, "I almost miss them.");
+	MSG(reimu, "E' come se ne sentissi la mancanza."); 
 
 	EVENT(boss_appears);
-	MSG(hina, "Ah, it’s Ms. Hakurei.");
+	MSG_UNSKIPPABLE(hina, 180, "Ah, è la Signora Hakurei.");
 	SHOW(hina);
 	FACE(reimu, normal);
 	FACE(hina, normal);
-	MSG(hina, "I thought you might come.");
+	MSG(hina, "Ho pensato che avresti potuto raggiungermi."); 
 	FACE(hina, concerned);
-	MSG(hina, "But once again, you’re trying to go places you shouldn’t.");
-	MSG(hina, "What a troubled girl…");
+	MSG(hina, "Ma ancora una volta, stai cercando di andare in posti dove non dovresti.");
+	MSG(hina, "Che ragazza problematica…"); 
 
 	FACE(reimu, sigh);
-	MSG(reimu, "So much for ‘deserted’…");
+	MSG(reimu, "Essendo questa montagna ‘abbandonata’…");
 	FACE(reimu, normal);
-	MSG(reimu, "Do you even know what you’re protecting me from this time?");
+	MSG(reimu, "Sai almeno da cosa mi stai proteggendo questa volta?"); 
 
-	TITLE(hina, "Kagiyama Hina", "Gyroscopic Pestilence God");
+	TITLE(hina, "Kagiyama Hina", "Dea giroscopica della pestilenza"); 
 
 	FACE(hina, normal);
-	MSG(hina, "A bright girl like you should know that Yōkai Mountain is especially dangerous today.");
+	MSG(hina, "Una ragazza brillante come te dovrebbe sapere che il monte Yōkai è particolarmente pericoloso oggi.");
 	FACE(hina, concerned);
-	MSG(hina, "You ought to turn back now, my dear.");
+	MSG(hina, "Dovresti tornare indietro adesso, mia cara."); 
 
 	FACE(reimu, sigh);
-	MSG(reimu, "(She… she completely ignored my question.)");
+	MSG(reimu, "Lei… ha completamente ignorato la mia domanda."); 
 	FACE(reimu, puzzled);
-	MSG(reimu, "Does it matter that the Gods asked me to come this time?");
+	MSG(reimu, "Ha importanza che gli Dei mi abbiano chiesto di venire questa volta?"); 
 
 	EVENT(music_changes);
 
-	MSG(hina, "I know better than the mountain Gods this time.");
-	MSG(hina, "If you do not turn back immediately, I’ll have to repel you by force.");
+	MSG(hina, "In questo caso, sono sicura di saperne di più degli dei della montagna."); 
+	MSG(hina, "Se non torni subito indietro, dovrò respingerti con la forza."); 
 
 	FACE(reimu, sigh);
-	MSG(reimu, "So annoying…");
+	MSG(reimu, "Così fastidiosa…"); 
 
 	DIALOG_END();
 }
@@ -159,19 +165,19 @@ DIALOG_TASK(reimu, Stage2PostBoss) {
 	ACTOR_LEFT(reimu);
 	ACTOR_RIGHT(hina);
 
-	WAIT_SKIPPABLE(30);
+	WAIT(30);
 
 	VARIANT(hina, defeated);
 	FACE(hina, defeated);
 	FACE(reimu, normal);
 
-	MSG(hina, "So I lost… you can keep going then, I suppose.");
+	MSG(hina, "Quindi ho perso.… dunque puoi proseguire, suppongo."); 
 	FACE(reimu, puzzled);
-	MSG(reimu, "You should know by now that I can handle it. Why are you being so overbearing?");
-	MSG(hina, "Just don’t say I didn’t warn you, when you inevitably get mauled by whatever’s out there…");
+	MSG(reimu, "Ormai dovresti sapere che posso farcela. Perché sei così prepotente?"); 
+	MSG(hina, "L'importante è non affermare che non ti avevo avvisata, qualora inevitabilmente verrai sbranata da qualunque cosa ci sia là fuori…"); 
 
 	FACE(reimu, unamused);
-	MSG(reimu, "(Ignored again…)");
+	MSG(reimu, "(Ignorata nuovamente...)");
 
 	DIALOG_END();
 }
@@ -187,45 +193,48 @@ DIALOG_TASK(reimu, Stage3PreBoss) {
 	ACTOR_RIGHT(wriggle);
 	HIDE(wriggle);
 	FACE(reimu, normal);
-	MSG(reimu, "Aside from everyone being whipped up into a frenzy, I can’t see anything abnormal yet.");
+	MSG(reimu, "Nonostante tutti siano impazziti, non riesco ancora a vedere nulla di anormale."); 
 
 	EVENT(boss_appears);
-	MSG(wriggle, "Well, to your human eyes, insects may seem ‘normal’…");
+	MSG_UNSKIPPABLE(wriggle, 180, "Bene, ai tuoi occhi umani, gli insetti possono sembrare ‘normali’…"); 
 
 	SHOW(wriggle);
 	FACE(wriggle, proud);
-	MSG(wriggle, "… but there was a time when we reigned supreme!");
+	MSG(wriggle, "… ma c'è stato un periodo in cui avevamo la supremazia!"); 
 
 	FACE(reimu, puzzled);
-	MSG(reimu, "Eh? You? Aren’t you a bit far from home?");
-	MSG(reimu, "Besides, ‘reigned supreme’? I’ve never heard of insects ruling over Gensōkyō.");
+	MSG(reimu, "Eh? Tu? Non sei un po' lontano da casa?"); 
+	MSG(reimu, "Inoltre, ‘supremazia'? Non ho mai sentito parlare di insetti che governano Gensōkyō.");
 
-	TITLE(wriggle, "Wriggle Nightbug", "Insect Rights Activist");
+	TITLE(wriggle, "Wriggle Nightbug", "Attivista dei Diritti degli Insetti"); 
 	FACE(wriggle, outraged);
-	MSG(wriggle, "'Far from home'? But you’ve intruded on my secret lair!");
-	FACE(wriggle, proud);
-	MSG(wriggle, "Haven’t you heard of the Car—…");
-	MSG(wriggle, "Carb—…");
-	FACE(reimu, puzzled);
-	MSG(wriggle, "That period of history?");
-	MSG(wriggle, "It was the greatest time, everyone should’ve heard of it by now!");
+	MSG(wriggle, "Casa?  tu ti sei intromessa nella mia tana segreta!"); 
 
-	MSG(reimu, "Seems pretty far-fetched to me, honestly. But you yōkai are always coming up with the craziest theories…");
+	FACE(reimu, sigh);
+	MSG(reimu, "Ancora con questa ‘tana segreta’…");
+	FACE(wriggle, proud);
+	MSG(wriggle, "Hai mai sentito parlare del Car—…"); 
+	MSG(wriggle, "Carb—…"); // "Carb—…"
+	FACE(reimu, puzzled);
+	MSG(wriggle, "Vabbè quel periodo della storia?"); 
+	MSG(wriggle, "È stato il momento più bello, tutti dovrebbero averne sentito parlare ormai!"); 
+
+	MSG(reimu, "Mi sembra abbastanza inverosimile, onestamente. Ma voi yōkai tirate fuori sempre le teorie più assurde…"); 
 
 	FACE(wriggle, outraged);
-	MSG(wriggle, "Don’t lump us great insects in with common yōkai!");
+	MSG(wriggle, "Non paragonare noi grandi insetti a dei comuni yōkai!"); 
 	FACE(wriggle, proud);
-	MSG(wriggle, "I’m going to restore us to our rightful glory of old!");
+	MSG(wriggle, "Porterò la mia stirpe agli antichi fasti!"); 
 
 	FACE(reimu, puzzled);
-	MSG(reimu, "Giant insects? But you’re tiny.");
+	MSG(reimu, "Insetti giganti? Ma sei minuscolo."); 
 	FACE(reimu, unamused);
-	MSG(reimu, "And I still don’t know what you mean by ‘glory of old.’");
+	MSG(reimu, "E ancora non so cosa intendi per ‘antichi fasti.’");
 
 	EVENT(music_changes);
 
-	MSG(wriggle, "You don’t seem very educated about our history.");
-	MSG(wriggle, "Allow me to be your teacher!");
+	MSG(wriggle, "Non sembri molto informata sulla nostra storia."); 
+	MSG(wriggle, "Quindi lascia che diventi il tuo insegnante!"); 
 	DIALOG_END();
 }
 
@@ -239,16 +248,16 @@ DIALOG_TASK(reimu, Stage3PostBoss) {
 	FACE(wriggle, defeated);
 
 	FACE(reimu, smug);
-	MSG(reimu, "Giant insects roaming Gensōkyō, huh?");
-	MSG(reimu, "Sounds like one of Sanae’s ‘nuclear’ experiments.");
+	MSG(reimu, "Insetti giganti che vagano per Gensōkyō, eh?"); 
+	MSG(reimu, "Suona come uno degli esperimenti ‘nucleari’ di Sanae.");
 
-	MSG(wriggle, "B-but I saw it clearly… the glorious past of insectkind…");
+	MSG(wriggle, "M-ma l'ho visto chiaramente… il destino degli insetti…");
 
-	FACE(reimu, unamused);
-	MSG(reimu, "Don’t you have a pretty sweet deal as it is, though?");
-	MSG(reimu, "You practically own Gensōkyō’s forests.");
+	FACE(reimu, normal);
+	MSG(reimu, "Non hai un buon affare così com'è, però"); 
+	MSG(reimu, "Praticamente possiedi le foreste del Gensōkyō.");
 
-	MSG(wriggle, "But can’t we ever hope for more…?");
+	MSG(wriggle, "Ma non possiamo mai sperare di più…?"); 
 
 	DIALOG_END();
 }
@@ -266,78 +275,76 @@ DIALOG_TASK(reimu, Stage4PreBoss) {
 	HIDE(kurumi);
 
 	FACE(reimu, puzzled);
-	MSG(reimu, "Huh? There’s a mansion jutting out of this tower?");
+	MSG(reimu, "Eh? C'è una villa che sporge da questa torre?"); 
 	FACE(reimu, sigh);
-	MSG(reimu, "This makes even less sense than usual.");
+	MSG(reimu, "Ciò è più insensato del solito."); 
 
 	EVENT(boss_appears);
-	WAIT_SKIPPABLE(30);
+	WAIT(30);
 
 	FACE(reimu, normal);
-	MSG(reimu, "And who are you supposed to be?");
+	MSG(reimu, "E tu, chi dovresti essere?"); 
 
 	SHOW(kurumi);
 	FACE(kurumi, tsun);
-	MSG(kurumi, "Oi, that’s what I should be asking!");
+	MSG(kurumi, "Oh, questo dovrei chiederlo io"); 
 
 	FACE(reimu, puzzled);
 	MSG(reimu, "…?");
 	FACE(reimu, unamused);
-	MSG(reimu, "And what are you doing, anyways?");
-	MSG(reimu, "Are you behind all these… strange thoughts everyone’s having?");
+	MSG(reimu, "E cosa stai facendo, comunque?");
+	MSG(reimu, "Sei dietro a tutti questi… strani pensieri che tutti hanno?"); 
 
 	FACE(kurumi, normal);
-	TITLE(kurumi, "Kurumi", "High-Society Phlebotomist");
-	MSG(kurumi, "I have no idea what you mean by ‘strange thoughts’, but I’ll be honest with you…");
-	MSG(kurumi, "Your clothing is giving me some strange thoughts!");
-	MSG(kurumi, "Where’d you even get that outfit?! Dumpster diving?! For real!");
+	TITLE(kurumi, "Kurumi", "Flebotomista dell'alta società"); 
+	MSG(kurumi, "Non ho idea di cosa intendi per ‘strani pensieri’, ma sarò onesto con te…"); 
+	MSG(kurumi, "I tuoi vestiti mi stanno dando degli strani pensieri!"); 
+	MSG(kurumi, "Dove hai preso quel vestito?! Dal cassonetto?! Davvero!"); 
 
 	FACE(reimu, unamused);
-	MSG(reimu, "Ugh, another prissy mansion-dweller.");
+	MSG(reimu, "Ugh, un'altra signorina che abita in una villa…"); 
 	FACE(reimu, sigh);
-	MSG(reimu, "I thought I remembered you from somewhere, but no. Absolutely not.");
+	MSG(reimu, "Pensavo di ricordarti da qualche parte, ma no. Assolutamente no."); 
 	FACE(reimu, assertive);
-	MSG(reimu, "Just… stop whatever it is you’re doing, right now.");
+	MSG(reimu, "Solo… ferma qualunque cosa tu stia facendo, adesso.");
 
 	FACE(kurumi, dissatisfied);
-	MSG(kurumi, "Once you get some fashion sense, maybe I will!");
+	MSG(kurumi, "Una volta che avrai un po' di senso della moda, forse lo farò!"); 
 
 	FACE(reimu, unamused);
-	MSG(reimu, "… so you *are* behind this, huh?");
+	MSG(reimu, "… quindi *ci sei* dietro, eh?"); 
 	FACE(reimu, sigh);
-	MSG(reimu, "Besides, haven’t you ever seen a shrine maiden before?");
+	MSG(reimu, "E poi, non hai mai visto una sacerdotessa prima d'ora?"); 
 
 	FACE(kurumi, normal);
-	MSG(kurumi, "You’re a shrine maiden?");
+	MSG(kurumi, "Tu saresti una sacerdotessa?"); 
 	FACE(reimu, unamused);
-	MSG(kurumi, "More like… BRINE maiden!");
+	MSG(kurumi, "Forse volevi dire NETTURBINA"); 
 
 	FACE(reimu, assertive);
-	MSG(reimu, "T-this is what a shrine maiden wears. It’s a uniform.");
+	MSG(reimu, "Q-questo è quello che indossa una sacerdotessa. È un'uniforme."); 
 
-	MSG(kurumi, "Uniform? Are you kidding me?!");
-	MSG(kurumi, "I’ve seen a real shrine maiden before, and she didn’t look anything like you!");
-	MSG(kurumi, "What’s with those patterns, anyways? It’s completely unorthodox! It’s not even using the right type of fabric!");
-	FACE(kurumi, tsun);
-	MSG(kurumi, "Get out of here, fake-maiden!");
+	MSG(kurumi, "Uniforme? Mi stai prendendo in giro?"); 
+	MSG(kurumi, "Ho avuto modo di conoscere una vera sacerdotessa, e lei non ti somigliava per niente!"); 
+	MSG(kurumi, "Cosa sono questi schemi, comunque? È completamente poco ortodosso!"); 
+	MSG(kurumi, "Non sta nemmeno usando il giusto tipo di tessuto! Esci di qui, finta sacerdotessa!"); 
 
 	FACE(reimu, irritated);
-	MSG(reimu, "… ARGH!");
+	MSG(reimu, "… ARGH!"); 
 	FACE(reimu, outraged);
-	MSG(reimu, "Listen!! It’s HARD to find clothes I can wear every day on the job!");
-	MSG(reimu, "It has to fit a certain style!");
-	MSG(reimu, "And only a few fabrics feel good to wear!");
-	MSG(reimu, "I can’t stand scratchy wool or slippery silk!");
-	MSG(reimu, "Everything else feels terrible against my skin—");
+	MSG(reimu, "Ascolta!! E' DIFFICILE trovare vestiti che posso indossare tutti i giorni al lavoro!"); 
+	MSG(reimu, "Deve adattarsi a un certo stile!"); 
+	MSG(reimu, "E solamente pochi tessuti sono comodi da indossare!"); 
+	MSG(reimu, "Non sopporto la lana ruvida o la seta scivolosa!"); 
+	MSG(reimu, "Tutto il resto è di nuovo terribile, la mia pelle—"); 
 	FACE(reimu, irritated);
-
-	MSG(kurumi, "Whoa, hey, sorry, didn’t mean to make you all—");
+	MSG(reimu, "… Accidenti! Ora sono irritata!"); 
 
 	EVENT(music_changes);
 
-	MSG(reimu, "I *hate* prissy mansion dwellers!");
+	MSG(reimu, "Odio gli abitanti delle dimore perfette!"); 
 	FACE(reimu, outraged);
-	MSG(reimu, "Let’s just get this over with!");
+	MSG(reimu, "Facciamola finita!"); 
 
 	DIALOG_END();
 }
@@ -351,32 +358,31 @@ DIALOG_TASK(reimu, Stage4PostBoss) {
 	FACE(kurumi, defeated);
 
 	FACE(reimu, irritated);
-	MSG(reimu, "That’s what you get for insulting my outfit like that.");
+	MSG(reimu, "Questo è per aver insultato il mio abbigliamento in quel modo."); 
 
-	MSG(kurumi, "Ouch ouch ouch…");
-	MSG(kurumi, "W-wait, what happened?");
+	MSG(kurumi, "Ahi Ahi Ahi…"); 
+	MSG(kurumi, "A-aspetta, cosa è successo?"); 
 
-	MSG(reimu, "What do you mean ‘what happened’?");
+	MSG(reimu, "In che senso ‘cosa è successo’?"); 
 
-	MSG(kurumi, "(M-maybe if I fake having amnesia… yeah, that’s it…!)");
+	MSG(kurumi, "(F-forse se fingo di avere un'amnesia… sì, è così…!)"); 
 	FACE(kurumi, normal);
-	MSG(kurumi, "O-oof, my head! Ow! How did I even get here???");
-	MSG(kurumi, "W-wait! Aren’t you that girl from a long while back?");
+	MSG(kurumi, "O-oh, la mia testa! Ahi! Come sono arrivata qui???"); 
+	MSG(kurumi, "A-aspetta! Non sei quella ragazza di tanto tempo fa?"); 
 
-	FACE(reimu, sigh);
-	MSG(reimu, "I don’t remember you at all.");
 	FACE(reimu, unsettled);
-	MSG(reimu, "But somehow, so familiar…");
+	MSG(reimu, "Perché non mi ricordo affatto di te? È solo quella sensazione inquietante di nuovo…");
+	MSG(reimu, "E' familiare…");
 	FACE(reimu, sigh);
-	MSG(reimu, "This feeling is annoying, whatever it is. Make it stop, or tell me how to make it stop.");
+	MSG(reimu, "È fastidioso, qualunque cosa sia. Fallo smettere, o dimmi come farlo smettere.");
 
 	FACE(kurumi, defeated);
-	MSG(kurumi, "Huh? I-I don’t know! I barely remember anything!");
-	MSG(kurumi, "(Ugh, her outfit really does suck though…)");
+	MSG(kurumi, "Eh? N-non lo so! Non mi ricordo nulla!"); 
+	MSG(kurumi, "(Ugh, i suoi vestiti fanno davvero schifo però…)"); 
 
-	MSG(reimu, "(Just another victim…?)");
+	MSG(reimu, "(Solo un altra vittima…?)");
 	FACE(reimu, normal);
-	MSG(reimu, "I’ll deal with you after I figure out whatever's happening here.");
+	MSG(reimu, "Rimani da queste parti. Voglio parlarti dopo aver sistemato la cosa.");
 
 	DIALOG_END();
 }
@@ -393,89 +399,89 @@ DIALOG_TASK(reimu, Stage5PreBoss) {
 	HIDE(iku);
 
 	FACE(reimu, unsettled);
-	MSG(reimu, "I’ve got a bad feeling about this…");
+	MSG(reimu, "Ho un brutto presentimento a riguardo…"); 
 	FACE(reimu, puzzled);
-	MSG(reimu, "Or maybe I’m just feeling nauseous with this tower’s constant spinning.");
+	MSG(reimu, "O forse mi sento solo nauseata dal costante girare di questa torre."); 
 
 	EVENT(boss_appears);
-	WAIT_SKIPPABLE(60);
+	WAIT(60);
 	SHOW(iku);
 	FACE(iku, normal);
-	MSG(iku, "Or perchance it a side effect of the tower’s mere presence?");
+	MSG(iku, "O forse è un effetto collaterale della mera presenza della torre?"); 
 
-	MSG(reimu, "Oh, it’s you. Why did you attack me earlier, anyway?");
+	MSG(reimu, "Oh, sei tu. Perché mi hai attaccata prima, comunque?"); 
 
-	TITLE(iku, "Nagae Iku", "Fulminologist of the Heavens");
+	TITLE(iku, "Nagae Iku", "Fulminologa dei cieli"); 
 	FACE(iku, smile);
-	MSG(iku, "Ah, apologies. It must have been friendly fire.");
+	MSG(iku, "Ah, scusa. Dev'essere stato fuoco amico."); 
 	FACE(iku, eyes_closed);
-	MSG(iku, "Things are quite hectic here. I beg your understanding.");
-	MSG(iku, "But it has been a while, has it not?");
+	MSG(iku, "le cose sono piuttosto frenetiche qui. Mi auguro che comprenda."); 
+	MSG(iku, "Ne è passato di tempo dall'ultima volta, vero?"); 
 
 	FACE(reimu, normal);
-	MSG(reimu, "Err, right, yes, it has been a while. Nice to see you again.");
+	MSG(reimu, "Ehm, già è passato un po' di tempo. Che bello rivederti."); 
 
 	FACE(iku, serious);
-	MSG(iku, "This tower is unlike anything I have seen before.");
-	MSG(iku, "Since word spread through the clouds, I’ve learned that the culprit is connected to ‘parallel universes.’");
+	MSG(iku, "Andiamo dritto al punto, questa torre è diversa da qualsiasi cosa vista prima d'ora."); 
+	MSG(iku, "Da quando si è sparsa la voce tra le nuvole, ho appreso che il colpevole è collegato a degli ‘universi paralleli.");
 
 	FACE(reimu, puzzled);
-	MSG(reimu, "You mean like Otherworlds? That’s not too out of the ordinary these days.");
+	MSG(reimu, "Intendi tipo l'Altro Mondo? Non è troppo fuori dall'ordinario di questi tempi."); 
 	FACE(reimu, unsettled);
-	MSG(reimu, "This feels different though. It’s like the walls are sucking up faith into a void.");
-	MSG(reimu, "I’m surprised the fairies are surviving at all…");
+	MSG(reimu, "Qua sembra diverso però. È come se i muri stessero risucchiando la fede nel vuoto."); 
+	MSG(reimu, "Sono soprpresa riguardo alla sopravvivenza delle fate…"); 
 	FACE(reimu, normal);
-	MSG(reimu, "But what are you even doing here?");
+	MSG(reimu, "Ma cosa ci fai qui?"); 
 
 	FACE(iku, eyes_closed);
-	MSG(iku, "It is not just the Netherworld and Gensōkyō being affected.");
+	MSG(iku, "Non sono solo gli Inferi e Gensōkyō ad essere colpiti"); 
 	FACE(iku, serious);
-	MSG(iku, "In Bhava-agra, the Eldest Daughter’s personality has experienced some changes, too.");
+	MSG(iku, "In Bhava-agra, anche la personalità della figlia maggiore ha subito alcuni cambiamenti."); 
 
 	FACE(reimu, surprised);
-	MSG(reimu, "It’s spreading that fast?!");
+	MSG(reimu, "si sta diffondendo così velocemente?!"); 
 
 	FACE(iku, smile);
-	MSG(iku, "Initially, I had no plans towards interfering.");
+	MSG(iku, "Inizialmente, non avevo intenzione di interferire."); 
 	FACE(reimu, normal);
 	FACE(iku, serious);
-	MSG(iku, "However, the tower’s psychological effects began to intensify, and I began to fear that nobody would take charge.");
+	MSG(iku, "Tuttavia, gli effetti psicologici della torre iniziarono a intensificarsi e cominciai a temere che nessuno si sarebbe fatto carico.");
 
 	FACE(reimu, sigh);
-	MSG(reimu, "(Do people have this little faith in me…?)");
+	MSG(reimu, "(La gente ha così poca fiducia in me?)"); 
 
 	FACE(iku, eyes_closed);
-	MSG(iku, "As more minds began to fall prey, I considered a theory…");
+	MSG(iku, "Man mano che più menti cominciavano a divenire prede, ho preso in considerazione una teoria…"); 
 	FACE(reimu, normal);
-	MSG(iku, "Is this machine incompatible with the existence of fantasy?");
+	MSG(iku, "Questa macchina è incompatibile con l'esistenza della fantasia?");
 	FACE(iku, normal);
-	MSG(iku, "That may be why you feel a sense of dread about the place.");
+	MSG(iku, "Questo potrebbe essere il motivo per cui provi un senso di terrore per il posto."); 
 
 	FACE(reimu, normal);
-	MSG(reimu, "Well, that settles it. Where’s the owner, then?");
+	MSG(reimu, "Bene, questo lo risolve. Dov'è il proprietario, allora?");
 
 	FACE(iku, smile);
-	MSG(iku, "To be frank, I am not sure whether you are up to the task.");
-	MSG(iku, "You are still relatively composed, yes, but your mental state seems to be deteriorating.");
+	MSG(iku, "Sinceramente, non sono sicura che tu sia all'altezza del compito."); 
+	MSG(iku, "Sei ancora relativamente composta, ma il tuo stato mentale sembra deteriorarsi."); 
 
 	FACE(reimu, irritated);
-	MSG(reimu, "Deteriorating? But I just got here!");
+	MSG(reimu, "Deteriorarsi? Ma sono appena arrivata!"); 
 
 	EVENT(music_changes);
-	MSG(iku, "You are still so worrisome. You ought to go home before you lose yourself.");
+	MSG(iku, "Sei ancora così preoccupata. Dovresti tornare a casa prima di perderti."); 
 
 	FACE(reimu, irritated);
 	MSG(reimu, "No!");
 
 	FACE(iku, serious);
-	MSG(iku, "I beg your pardon?");
+	MSG(iku, "Mi scusi?"); 
 
-	MSG(reimu, "Don’t keep telling me how little you think of me. I’m sick of it!");
+	MSG(reimu, "Non ribadire il tuo pessimo parere nei miei confronti. Ne sono stufa!"); 
 	FACE(reimu, assertive);
-	MSG(reimu, "I’m going to give everyone a reason to have faith in me!");
+	MSG(reimu, "Darò a tutti un motivo per fidarvi di me!"); 
 
-	MSG(iku, "It seems your resolve is unwavering. Very well, then.");
-	MSG(iku, "Allow me to test your resistance to their infuriating machine!");
+	MSG(iku, "Sembra che la tua determinazione sia incrollabile. Molto bene allora.");
+	MSG(iku, "Permettimi di mettere alla prova la tua resistenza sulla loro macchina esasperante!"); 
 
 	DIALOG_END();
 }
@@ -486,9 +492,8 @@ DIALOG_TASK(reimu, Stage5PostMidBoss) {
 	ACTOR_LEFT(reimu);
 	FACE(reimu, surprised);
 
-	// should be only one message with a fixed 120-frames timeout
-	// UNSKIPPABLE is required here to keep music in sync
-	MSG_UNSKIPPABLE(reimu, 120, "Thunder clouds? Are we really that high up?");
+	// Dovrebbe essere solo un messaggio con un timeout fisso di 120 frame
+	MSG_UNSKIPPABLE(reimu, 120, "Il pesce remo? Perché LEI è qui?"); 
 
 	DIALOG_END();
 }
@@ -502,25 +507,26 @@ DIALOG_TASK(reimu, Stage5PostBoss) {
 	FACE(iku, defeated);
 
 	MSG(iku, "Ah…");
-	MSG(iku, "I was wrong for doubting you, I suppose…");
+	MSG(iku, "Ho sbagliato a dubitare di te, suppongo."); 
 
 	FACE(reimu, unamused);
-	MSG(reimu, "Somehow I don’t feel too satisfied by that.");
+	MSG(reimu, "In qualche modo non mi sento troppo soddisfatta da questo.");
 
 	FACE(iku, eyes_closed);
-	MSG(iku, "To be honest with you, I’m glad you arrived after all.");
-	MSG(iku, "I know now that I would not have been able to defeat her.");
+	MSG(iku, "Ad essere onesta con te, sono contenta che tu sia arrivata dopo tutto.");
+	MSG(iku, "Ora so che non sarei stata in grado di sconfiggerla.");
 	FACE(reimu, normal);
-	MSG(iku, "Since you’re still able to think clearly, perhaps Gensōkyō will be saved after all.");
+	MSG(iku, "Dato che sei ancora in grado di pensare con chiarezza, forse Gensōkyō verrà salvato dopotutto."); 
 
 	FACE(reimu, sigh);
-	MSG(reimu, "Finally.");
+	MSG(reimu, "Finalmente."); 
 	FACE(reimu, normal);
-	MSG(reimu, "But you’re right. This is bigger than Gensōkyō.");
-	MSG(reimu, "I’ll need to take this seriously.");
+	MSG(reimu, "Però hai ragione. Questa roba è più grande di Gensōkyō."); 
+	MSG(reimu, "Dovrò prenderlo sul serio."); 
 
 	FACE(iku, normal);
-	MSG(iku, "Glad to hear it.");
+	MSG(iku, "Bene."); 
+	MSG(iku, "Continua a salire fino a raggiungere l'ultimo piano. Lì incontrerai senza dubbio l'istigatore."); 
 
 	DIALOG_END();
 }
@@ -536,96 +542,94 @@ DIALOG_TASK(reimu, Stage6PreBoss) {
 	ACTOR_RIGHT(elly);
 	HIDE(elly);
 	EVENT(boss_appears);
-	MSG(elly, "Well, well, well. It seems a faithful rat trespassed on our domain.");
+	MSG_UNSKIPPABLE(elly, 180, "Bene bene bene. Sembra che un topo abbia violato la nostra proprietà."); 
 	SHOW(elly);
 
 	FACE(elly, smug);
-	MSG(elly, "How strange. You should’ve lost your mind by now.");
+	MSG(elly, "Che strano. Ormai dovresti aver perso la testa."); 
 
 	FACE(reimu, unsettled);
-	MSG(reimu, "Just turn it off already.");
-	MSG(reimu, "I’m not in the mood to argue, so don’t push me!");
+	MSG(reimu, "Spegnilo e basta."); 
+	MSG(reimu, "Non sono in vena di discutere, quindi non spingermi!"); 
 
-	TITLE(elly, "Elly", "The Theoretical Reaper");
+	TITLE(elly, "Elly", "La mietitrice teorica"); 
 	FACE(elly, angry);
-	MSG(elly, "Bold of you to barge into MY tower and give ME orders!");
-	MSG(elly, "I still remember what you did to Lady Kazami and I back then!");
+	MSG(elly, "Audace da parte tua fare irruzione nella MIA torre e darmi ordini!"); 
+	MSG(elly, "Ricordo ancora ciò che hai fatto a me e Lady Kazami!"); 
 
 	FACE(reimu, sigh);
-	MSG(reimu, "And what was that, again?");
-	MSG(reimu, "I’m getting a familiar feeling just looking at you, but…");
+	MSG(reimu, "E cos'era quello, di nuovo?"); 
+	MSG(reimu, "Sento una sensazione familiare solo guardandoti, però…"); 
 
 	FACE(elly, shouting);
-	MSG(elly, "Is this a joke?! Are you trying to mock me?!");
+	MSG(elly, "È uno scherzo?! Stai cercando di prendermi in giro?!"); 
 
 	FACE(reimu, assertive);
-	MSG(reimu, "I think I would’ve remembered a giant tower that makes people go mad with power!");
-	MSG(reimu, "The least you can do when accusing someone is to tell them what they’ve supposedly done!");
+	MSG(reimu, "Penso che mi sarei ricordata di una torre gigante che fa impazzire le persone con il potere!");
+	MSG(reimu, "Il minimo che puoi fare quando accusi qualcuno è dirgli quello che presumibilmente ha fatto!"); 
 
 	FACE(elly, smug);
-	MSG(elly, "Ah. I see.");
+	MSG(elly, "Ah, capisco."); 
+	MSG(elly, "Va bene. Lo dirò."); 
 	FACE(elly, normal);
-	MSG(elly, "Fine. I will.");
 	FACE(reimu, unamused);
-	MSG(elly, "This tower is a recent invention. Its mere existence is revolutionary in several scientific fields.");
-	MSG(elly, "The denizens of this Gensōkyō ought to have been thankful for its vast scientific knowledge…");
-	MSG(elly, "But alas, we have other plans.");
-
-	FACE(reimu, unsettled);
-	MSG(reimu, "‘This’ Gensōkyō…?");
+	MSG(elly, "Questa torre è un'invenzione recente. La sua mera esistenza è rivoluzionaria in diversi campi scientifici."); 
+	MSG(elly, "La gente di questo Gensōkyō dovrebbe esserne grata per la sua vasta conoscenza scientifica…"); 
+	MSG(elly, "Ma ahimé, abbiamo altri piani."); 
 
 	FACE(reimu, unamused);
-	MSG(reimu, "Somehow, it feels like more of a punishment.");
-	MSG(reimu, "Ever heard of ‘ignorance is bliss’?");
-	MSG(reimu, "There won’t be anyone to rule over, or whatever, if you make them all lose it.");
+	MSG(reimu, "In qualche modo, sembra più una punizione."); 
+	MSG(reimu, "Hai mai sentito il detto ‘L'ignoranza è beatitudine’?"); 
+	MSG(reimu, "Non ci sarà nessuno su cui governare, o qualsiasi altra cosa, se li fai perdere a tutti."); 
 
-	MSG(elly, "The Tower of Babel is capable of ‘enlightening’ those fortunate to be around it.");
+	MSG(elly, "La Torre di Babele è in grado di ‘illuminare’ chi ha la fortuna di trovarsi attorno ad essa."); 
 	FACE(elly, smug);
-	MSG(elly, "Anyone unable to comprehend its brilliance will be driven to madness.");
+	MSG(elly, "Chiunque non sia in grado di comprendere la sua genialità sarà portato alla pazzia."); 
 	FACE(elly, shouting);
-	MSG(elly, "But this is simply retribution for the crimes that have been committed against us!");
+	MSG(elly, "Ma i residenti di questo Gensōkyō significano meno di niente per noi! Questa è semplicemente una punizione!");
 
 	FACE(reimu, unsettled);
-	MSG(reimu, "‘Parallel universes’, is that it?");
+	MSG(reimu, "‘Questo’ Gensōkyō…?"); 
+	MSG(reimu, "Questo è un ‘Universo parallelo’?"); 
 
 	FACE(elly, normal);
-	MSG(elly, "Hmm? Is that what you think this Gensōkyō is?");
+	MSG(elly, "Hmm? Pensi che questo Gensōkyō lo sia?"); 
 
 	FACE(reimu, irritated);
-	MSG(reimu, "You tell me! You’re the megalomaniac!");
+	MSG(reimu, "Dimmelo tu! Sei la megalomane!"); 
 	FACE(reimu, assertive);
-	MSG(reimu, "Do you hate me because some other Reimu did something? Is that it?");
-	MSG(reimu, "But then what does that have to do with any of us?!");
+	MSG(reimu, "Do you hate me because some other Reimu did something? Is that it?"); 
+	MSG(reimu, "Mi odi perché un' altra Reimu ha fatto qualcosa? È così?"); 
 	FACE(reimu, irritated);
-	MSG(reimu, "For a ‘scientist’, you’re not making a whole lot of sense!");
+	MSG(reimu, "Per essere una ‘scienziata’, non hai molto senso!"); 
 
 	FACE(elly, angry);
-	MSG(elly, "Perhaps you’ve simply forgotten, like you have of the rest of us!");
+	MSG(elly, "Forse te ne sei semplicemente dimenticato, come hai fatto con tutti noi!"); 
 	FACE(reimu, unamused);
-	MSG(elly, "Only the privileged, such as Lady Kazami, made it out! The rest of us were lost!");
+	MSG(elly, "Solo i privilegiati, come Lady Kazami, ce l'hanno fatta! Il resto di noi era perso!"); 
 
 	FACE(reimu, unsettled);
-	MSG(reimu, "You mean Kazami Yūka? And I suppose… Alice, too?");
-	MSG(reimu, "I remember when I first met Alice, and she said some weird things too, just like you are now.");
+	MSG(reimu, "Intendi Kazami Yuuka? E suppongo… anche Alice?"); 
+	MSG(reimu, "Ricordo quando ho incontrato Alice per la prima volta, e anche lei ha detto cose strane, proprio come te adesso.");
 	FACE(reimu, unamused);
-	MSG(reimu, "But she didn’t go around threatening everyone!");
+	MSG(reimu, "Lei però non andava in giro a minacciare tutti!"); 
 
 	FACE(elly, angry);
-	MSG(elly, "We weren’t as lucky! And as reparation, we will take control of this Gensōkyō!");
-	MSG(elly, "We will make it so we will NEVER be forgotten!");
+	MSG(elly, "Non siamo stati così fortunati! E per par condicio, prenderemo il controllo di questo Gensōkyō!"); 
+	MSG(elly, "Faremo in modo che non saremo MAI dimenticate!"); 
 
 	FACE(reimu, sigh);
-	MSG(reimu, "Even in Gensōkyō, you can be forgotten, huh?");
-	MSG(reimu, "What a miserable thought. No wonder I felt terrible just seeing this place!");
+	MSG(reimu, "Anche in Gensōkyō, puoi essere dimenticata, eh?"); 
+	MSG(reimu, "Che triste pensiero. Non c'è da stupirsi che se mi sento male solo a vedere questo posto!");
 	FACE(reimu, assertive);
-	MSG(reimu, "Turn it off, or being forgotten will be the least of your worries!");
+	MSG(reimu, "Spegnilo o essere dimenticata sarà l'ultima delle tue preoccupazioni!"); 
 
 	EVENT(music_changes);
 	FACE(elly, shouting);
-	MSG(elly, "It’s too late for that! Soon, all of Gensōkyō will become enlightened!");
+	MSG(elly, "È troppo tardi per quello! Presto, tutta Gensōkyō verràilluminata!"); 
 	FACE(reimu, unsettled);
-	MSG(elly, "Don’t you understand, pitiful shrine maiden? Science is an unfathomable power, surpassed by nothing!");
-	MSG(elly, "We won’t be forgotten again!");
+	MSG(elly, "Non capisci, sacerdotessa pietosa? La scienza è un potere insondabile, superato da nulla!"); 
+	MSG(elly, "Non verremo dimenticate da questo mondo, ad ogni costo!"); 
 
 	DIALOG_END();
 }
@@ -638,9 +642,9 @@ DIALOG_TASK(reimu, Stage6PreFinal) {
 	VARIANT(elly, beaten);
 	FACE(elly, shouting);
 	FACE(reimu, assertive);
-	MSG(reimu, "Is that it? Are you finally done?");
-	MSG(elly, "Y-you think this is over?! The time of reckoning is upon you!");
-	MSG(elly, "Gaze upon the ultimate truth of the universe, and tremble!");
+	MSG(reimu, "È così? Hai finalmente finito?"); 
+	MSG(elly, "P-pensi che sia finita?! Il tempo della resa dei conti è su di te!"); 
+	MSG(elly, "Guarda l'ultima verità dell'universo e trema!"); 
 
 	DIALOG_END();
 }
