@@ -1,334 +1,146 @@
-Taisei Project – Environment Variables
+Progetto Taisei – Variabili d'ambiente
 ======================================
 
-.. contents::
+.. Contenuti::
 
-Introduction
+introduzione
 ------------
 
-Some of Taisei's more advanced configuration options are delegated to
-`environment
-variables <https://en.wikipedia.org/wiki/Environment_variable>`__. This
-document attempts to describe them all.
+Alcune delle opzioni di configurazione più avanzate di Taisei sono delegate a
+`ambiente
+variabili <https://en.wikipedia.org/wiki/Environment_variable>`__. Questo
+documento tenta di descriverli tutti.
 
-Generally you don't need to set any of them. They are intended for
-developers and advanced users only. Therefore, familiarity with the
-concept is assumed.
+Generalmente non è necessario impostarne nessuno. Sono destinati a
+solo sviluppatori e utenti avanzati. Pertanto, la familiarità con il
+si assume il concetto.
 
-In addition to the variables listed here, those processed by our runtime
-dependencies (such as SDL) also take effect, unless stated otherwise.
+Oltre alle variabili qui elencate, quelle processate dal nostro runtime
+anche le dipendenze (come SDL) hanno effetto, se non diversamente specificato.
 
-Variables
+Variabili
 ---------
 
-Virtual filesystem
+File system virtuale
 ~~~~~~~~~~~~~~~~~~
 
 **TAISEI_RES_PATH**
-   | Default: unset
+   | Predefinito: non impostato
 
-   If set, overrides the default **resource directory** path. This is
-   where Taisei looks for game data. The default path is platform and
-   build specific:
+   Se impostato, sovrascrive il percorso predefinito della **directory delle risorse**. Questo è
+   dove Taisei cerca i dati di gioco. Il percorso predefinito è piattaforma e
+   costruire specifico:
 
-   -  On **macOS**, it will be the ``Contents/Resources/data`` directory
-      inside of the ``Taisei.app`` bundle.
-   -  On **Linux**, **\*BSD**, and most other **Unix**-like systems
-      (without -DRELATIVE), it will be ``$prefix/share/taisei``. This
-      path is static and determined at compile time.
-   -  On **Windows** and other platforms when built with -DRELATIVE, it
-      will be the ``data`` directory relative to the executable (or to
-      whatever ``SDL_GetBasePath`` returns on the given platform).
+   - Su **macOS**, sarà la directory ``Contents/Resources/data``
+      all'interno del bundle ``Taisei.app``.
+   - Su **Linux**, **\*BSD** e la maggior parte degli altri sistemi simili a **Unix**
+      (senza -DRELATIVE), sarà ``$prefix/share/taisei``. Questo
+      path è statico e determinato in fase di compilazione.
+   - Su **Windows** e altre piattaforme se compilato con -DRELATIVE, it
+      sarà la directory ``data`` relativa all'eseguibile (o to
+      qualunque ``SDL_GetBasePath`` restituisca sulla piattaforma data).
 
 **TAISEI_STORAGE_PATH**
-   | Default: unset
+   | Predefinito: non impostato
 
-   If set, overrides the default **storage directory** path. This is
-   where Taisei saves your configuration, progress, screenshots and
-   replays. Taisei also loads custom data from the ``resources``
-   subdirectory in there, if any, in addition to the stock assets. The
-   custom resources shadow the default ones if the names clash. The
-   default path is platform specific, and is equivalent to the return
-   value of ``SDL_GetPrefPath("", "taisei")``:
+   Se impostato, sovrascrive il percorso predefinito della **directory di archiviazione**. Questo è
+   dove Taisei salva la configurazione, i progressi, gli screenshot e
+   replay. Taisei carica anche dati personalizzati dalle ``risorse``
+   sottodirectory in là, se presente, oltre alle risorse di magazzino. IL
+   le risorse personalizzate oscurano quelle predefinite se i nomi sono in conflitto. IL
+   il percorso predefinito è specifico della piattaforma ed è equivalente a return
+   valore di ``SDL_GetPrefPath("", "taisei")``:
 
-   -  On **Windows**, it's ``%APPDATA%\taisei``.
-   -  On **macOS**, it's ``$HOME/Library/Application Support/taisei``.
-   -  On **Linux**, **\*BSD**, and most other **Unix**-like systems,
-      it's ``$XDG_DATA_HOME/taisei`` or ``$HOME/.local/share/taisei``.
+   - Su **Windows**, è ``%APPDATA%\taisei``.
+   - Su **macOS**, è ``$HOME/Library/Application Support/taisei``.
+   - Su **Linux**, **\*BSD** e la maggior parte degli altri sistemi simili a **Unix**,
+      è ``$XDG_DATA_HOME/taisei`` o ``$HOME/.local/share/taisei``.
 
-Resources
+Risorse
 ~~~~~~~~~
 
 **TAISEI_NOASYNC**
-   | Default: ``0``
+   | Predefinito: ``0``
 
-   If ``1``, disables asynchronous loading. Increases loading times, might
-   slightly reduce CPU and memory usage during loads. Generally not
-   recommended unless you encounter a race condition bug, in which case
-   you should report it.
+   Se ``1``, disabilita il caricamento asincrono. Aumenta i tempi di caricamento, potrebbe
+   ridurre leggermente l'utilizzo della CPU e della memoria durante i carichi. Generalmente no
+   consigliato a meno che non incontri un bug race condition, nel qual caso
+   dovresti segnalarlo.
 
 **TAISEI_NOUNLOAD**
-   | Default: ``0``
+   | Predefinito: ``0``
 
-   If ``1``, loaded resources are never unloaded. Increases memory usage,
-   reduces filesystem reads and loading times over time.
+   Se ``1``, le risorse caricate non vengono mai scaricate. Aumenta l'utilizzo della memoria,
+   riduce le letture del filesystem e i tempi di caricamento nel tempo.
 
 **TAISEI_NOPRELOAD**
-   | Default: ``0``
+   | Predefinito: ``0``
 
-   If ``1``, disables preloading. All resources are only loaded as they
-   are needed. Reduces loading times and memory usage, but may cause
-   stuttering during gameplay.
+   Se ``1``, disabilita il precaricamento. Tutte le risorse vengono caricate solo così come sono
+   sono necessari. Riduce i tempi di caricamento e l'utilizzo della memoria, ma può causare
+   balbuzie durante il gioco.
 
 **TAISEI_PRELOAD_REQUIRED**
-   | Default: ``0``
+   | Predefinito: ``0``
 
-   If ``1``, the game will crash with an error message when it attempts to
-   use a resource that hasn't been previously preloaded. Useful for
-   developers to debug missing preloads.
+   Se ``1``, il gioco andrà in crash con un messaggio di errore quando tenta di farlo
+   utilizzare una risorsa che non è stata precedentemente precaricata. Utile per
+   sviluppatori per eseguire il debug dei precarichi mancanti.
 
 **TAISEI_PRELOAD_SHADERS**
-   | Default: ``0``
+   | Predefinito: ``0``
 
-   If ``1``, Taisei will load all shader programs at startup. This is mainly
-   useful for developers to quickly ensure that none of them fail to compile.
+   Se ``1``, Taisei caricherà tutti i programmi shader all'avvio. Questo è principalmente
+   utile per gli sviluppatori per garantire rapidamente che nessuno di loro fallisca nella compilazione.
 
-Video and OpenGL
+Video e OpenGL
 ~~~~~~~~~~~~~~~~
 
 **TAISEI_PREFER_SDL_VIDEODRIVERS**
-   | Default: ``wayland,mir,cocoa,windows,x11``
+   | Predefinito: ``wayland,mir,cacao,windows,x11``
 
-   List of SDL video backends that Taisei will attempt to use, in the
-   specified order, before falling back to SDL's default. Entries may be
-   separated by spaces, commas, colons, and semicolons. This variable is
-   ignored if ``SDL_VIDEODRIVER`` is set.
+   Elenco dei backend video SDL che Taisei tenterà di utilizzare, nel formato
+   ordine specificato, prima di tornare all'impostazione predefinita di SDL. Le voci possono essere
+   separati da spazi, virgole, due punti e punti e virgola. Questa variabile è
+   ignorato se ``SDL_VIDEODRIVER`` è impostato.
 
 **TAISEI_VIDEO_DRIVER**
-   | Default: unset
-   | **Deprecated**
+   | Predefinito: non impostato
+   | **Deprecato**
 
-   Use ``SDL_VIDEODRIVER`` instead.
+   Utilizzare invece ``SDL_VIDEODRIVER``.
 
 **TAISEI_RENDERER**
-   | Default: ``gl33``
+   | Predefinito: ``gl33``
 
-   Selects the rendering backend to use. Currently available options are:
+   Seleziona il backend di rendering da utilizzare. Le opzioni attualmente disponibili sono:
 
-      -  ``gl33``: the OpenGL 3.3 Core renderer
-      -  ``gles30``: the OpenGL ES 3.0 renderer
-      -  ``gles20``: the OpenGL ES 2.0 renderer
-      -  ``null``: the no-op renderer (nothing is displayed)
+      - ``gl33``: il renderer OpenGL 3.3 Core
+      - ``gles30``: il renderer OpenGL ES 3.0
+      - ``gles20``: il renderer OpenGL ES 2.0
+      - ``null``: il renderer no-op (non viene visualizzato nulla)
 
-   Note that the actual subset of usable backends, as well as the default
-   choice, can be controlled by build options. The ``gles`` backends are not
-   built by default.
+   Si noti che il sottoinsieme effettivo di backend utilizzabili, nonché il valore predefinito
+   scelta, può essere controllato dalle opzioni di costruzione. I backend ``gles`` non lo sono
+   costruito di default.
 
 **TAISEI_LIBGL**
-   | Default: unset
+   | Predefinito: non impostato
 
-   OpenGL library to load instead of the default. The value has a
-   platform-specific meaning (it's passed to the equivalent of ``dlopen``).
-   Takes precedence over ``SDL_OPENGL_LIBRARY`` if set. Has no effect if
-   Taisei is linked to libgl (which is not recommended, because it's not
-   portable).
+   Libreria OpenGL da caricare invece di quella predefinita. Il valore ha a
+   significato specifico della piattaforma (è passato all'equivalente di ``dlopen``).
+   Ha la precedenza su ``SDL_OPENGL_LIBRARY`` se impostato. Non ha effetto se
+   Taisei è collegato a libgl (che non è raccomandato, perché non lo è
+   portatile).
 
 **TAISEI_GL_DEBUG**
-   | Default: ``0``
+   | Predefinito: ``0`` per build di rilascio, ``1`` per build di debug
 
-   Enables OpenGL debugging. A debug context will be requested, all OpenGL
-   messages will be logged, and errors are fatal. Requires the ``KHR_debug``
-   or ``ARB_debug_output`` extension.
+   Abilita il debug OpenGL. Verrà richiesto un contesto di debug, tutto OpenGL
+   i messaggi verranno registrati e gli errori sono fatali. Richiede ``KHR_debug``
+   o l'estensione ``ARB_debug_output``.
 
 **TAISEI_GL_EXT_OVERRIDES**
-   | Default: unset
+   | Predefinito: non impostato
 
-   Space-separated list of OpenGL extensions that are assumed to be
-   supported, even if the driver says they aren't. Prefix an extension with
-   ``-`` to invert this behaviour. Might be used to work around bugs in
-   some weird/ancient/broken drivers, but your chances are slim. Note that
-   this only affects code paths that actually test for the given extensions,
-   not the actual OpenGL functionality. Some OpenGL implementations (such as
-   Mesa) provide their own mechanisms for controlling extensions. You most
-   likely want to use that instead.
-
-**TAISEI_FRAMERATE_GRAPHS**
-   | Default: ``0`` for release builds, ``1`` for debug builds
-
-   If ``1``, framerate graphs will be drawn on the HUD.
-
-**TAISEI_OBJPOOL_STATS**
-   | Default: ``0``
-
-   Displays some statistics about usage of in-game objects.
-
-Timing
-~~~~~~
-
-**TAISEI_HIRES_TIMER**
-   | Default: ``1``
-
-   If ``1``, tries to use the system's high resolution timer to limit the
-   game's framerate. Disabling this is not recommended; it will likely make
-   Taisei run slower or faster than intended and the reported FPS will be
-   less accurate.
-
-**TAISEI_FRAMELIMITER_SLEEP**
-   | Default: ``3``
-
-   If over ``0``, tries to give up processing time to other applications
-   while waiting for the next frame, if at least ``frame_time / this_value``
-   amount of time is remaining. Increasesing this value reduces CPU usage,
-   but may harm performance. Set to ``0`` for the v1.2 default behaviour.
-
-**TAISEI_FRAMELIMITER_COMPENSATE**
-   | Default: ``1``
-
-   If ``1``, the framerate limiter may let frames finish earlier than
-   normal after sudden frametime spikes. This achieves better timing
-   accuracy, but may hurt fluidity if the framerate is too unstable.
-
-**TAISEI_FRAMELIMITER_LOGIC_ONLY**
-   | Default: ``0``
-   | **Experimental**
-
-   If ``1``, only the logic framerate will be capped; new rendering frames
-   will be processed as quickly as possible, with no delay. This inherently
-   desynchronizes logic and rendering frames, and therefore, some logic
-   frames may be dropped if rendering is too slow. However, unlike with the
-   synchronous mode, the game speed will remain roughly constant in those
-   cases. ``TAISEI_FRAMELIMITER_SLEEP``, ``TAISEI_FRAMELIMITER_COMPENSATE``,
-   and the ``frameskip`` setting have no effect in this mode.
-
-Miscellaneous
-~~~~~~~~~~~~~
-
-**TAISEI_GAMEMODE**
-   | Default: ``1``
-   | *Linux only*
-
-   If ``1``, enables automatic integration with Feral Interactive's GameMode
-   daemon. Only meaningful for GameMode-enabled builds.
-
-Logging
-~~~~~~~
-
-Taisei's logging system currently has five basic levels and works by
-dispatching messages to a few output handlers. Each handler has a level
-filter, which is configured by a separate environment variable. All of
-those variables work the same way: their value looks like an IRC mode
-string, and represents a modification of the handler's default settings.
-If this doesn't make sense, take a look at the *Examples* section.
-
-The levels
-^^^^^^^^^^
-
--  **Debug** (*d*) is the most verbose level. It contains random
-   information about internal workings of the game and is disabled for
-   release builds at source level.
--  **Info** (*i*) logs some events that are expected to occur during
-   normal operation, for example when a spell is unlocked or a
-   screenshot is taken.
--  **Warning** (*w*) usually complains about misuse of the engine
-   features, deprecations, unimplemented functionality, other small
-   anomalies that aren't directly detrimental to functionality.
--  **Error** (*e*) alerts of non-critical errors, for example a
-   missing optional resource, corrupted progress data, or failure to
-   save a replay due to insufficient storage space or privileges.
--  **Fatal** (*f*) is an irrecoverable failure condition. Such an
-   event most likely signifies a programming error or a broken
-   installation. The game will immediately crash after writing a message
-   with this log level. On some platforms, it will also display a
-   graphical message box.
--  **All** (*a*) is not a real log level, but a shortcut directive
-   representing all possible log levels. See *Examples* for usage.
-
-The variables
-^^^^^^^^^^^^^
-
-**TAISEI_LOGLVLS_CONSOLE**
-   | Default: ``+a`` *(All)*
-
-   Controls what log levels may go to the console. This acts as a master
-   switch for **TAISEI_LOGLVLS_STDOUT** and **TAISEI_LOGLVLS_STDERR**.
-
-**TAISEI_LOGLVLS_STDOUT**
-   | Default: ``+di`` *(Debug, Info)*
-
-   Controls what log levels go to standard output. Log levels that are
-   disabled by **TAISEI_LOGLVLS_CONSOLE** are ignored.
-
-**TAISEI_LOGLVLS_STDERR**
-   | Default: ``+wef`` *(Warning, Error, Fatal)*
-
-   Controls what log levels go to standard error. Log levels that are
-   disabled by **TAISEI_LOGLVLS_CONSOLE** are ignored.
-
-**TAISEI_LOGLVLS_FILE**
-   | Default: ``+a`` *(All)*
-
-   Controls what log levels go to the log file
-   (``{storage directory}/log.txt``).
-
-**TAISEI_LOG_ASYNC**
-   | Default: ``1``
-
-   If ``1``, log messages are written asynchronously from a background
-   thread. This mostly benefits platforms where writing to the console
-   or files is very slow (such as Windows). You may want to disable this
-   when debugging.
-
-**TAISEI_LOG_ASYNC_FAST_SHUTDOWN**
-   | Default: ``0``
-
-   If ``1``, don't wait for the whole log queue to be written when
-   shutting down. This will make the game quit faster if log writing is
-   slow, at the expense of log integrity. Ignored if ``TAISEI_LOG_ASYNC``
-   is disabled.
-
-Examples
-^^^^^^^^
-
--  In release builds: print *Info* messages to stdout, in addition to
-   *Warning*\ s, *Error*\ s, and *Fatal*\ s as per default:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_STDOUT=+i
-
--  In Debug builds: remove *Debug* and *Info* output from the console:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_STDOUT=-di
-
-   OR:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_CONSOLE=-di
-
--  Don't save anything to the log file:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_FILE=-a
-
--  Don't print anything to the console:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_CONSOLE=-a
-
--  Don't save anything to the log file, except for *Error*\ s and *Fatal*\ s:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_FILE=-a+ef
-
--  Print everything except *Debug* to ``stderr``, nothing to ``stdout``:
-
-   .. code:: sh
-
-       TAISEI_LOGLVLS_STDOUT=-a
-       TAISEI_LOGLVLS_STDERR=+a-d
+   Elenco separato da spazi di estensioni OpenGL che si presume siano
