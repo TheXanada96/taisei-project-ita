@@ -1,40 +1,41 @@
-The Animation Sequence Format
+Il formato delle sequenze di animazione
 =============================
 
-An animation is made up of a number of sprites and an .ani file which
-contains all the metadata.
+Un'animazione è composta da una serie di sprite e da un file .ani che contiene tutti i metadati.
+contiene tutti i metadati.
 
-The .ani file needs to specify the number of sprites using the ``@sprite_count``
-attribute. Then different animation sequences can be defined.
+Il file .ani deve specificare il numero di sprite utilizzando l'opzione ``@sprite_count``
+attributo. È quindi possibile definire diverse sequenze di animazione.
 
-Animation sequences are chains of sprites that can be replayed in-game. For
-example Cirno can either fly normally or flex while flying. In order for the
-game to understand which sprites need to be shown in what order and time delay
-you need to define a sequence for every action.
+Le sequenze di animazione sono catene di sprite che possono essere riprodotte nel gioco. Ad esempio
+esempio Cirno può volare normalmente o flettersi durante il volo. Affinché il
+gioco capisca quali sprite devono essere mostrati in che ordine e con che ritardo
+è necessario definire una sequenza per ogni azione.
 
-To define the action *right* of the player flying to the left for example,
-you write into the file
+
+Per definire l'azione *destra* del giocatore che vola a sinistra, ad esempio,
+si scrive nel file
 
 .. code:: c
 
    	right = d5 0 1 2 3
 
-Every key in the .ani file not starting with @ corresponds to a sequence.
-The sequence specification itself is a list of frame indices. In the example
-above, the right sequence will cycle frames 0-3. Everything that is not a
-number like d5 in the example is a parameter:
+Ogni chiave del file .ani che non inizia con @ corrisponde a una sequenza.
+La specifica della sequenza stessa è un elenco di indici di fotogrammi. Nell'esempio
+di cui sopra, la sequenza di destra eseguirà un ciclo di fotogrammi 0-3. Tutto ciò che non è un numero
+come d5 nell'esempio è un parametro:
 
 **d<n>**
-  sets the frame delay to n. This means every sprite index given is
-  shown for n ingame frames.
+  imposta il ritardo dei fotogrammi a n. Ciò significa che ogni indice di sprite dato viene
+  mostrato per n fotogrammi di gioco.
 **m**
-  toggles the mirroring of the following frames.
+  alterna il mirroring dei fotogrammi seguenti.
 **m0,m1**
-  set the absolute mirroring of the following frames.
+  impostare il mirroring assoluto dei fotogrammi seguenti.
 
-All parameters are persistent within one sequence spec until you change them.
+Tutti i parametri sono persistenti all'interno di una specifica sequenza finché non vengono modificati.
 
-More examples:
+Altri esempi:
 
 .. code:: c
 
@@ -42,23 +43,21 @@ More examples:
 	left = m d5 0 1 2 3
 	alternateleftright = m d5 0 1 2 3 m 0 1 2 3
 
-There are many possibilities to use ``d<n>`` to make animations look dynamic (or
-strange)
+Ci sono molte possibilità di utilizzo ``d<n>`` Ci sono molte possibilità di utilizzo
 
-Some naming conventions
+Alcune convenzioni di denominazione
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The resource code does not require you to choose any specific names for your
-sequences, but different parts of the game of course have to at some point.
-The most common convention is calling the standard sequence "main". This is
-the least you need to do for anything using an aniplayer, because the
-aniplayer needs to know a valid starting animation.
+Il codice delle risorse non richiede la scelta di nomi specifici per le sequenze.
+ma le diverse parti del gioco devono essere chiamate così a un certo punto.
+La convenzione più comune è quella di chiamare la sequenza standard "main". Questo è
+è il minimo che si debba fare per qualsiasi cosa che utilizzi un aniplayer, perché l'aniplayer deve conoscere una sequenza
+aniplayer ha bisogno di conoscere un'animazione iniziale valida.
 
-If you have a sequence of the sprite going left or right, call it "left" and
-"right". Player and fairy animations do this.
+Se avete una sequenza in cui lo sprite va a sinistra o a destra, chiamatela "sinistra" e "destra".
+"destra". Le animazioni del giocatore e della fata fanno questo.
 
-Look at existing files for more examples. Wriggle might be interesting for
-complicated delay and queue trickery.
-The documentation of the ``AniPlayer`` struct might also be interesting to
-learn more about the internals.
-
+Guardate i file esistenti per ulteriori esempi. Wriggle potrebbe essere interessante per
+ritardi complicati e trucchi di coda.
+La documentazione della struttura ``AniPlayer`` potrebbe essere interessante anche per
+saperne di più sugli interni.
