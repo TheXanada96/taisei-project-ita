@@ -182,394 +182,502 @@ This is *not* an exhaustive list. You can see the full list of option using
    cd taisei/
    meson configure
 
-Setup
+Impostare
 """""
 
-The first command you'll need to run is ``setup``, which creates a directory
-(in this case, ``taisei/build/``). It checks your system for various
-dependencies and required tools, which should take about a minute on most
-systems.
+Il primo comando che dovrai eseguire è ``setup``, che crea una directory
+(in questo caso, ``taisei/build/``). Controlla il tuo sistema per vari
+dipendenze e strumenti richiesti, che dovrebbero richiedere circa un minuto al massimo
+sistemi.
 
-.. code:: sh
+.. codice:: sh
 
-   # inside the taisei/ directory you cloned before
-   meson setup build/
+   # all'interno della directory taisei/ che hai clonato in precedenza
+   costruzione configurazione mesone/
 
-You can also have the ``setup`` command contain certain build options (seen
-below). The following are an *example* and *not required* for getting Taisei
-building.
+Puoi anche fare in modo che il comando ``setup`` contenga alcune opzioni di compilazione (viste
+sotto). I seguenti sono un *esempio* e *non richiesto* per ottenere Taisei
+edificio.
 
-.. code:: sh
+.. codice:: sh
 
-   # enables Developer Mode and debugging symbols
+   # abilita la modalità sviluppatore e i simboli di debug
    meson setup build/ -Ddeveloper=true -Dbuildtype=debug
 
-You can then apply more build options later using ``meson configure`` (as seen
-below). It will automatically reconfigure your build environment with the new
-options without having to rebuild everything.
+Puoi quindi applicare più opzioni di compilazione in un secondo momento usando ``meson configure`` (come visto
+sotto). Riconfigurerà automaticamente il tuo ambiente di compilazione con il nuovo
+opzioni senza dover ricostruire tutto.
 
-System/Vendored Dependencies (``--wrap-mode``)
+Dipendenze sistema/fornitore (``--wrap-mode``)
 """"""""""""""""""""""""""""""""""""""""""""""
 
-See: `Meson Manual <https://mesonbuild.com/Wrap-dependency-system-manual.html>`__
+Vedere: `Meson Manual <https://mesonbuild.com/Wrap-dependency-system-manual.html>`__
 
-* Default: ``default``
-* Options: ``default``, ``nofallback``, ``forcefallback``, ...
+* Predefinito: ``predefinito``
+* Opzioni: ``default``, ``nofallback``, ``forcefallback``, ...
 
-This is a core ``meson`` flag that does quite a few things. Not all of them will
-be covered here. Refer to the ``meson`` documentation linked above.
+Questo è un flag ``meson`` di base che fa un bel po' di cose. Non tutti lo faranno
+essere coperto qui. Fare riferimento alla documentazione del ``mesone`` collegata sopra.
 
-Generally, ``default`` will rely on system-installed libraries when available,
-and download missing dependencies when necessary.
+Generalmente, ``default`` si baserà sulle librerie installate dal sistema quando disponibili,
+e scarica le dipendenze mancanti quando necessario.
 
-``forcefallback`` will force the use of wrapped dependencies whenever possible.
-Recommended for release builds.
+``forcefallback`` forzerà l'uso di dipendenze incapsulate quando possibile.
+Consigliato per build di rilascio.
 
-``nofallback`` disallows the use of wrapped dependencies whenever possible,
-instead relying on system libraries. Useful for CI.
+``nofallback`` non consente l'uso di dipendenze incapsulate quando possibile,
+affidandosi invece alle librerie di sistema. Utile per CI.
 
-.. code:: sh
+.. codice:: sh
 
-   # forces in-repo dependencies
+   # forza le dipendenze in-repo
    meson configure build/ --wrap-mode=forcefallback
-   # disables in-repo repositories
+   # disabilita i repository in-repo
    meson configure build/ --wrap-mode=nofallback
 
-Relative Directory Install (``-Dinstall_relative``)
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+Installazione directory relativa (``-Dinstall_relative``)
+"""""""""""""""""""""""""""""""""""""""""""""""""" "
 
-* Default: ``true`` or ``false`` (platform-dependent)
+* Predefinito: ``true`` o ``false`` (dipende dalla piattaforma)
 
-``-Dinstall_relative`` is a special option that changes depending on the
-platform build target.
+``-Dinstall_relative`` è un'opzione speciale che cambia a seconda del file
+obiettivo di costruzione della piattaforma.
 
-It is set to ``true`` when building for macOS, Windows, Emscripten, and Switch.
+È impostato su ``true`` durante la compilazione per macOS, Windows, Emscripten e Switch.
 
-It is set to ``false`` when building for Linux.
+È impostato su ``false`` durante la compilazione per Linux.
 
-Install Prefix (``--prefix``)
+Prefisso di installazione (``--prefix``)
 """""""""""""""""""""""""""""
 
-* Default: ``/usr/local``
+* Predefinito: ``/usr/local``
 
-``--prefix`` installs the Taisei binary and content files to a path of your
-choice on your filesystem.
+``--prefix`` installa i file binari e di contenuto di Taisei in un percorso del tuo
+scelta sul tuo filesystem.
 
-On Linux without ``-Dinstall_relative`` enabled (i.e: ``false``), it should be
-kept to its default ``/usr/local``. In general, don't touch it unless you need
-to.
+Su Linux senza ``-Dinstall_relative`` abilitato (cioè: ``false``), dovrebbe essere
+mantenuto al suo valore predefinito ``/usr/local``. In generale, non toccarlo a meno che non sia necessario
+A.
 
-On other platforms, it will install all Taisei game files to the directory of
-your choice.
+Su altre piattaforme, installerà tutti i file di gioco Taisei nella directory di
+la tua scelta.
 
-.. code:: sh
+.. codice:: sh
 
    meson setup --prefix=/path/goes/here build/
 
-Package Data (``-Dpackage_data``)
+Dati pacchetto (``-Dpackage_data``)
 """""""""""""""""""""""""""""""""
 
-* Default: ``auto``
-* Options: ``auto``, ``true``, ``false``
+* Predefinito: ``auto``
+* Opzioni: ``auto``, ``true``, ``false``
 
-Packages game data into either a directory or a ``.zip`` depending on if
-``-Denable_zip`` is ``true`` (see below).
+Impacchetta i dati di gioco in una directory o in un ``.zip`` a seconda di se
+``-Denable_zip`` è ``true`` (vedi sotto).
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Dpackage_data=false
 
-Enable ZIP Loading (``-Denable_zip``)
+Abilita caricamento ZIP (``-Denable_zip``)
 """""""""""""""""""""""""""""""""""""
 
-* Default: ``true```
-* Options: ``true``, ``false``
+* Predefinito: ``true```
+* Opzioni: ``vero``, ``falso``
 
-Controls whether or not Taisei can load game data (textures, shaders, etc) from
-``.zip`` files. Useful for distribution and packaging.
+Controlla se Taisei può o meno caricare i dati di gioco (texture, shader, ecc.) da
+File ``.zip``. Utile per la distribuzione e il confezionamento.
 
-**NOTE:** Setting this to ``false`` automatically disables ``-Dpackage_data``.
+**NOTA:** l'impostazione su ``false`` disabilita automaticamente ``-Dpackage_data``.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Denable_zip=false
 
-In-Game Developer Options (``-Ddeveloper``)
-"""""""""""""""""""""""""""""""""""""""""""
+Opzioni sviluppatore in-game (``-Ddeveloper``)
+""""""""""""""""""""""""""""""""""""""""""
 
-* Default: ``false``
-* Options: ``true``, ``false``
+* Predefinito: ``falso``
+* Opzioni: ``vero``, ``falso``
 
-For testing actual gameplay, you can set this option and it will enable cheats
-and other 'fast-forward' options by the pressing keys defined in
+Per testare il gameplay reale, puoi impostare questa opzione e abiliterà i cheat
+e altre opzioni di "avanzamento rapido" premendo i tasti definiti in
 ``src/config.h``.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Ddeveloper=true
 
-Build Type (``-Dbuildtype``)
+Tipo di build (``-Dbuildtype``)
 """"""""""""""""""""""""""""
 
-* Default: ``release``
-* Options: ``release``, ``debug``
+* Predefinito: ``rilascio``
+* Opzioni: ``rilascio``, ``debug``
 
-Sets the type of build. ``debug`` enables several additional debugging features,
-as well as reduced optimizations and more debugging symbols.
+Imposta il tipo di build. ``debug`` abilita diverse funzionalità di debug aggiuntive,
+così come ottimizzazioni ridotte e più simboli di debug.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Dbuildtype=debug
 
-Assertions (``-Db_ndebug``)
+Asserzioni (``-Db_ndebug``)
 """""""""""""""""""""""""""
 
-* Default: ``true``
-* Options: ``true``, ``false``
+* Predefinito: ``true``
+* Opzioni: ``vero``, ``falso``
 
-The name of this flag is opposite of what you'd expect. Think of it as "Not
-Debugging". It controls the ``NDEBUG`` declaration which is responsible for
-deactivating ``assert()`` macros.
+Il nome di questa bandiera è l'opposto di quello che ti aspetteresti. Pensalo come "No
+Debugging". Controlla la dichiarazione ``NDEBUG`` di cui è responsabile
+disattivando le macro ``assert()``.
 
-Setting to ``false`` will *enable* assertions (i.e: good for debugging).
+L'impostazione su ``false`` *abiliterà* le asserzioni (vale a dire: buono per il debug).
 
-Keep ``true`` during release.
+Mantieni ``true`` durante il rilascio.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Db_ndebug=false
 
-Strict Compiler Warnings (``-Dwerror``)
+Avvisi rigorosi del compilatore (``-Dwerror``)
 """""""""""""""""""""""""""""""""""""""
 
 * Default: ``false``
 * Options: ``true``, ``false``
 
-This option forces stricter checks against Taisei's codebase to ensure code
-health, treating all ``Warnings`` as ``Errors`` in the code.
+Questa opzione impone controlli più rigorosi sulla base di codice di Taisei per garantire il codice
+salute, trattando tutti gli ``Avvisi`` come ``Errori`` nel codice.
 
-It's highly recommended to **enable** (i.e: ``true``) this whenever developing
-for the engine. Sometimes, it's overly-pedantic, but much of the time, it
-provides useful advice. (For example, it can detect potential null-pointer
-exceptions that may not be obvious to the human eye.)
+Si consiglia vivamente di **abilitare** (ovvero: ``true``) questo ogni volta che si sviluppa
+per il motore. A volte è eccessivamente pedante, ma la maggior parte delle volte lo è
+fornisce utili consigli. (Ad esempio, può rilevare potenziali puntatori nulli
+eccezioni che potrebbero non essere evidenti all'occhio umano.)
 
 .. code:: sh
 
    meson configure build/ -Dwerror=true
 
-Deprecation Warnings (``-Ddeprecation_warnings``)
+Avvisi di deprecazione (``-Ddeprecation_warnings``)
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 * Default: ``default``
 * Options: ``error``, ``no-error``, ``ignore``, ``default``
 
-Sets deprecation warnings to either hard-fail (``error``), print as warnings but
-not trigger full errors if ``-Dwerror=true`` (``no-error``), and otherwise
-ignore them (``ignore``). ``default`` respects the ``-Dwerror`` setting.
+Imposta gli avvisi di deprecazione su hard-fail (``error``), stampa come avvisi ma
+non attivare errori completi se ``-Dwerror=true`` (``no-error``), e altrimenti
+ignorali (``ignore``). ``default`` rispetta l'impostazione ``-Dwerror``.
 
-Generally, ``no-error`` is the recommended default when using ``-Dwerror=true``.
+Generalmente, ``no-error`` è l'impostazione predefinita consigliata quando si utilizza ``-Dwerror=true``.
 
 .. code:: sh
 
    meson configure build/ -Ddeprecation_warnings=no-error
 
 
-Debugging With Sanitizers (``-Db_sanitize``)
+Debug con disinfettanti (``-Db_sanitize``)
 """"""""""""""""""""""""""""""""""""""""
 
-This is useful for debugging memory management errors, leaks, and undefined behavior.
-However, there is some additional setup required to use it.
+Ciò è utile per il debug di errori di gestione della memoria, perdite e comportamento non definito.
+Tuttavia, sono necessarie alcune impostazioni aggiuntive per utilizzarlo.
 
-.. code:: sh
+.. codice:: sh
 
-   meson configure build/ -Db_sanitize=address,undefined
+   meson configure build/ -Db_sanitize=indirizzo,non definito
 
-Depending on your platform, you may need to specify the specific library binary
-to use to launch ASan appropriately. Using macOS as an example:
+A seconda della piattaforma, potrebbe essere necessario specificare il binario della libreria specifica
+da utilizzare per avviare ASan in modo appropriato. Usando macOS come esempio:
 
-.. code:: sh
+.. codice:: sh
 
    export DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.5/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
 
-The ``../12.0.5/..`` in the path of ``DYLD_INSERT_LIBRARIES`` changes with each
-version of Xcode. If it fails to launch for you, ensure that the version number
-is correct by browsing to the parent directory of ``../clang``.
+``../12.0.5/..`` nel percorso di ``DYLD_INSERT_LIBRARIES`` cambia a ogni
+versione di Xcode. Se non si avvia per te, assicurati che il numero di versione
+è corretto sfogliando la directory principale di ``../clang``.
 
-Then, you can launch Taisei's binary from the command line (using macOS as an
-example):
+Quindi, puoi avviare il file binario di Taisei dalla riga di comando (usando macOS come file
+esempio):
 
-.. code:: sh
+.. codice:: sh
 
    /path/to/Taisei.app/Contents/MacOS/Taisei
 
-Further reading: `Sanitizers <https://github.com/google/sanitizers/wiki>`__
+Ulteriori letture: `Disinfettanti <https://github.com/google/sanitizers/wiki>`__
 
-Link-Time Optimizations (``-Db_lto``)
+Ottimizzazioni del tempo di collegamento (``-Db_lto``)
 """""""""""""""""""""""""""""""""""""
 
-* Default: ``true``
-* Options: ``true``, ``false``
+* Predefinito: ``true``
+* Opzioni: ``vero``, ``falso``
 
-Link-time optimizations (LTO) increase build times, but also increase
-performance. For quicker build times during development, you can disable it.
-For release builds, this should be kept ``true``.
+Le ottimizzazioni del tempo di collegamento (LTO) aumentano i tempi di compilazione, ma aumentano anche
+prestazione. Per tempi di compilazione più rapidi durante lo sviluppo, puoi disabilitarlo.
+Per le build di rilascio, questo dovrebbe essere mantenuto ``true``.
 
-See: `Interprocedural Optimization <https://en.wikipedia.org/wiki/Interprocedural_optimization#WPO_and_LTO>`__
+Vedere: `Ottimizzazione interprocedurale <https://en.wikipedia.org/wiki/Interprocedural_optimization#WPO_and_LTO>`__
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Db_lto=false
 
-Binary Striping (``-Dstrip``)
+Striping binario (``-Dstrip``)
 """""""""""""""""""""""""""""
 
-* Default: ``true``
-* Options: ``true``, ``false``
+* Predefinito: ``true``
+* Opzioni: ``vero``, ``falso``
 
-This option prevents stripping of the `taisei` binary, providing a marginally
-faster build time.
+Questa opzione impedisce lo stripping del binario `taisei`, fornendo un valore marginale
+tempi di costruzione più rapidi.
 
-Keep this ``true`` during releases, but ``false`` during development, as it will
-strip out useful debugging symbols.
+Mantieni questo ``vero`` durante i rilasci, ma ``falso`` durante lo sviluppo, come sarà
+eliminare utili simboli di debug.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Db_strip=false
 
 Rendering
 """""""""
 
-Backends (``-Dr_gl*``)
-''''''''''''''''''''''
+Backend (``-Dr_gl*``)
+'''''''''''''''''''''''
 
-* Default: ``false``
-* Options: ``true``, ``false``
+* Predefinito: ``falso``
+* Opzioni: ``vero``, ``falso``
 
-Enable or disable the various renderer backends for Taisei.
+Abilita o disabilita i vari backend del renderer per Taisei.
 
-``-Dshader_transpiler`` is required for when OpenGL ES is used.
+``-Dshader_transpiler`` è necessario quando si usa OpenGL ES.
 
-.. code:: sh
+.. codice:: sh
 
-   # for GL 3.3 (default)
+   # per GL 3.3 (predefinito)
    meson configure build/ -Dr_gl33=true
-   # for GL ES 3.0
+   # per GL ES 3.0
    meson configure build/ -Dr_gles30=true
-   # for GL ES 2.0 (not recommended)
+   # per GL ES 2.0 (non consigliato)
    meson configure build/ -Dr_gles20=true
 
-**NOTE:** GL ES 2.0 is *not recommended* as it is unsupported and may
-not work correctly. However, if for some reason you still want to use it,
-it requires a few extensions to be present on your system to function
-correctly, most notably:
+**NOTA:** GL ES 2.0 *non è consigliato* in quanto non è supportato e potrebbe
+non funziona correttamente. Tuttavia, se per qualche motivo desideri ancora utilizzarlo,
+richiede che alcune estensioni siano presenti sul tuo sistema per funzionare
+correttamente, in particolare:
 
-- ``OES_depth_texture`` or ``GL_ANGLE_depth_texture``
+- ``OES_depth_texture`` o ``GL_ANGLE_depth_texture``
 - ``OES_standard_derivatives``
 - ``OES_vertex_array_object``
 - ``EXT_frag_depth``
-- ``EXT_instanced_arrays`` or ``ANGLE_instanced_arrays`` or
+- ``EXT_instanced_arrays`` o ``ANGLE_instanced_arrays`` o
   ``NV_instanced_arrays``
 
-Default Renderer (``-Dr_default``)
-''''''''''''''''''''''''''''''''''
+Rendering predefinito (``-Dr_default``)
+'''''''''''''''''''''''''''''''''''
 
-* Default: ``gl33``
-* Options: ``gl33``, ``gles30``, ``gles20``, ``null``
+* Predefinito: ``gl33``
+* Opzioni: ``gl33``, ``gles30``, ``gles20``, ``null``
 
-Sets the default renderer to use when Taisei launches.
+Imposta il renderer predefinito da utilizzare all'avvio di Taisei.
 
-.. code:: sh
+.. codice:: sh
 
-   # for GL 3.3 (default)
+   # per GL 3.3 (predefinito)
    meson configure build/ -Dr_default=gl33
-   # for GL ES 3.0
+   # per GL ES 3.0
    meson configure build/ -Dr_default=gles30
-   # for GL ES 2.0 (not recommended)
+   # per GL ES 2.0 (non consigliato)
    meson configure build/ -Dr_default=gles20
 
-You can switch the renderer using the ``--renderer`` flag on the ``taisei``
-binary. (i.e: ``taisei --renderer gl33``).
+Puoi cambiare il renderer usando il flag ``--renderer`` sul ``taisei``
+binario. (es: ``taisei --renderer gl33``).
 
 Shader Transpiler (``-Dshader_transpiler``)
-'''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''
 
-* Default: ``false``
-* Options: ``true``, ``false``
+* Predefinito: ``falso``
+* Opzioni: ``vero``, ``falso``
 
-For using OpenGL ES, the shader transpiler is necessary for converting Taisei's
-shaders to a format usable by that driver.
+Per utilizzare OpenGL ES, è necessario lo shader transpiler per la conversione di Taisei
+shader in un formato utilizzabile da quel driver.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Dshader_transpiler=true
 
-ANGLE
+ANGOLO
 """""
 
-Building ANGLE (Optional)
-'''''''''''''''''''''''''
-`ANGLE <https://github.com/google/angle>`__ is Google's graphics translation
-layer, intended for for Chromium. Taisei packages it with Windows builds to
-workaround some bugs and performance issues with many Windows OpenGL drivers,
-and it can be optionally packaged as as an experimental Metal renderer for
-macOS.
+Compilare ANGLE (Opzionale)
+''''''''''''''''''''''''''
+`ANGLE <https://github.com/google/angle>`__ è la traduzione grafica di Google
+strato, destinato a Chromium. Taisei lo impacchetta con le build di Windows
+risolvere alcuni bug e problemi di prestazioni con molti driver Windows OpenGL,
+e può essere facoltativamente impacchettato come renderer Metal sperimentale per
+Mac OS.
 
-You need to read
-`this guide <https://github.com/google/angle/blob/master/doc/DevSetup.md>`__ and
-set up Google's custom build system to get things going. However, the below
-commands might help you compiling what you need from it when you have that all
-set up.
+Devi leggere
+`questa guida <https://github.com/google/angle/blob/master/doc/DevSetup.md>`__ e
+imposta il sistema di build personalizzato di Google per far funzionare le cose. Tuttavia, il sotto
+i comandi potrebbero aiutarti a compilare ciò di cui hai bisogno quando hai tutto
+impostare.
 
-.. code:: sh
+.. codice:: sh
 
-   cd angle
+   angolo cd
    python ./scripts/bootstrap.py
-   gclient sync
+   sincronizzazione client
    gn gen out/x64 --args='is_debug=false dcheck_always_on=false target_cpu="x64"'
    ninja -C out/x64 libEGL libGLESv2
 
-It will output two files to ``angle/out/x64``:
+Produrrà due file in ``angle/out/x64``:
 
 * ``libEGL.(*)``
 * ``libGLESv2.(*)``
 
-The file extension can be ``.dll`` for Windows, ``.dylib`` for macOS,
-and ``.so`` for Linux.
+L'estensione del file può essere ``.dll`` per Windows, ``.dylib`` per macOS,
+e ``.so`` per Linux.
 
-Using ``-Dinstall_angle`` and ``-Dangle_lib*`` (see below), ``meson`` will copy
-those files over into the package itself when running the packaging steps.
+Usando ``-Dinstall_angle`` e ``-Dangle_lib*`` (vedi sotto), ``meson`` copierà
+quei file nel pacchetto stesso durante l'esecuzione dei passaggi di creazione del pacchetto.
 
-ANGLE Library Paths (``-Dangle_lib*``)
-''''''''''''''''''''''''''''''''''''''
+Percorsi libreria ANGLE (``-Dangle_lib*``)
+'''''''''''''''''''''''''''''''''''''''
 
-* Default: ``(null)``
-* Options: ``/path/to/libGLESv2.{dll,dylib,so}``/``path/to/libEGL.{dll,dylib,so}``
+* Predefinito: ``(nullo)``
+* Opzioni: ``/percorso/a/
 
-``-Dangle_libgles`` and ``-Dangle_libegl`` provide the full paths to the ANGLE
-libraries necessary for that engine.
 
-Generally, both need to be supplied at the same time.
 
-.. code:: sh
+ANGLE
+"""""
 
-   # for macOS
-   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.dylib -Dangle_libegl=/path/to/libEGL.dylib
-   # for Linux
-   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.so -Dangle_libegl=/path/to/libEGL.so
-   # for Windows
+Compilare ANGLE (Opzionale)
+'''''''''''''''''''''''''
+`ANGLE <https://github.com/google/angle>`__ è la traduzione grafica di Google
+strato, destinato a Chromium. Taisei lo impacchetta con le build di Windows
+risolvere alcuni bug e problemi di prestazioni con molti driver Windows OpenGL,
+e può essere facoltativamente impacchettato come renderer Metal sperimentale per
+Mac OS.
+
+Devi leggere
+`questa guida <https://github.com/google/angle/blob/master/doc/DevSetup.md>`__ e
+imposta il sistema di build personalizzato di Google per far funzionare le cose. Tuttavia, il sotto
+i comandi potrebbero aiutarti a compilare ciò di cui hai bisogno quando hai tutto
+impostare.
+
+.. codice:: sh
+
+   angolo cd
+   python ./scripts/bootstrap.py
+   sincronizzazione client
+   gn gen out/x64 --args='is_debug=false dcheck_always_on=false target_cpu="x64"'
+   ninja -C out/x64 libEGL libGLESv2
+
+Produrrà due file in ``angle/out/x64``:
+
+* ``libEGL.(*)``
+* ``libGLESv2.(*)``
+
+L'estensione del file può essere ``.dll`` per Windows, ``.dylib`` per macOS,
+e ``.so`` per Linux.
+
+Usando ``-Dinstall_angle`` e ``-Dangle_lib*`` (vedi sotto), ``meson`` copierà
+quei file nel pacchetto stesso durante l'esecuzione dei passaggi di creazione del pacchetto.
+
+Percorsi libreria ANGLE (``-Dangle_lib*``)
+'''''''''''''''''''''''''''''''''''''''
+
+* Predefinito: ``(nullo)``
+* Opzioni: ``/path/to/libGLESv2.{dll,dylib,so}``/``path/to/libEGL.{dll,dylib,so}``
+
+``-Dangle_libgles`` e ``-Dangle_libgles`` forniscono i percorsi completi per ANGLE
+librerie necessarie per quel motore.
+
+In genere, entrambi devono essere forniti contemporaneamente.
+
+.. codice:: sh
+
+   # per macOS
+   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.dylib -Dangle_libgles=/path/to/libEGL.dylib
+   # per Linux
+   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.so -Dangle_libgles=/path/to/libEGL.so
+   # per Windows
    meson configure build/ -Dangle_libgles=/path/to/libGLESv2.dll -Dangle_libegl=/path/to/libEGL.dll
 
-Install ANGLE (``-Dinstall_angle``)
-'''''''''''''''''''''''''''''''''''
+Installa ANGLE (``-Dinstall_angle``)
+''''''''''''''''''''''''''''''''''''
 
-* Default: ``false``
-* Options: ``true``, ``false``
+* Predefinito: ``falso``
+* Opzioni: ``vero``, ``falso``
 
-Installs the ANGLE libraries supplied above through ``-Dangle_lib*``.
+Installa le librerie ANGLE fornite sopra tramite ``-Dangle_lib*``.
 
-Generally recommended when packaging ANGLE for distribution.
+Generalmente consigliato quando si confeziona ANGLE per la distribuzione.
 
-.. code:: sh
+.. codice:: sh
 
    meson configure build/ -Dinstall_angle=true
 
+`ANGLE <https://github.com/google/angle>`__ è la traduzione grafica di Google
+strato, destinato a Chromium. Taisei lo impacchetta con le build di Windows
+risolvere alcuni bug e problemi di prestazioni con molti driver Windows OpenGL,
+e può essere facoltativamente impacchettato come renderer Metal sperimentale per
+Mac OS.
+
+Devi leggere
+`questa guida <https://github.com/google/angle/blob/master/doc/DevSetup.md>`__ e
+imposta il sistema di build personalizzato di Google per far funzionare le cose. Tuttavia, il sotto
+i comandi potrebbero aiutarti a compilare ciò di cui hai bisogno quando hai tutto
+impostare.
+
+.. codice:: sh
+
+   angolo cd
+   python ./scripts/bootstrap.py
+   sincronizzazione client
+   gn gen out/x64 --args='is_debug=false dcheck_always_on=false target_cpu="x64"'
+   ninja -C out/x64 libEGL libGLESv2
+
+Produrrà due file in ``angle/out/x64``:
+
+* ``libEGL.(*)``
+* ``libGLESv2.(*)``
+
+L'estensione del file può essere ``.dll`` per Windows, ``.dylib`` per macOS,
+e ``.so`` per Linux.
+
+Usando ``-Dinstall_angle`` e ``-Dangle_lib*`` (vedi sotto), ``meson`` copierà
+quei file nel pacchetto stesso durante l'esecuzione dei passaggi di creazione del pacchetto.
+
+Percorsi libreria ANGLE (``-Dangle_lib*``)
+'''''''''''''''''''''''''''''''''''''''
+
+* Predefinito: ``(nullo)``
+* Opzioni: ``/path/to/libGLESv2.{dll,dylib,so}``/``path/to/libEGL.{dll,dylib,so}``
+
+``-Dangle_libgles`` e ``-Dangle_libgles`` forniscono i percorsi completi per ANGLE
+librerie necessarie per quel motore.
+
+In genere, entrambi devono essere forniti contemporaneamente.
+
+.. codice:: sh
+
+   # per macOS
+   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.dylib -Dangle_libgles=/path/to/libEGL.dylib
+   # per Linux
+   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.so -Dangle_libgles=/path/to/libEGL.so
+   # per Windows
+   meson configure build/ -Dangle_libgles=/path/to/libGLESv2.dll -Dangle_libegl=/path/to/libEGL.dll
+
+Installa ANGLE (``-Dinstall_angle``)
+''''''''''''''''''''''''''''''''''''
+
+* Predefinito: ``falso``
+* Opzioni: ``vero``, ``falso``
+
+Installa le librerie ANGLE fornite sopra tramite ``-Dangle_lib*``.
+
+Generalmente consigliato quando si confeziona ANGLE per la distribuzione.
+
+.. codice:: sh
+
+   meson configure build/ -Dinstall_angle=true

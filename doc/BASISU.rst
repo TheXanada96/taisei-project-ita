@@ -4,21 +4,20 @@ Basis Universal
 
 .. contents::
 
-Intro
+Introduzione
 -----
 
-`Basis Universal <https://github.com/taisei-project/basis_universal>`__ is a GPU texture compression system with ability
-to transcode images into a wide variety of formats at runtime from a single source. This document explains how to author
-Basis Universal (``.basis``) textures for Taisei, and highlights limitations and caveats of our Basis support.
-
+`Basis Universal <https://github.com/taisei-project/basis_universal>`__ è un sistema di compressione delle texture su GPU con capacità
+per transcodificare le immagini in un'ampia varietà di formati in tempo reale da un'unica fonte. Questo documento illustra come creare
+Texture Basis Universal (``.basis``) per Taisei, ed evidenzia le limitazioni e le avvertenze del nostro supporto Basis.
 First-time setup
 ----------------
 
-Step 1: The encoder
+Fase 1: L'encoder
 ~~~~~~~~~~~~~~~~~~~
 
-Compile the encoder and put it somewhere in your ``PATH``. Assuming you have a working and up to date clone of the
-Taisei repository, including submodules, this can be done like so on Linux:
+Compilate il codificatore e mettetelo da qualche parte nel vostro ``PATH``. Supponendo di avere un clone funzionante e aggiornato del file
+Il repository Taisei, compresi i sottomoduli, può essere fatto in questo modo su Linux:
 
 .. code:: sh
 
@@ -27,35 +26,35 @@ Taisei repository, including submodules, this can be done like so on Linux:
     meson compile -C build basisu
     ln -s $PWD/build/basisu ~/.local/bin
 
-Verify that the encoder is working by running ``basisu``. It should print a long list of options. If the command is not
-found, make sure ``~/.local/bin`` is in your ``PATH``, or choose another directory that is.
+Verificare che il codificatore funzioni eseguendo ``basisu``. Dovrebbe essere stampato un lungo elenco di opzioni. Se il comando non è
+trovato, assicuratevi che ``~/.local/bin`` sia nella vostra ``PATH``, oppure scegliete un'altra directory che lo sia.
 
-The optimization options in ``meson setup`` are optional but highly recommended, as the encoding process can be quite
-slow.
+Le opzioni di ottimizzazione in ``meson setup`` sono opzionali ma altamente raccomandate, in quanto il processo di codifica può essere abbastanza
+lento.
 
-It's also possible to use `the upstream encoder <https://github.com/BinomialLLC/basis_universal>`__, which may be
-packaged by your distribution. However, this is not recommended. As of 2020-08-06, the upstream encoder is missing some
-important performance optimizations; see
+È anche possibile usare `l'encoder upstream <https://github.com/BinomialLLC/basis_universal>`__, che può essere
+confezionato dalla vostra distribuzione. Tuttavia, non è consigliabile. A partire dal 2020-08-06, il codificatore upstream manca di alcune
+importanti ottimizzazioni delle prestazioni; 
 `BinomialLLC/basis_universal#105 <https://github.com/BinomialLLC/basis_universal/pull/105>`__
 `BinomialLLC/basis_universal#112 <https://github.com/BinomialLLC/basis_universal/pull/112>`__
 `BinomialLLC/basis_universal#113 <https://github.com/BinomialLLC/basis_universal/pull/113>`__.
 
-Step 2: The wrapper
+Fase 2: L'involucro
 ~~~~~~~~~~~~~~~~~~~
 
-The ``mkbasis`` wrapper script is what you'll actually use to create ``.basis`` files. Simply symlink it into your
+Lo script wrapper ``mkbasis'' è quello che verrà utilizzato per creare i file ``.basis''. È sufficiente un collegamento simbolico con il file
 ``PATH``:
 
 .. code:: sh
 
     ln -s $PWD/scripts/mkbasis.py ~/.local/bin/mkbasis
 
-Verify that it works by running ``mkbasis``.
+Verificate che funzioni eseguendo ``mkbasis``.
 
-Encoding TL;DR
+Codifica TL;DR
 --------------
 
-Encode a **diffuse or ambient map** (sRGB data, decoded to linear when sampled in a shader):
+Codificare una **mappa diffusa o ambientale** (dati sRGB, decodificati in lineari quando vengono campionati in uno shader):
 
 .. code:: sh
 
@@ -65,13 +64,13 @@ Encode a **diffuse or ambient map** (sRGB data, decoded to linear when sampled i
     # Outputs to /path/to/bar.basis
     mkbasis foo.png -o /path/to/bar.basis
 
-Encode a **tangent-space normal map** (special case):
+Codificare una **mappa normale dello spaziotangente** (caso speciale):
 
 .. code:: sh
 
     mkbasis foo.png --normal
 
-Encode a **roughness map** (single-channel linear data):
+Codificare una **mappa di rugosità** (dati lineari a canale singolo):
 
 .. code:: sh
 
@@ -79,7 +78,7 @@ Encode a **roughness map** (single-channel linear data):
     # Equivalent to:
     mkbasis foo.png --r --linear
 
-Encode **RGBA** color data and **pre-multiply alpha**:
+Codifica i dati di colore **RGBA** e **pre-moltiplica l'alfa**.:
 
 .. code:: sh
 
@@ -87,7 +86,7 @@ Encode **RGBA** color data and **pre-multiply alpha**:
     # Equivalent to:
     mkbasis foo.png --rgba
 
-Encode **Gray+Alpha** data and **pre-multiply alpha**:
+Codifica i dati **Gray+Alpha** e **pre-moltiplica alpha**:
 
 .. code:: sh
 
@@ -95,48 +94,46 @@ Encode **Gray+Alpha** data and **pre-multiply alpha**:
     # Equivalent to:
     mkbasis foo.png --gray-alpha
 
-Do **not** pre-multiply alpha:
+**Non** pre-moltiplicare alfa:
 
 .. code:: sh
 
     mkbasis foo.png --no-multiply-alpha
 
-Sacrifice quality to speed up the encoding process:
+Sacrificare la qualità per accelerare il processo di codifica:
 
 .. code:: sh
 
     mkbasis foo.png --fast
 
-For a complete list of options and their default values, see
-
+Per un elenco completo delle opzioni e dei loro valori predefiniti, vedere
 .. code:: sh
 
     mkbasis --help
 
-Encoding details
+Dettagli di codifica
 ----------------
 
-Encoding modes
+Modalità di codifica
 ~~~~~~~~~~~~~~
 
-Basis Universal supports two very different encoding modes: ETC1S and UASTC. The primary difference between the two is
-the size/quality trade-off.
+Basis Universal supporta due modalità di codifica molto diverse: ETC1S e UASTC. La differenza principale tra i due è
+il compromesso dimensioni/qualità.
 
-ETC1S is the default mode. It offers medium/low quality and excellent compression.
+ETC1S è la modalità predefinita. Offre una qualità medio/bassa e un'ottima compressione.
 
-UASTC has significantly higher quality, but much larger file sizes. UASTC-encoded Basis files must also be additionally
-compressed with an LZ-based scheme, such as deflate (zlib). Zopfli-compressed UASTC files are roughly 4 times as large
-as their ETC1S equivalents (including mipmaps), comparable to the source file stored with lossless PNG or WebP
-compression.
+UASTC ha una qualità notevolmente superiore, ma dimensioni di file molto maggiori. Anche i file Basis con codifica UASTC devono essere aggiuntivi
+compresso con uno schema basato su LZ, come deflate (zlib). I file UASTC compressi con Zopfli sono circa 4 volte più grandi
+come i loro equivalenti ETC1S (comprese le mipmap), paragonabili al file sorgente memorizzato con PNG senza perdita o WebP
+compressione.
 
-Although UASTC should theoretically work, it has not been well tested with Taisei yet. The ``mkbasis`` wrapper also does
-not apply LZ compression to UASTC files automatically yet, and Taisei wouldn't pick them up either (unless they are
-stored compressed inside of a ``.zip`` package). If you want to use UASTC nonetheless, pass ``--uastc`` to ``mkbasis``.
+Sebbene UASTC dovrebbe teoricamente funzionare, non è stato ancora ben testato con Taisei. Anche il wrapper ``mkbasis`` lo fa
+non applica ancora automaticamente la compressione LZ ai file UASTC, e neanche Taisei li rileverebbe (a meno che non siano
+memorizzati compressi all'interno di un pacchetto ``.zip``). Se vuoi comunque usare UASTC, passa ``--uastc`` a ``mkbasis``.
+*DAFARE*
 
-*TODO*
 
-
-Caveats and limitations
+Avvertenze e limitazioni
 -----------------------
 
-*TODO*
+*DAFARE*
